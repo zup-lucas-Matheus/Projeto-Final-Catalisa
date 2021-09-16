@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-@Table (name = "colaboradores")
+//@Table (name = "colaboradores")
 public class Colaborador {
 
     private String nome;

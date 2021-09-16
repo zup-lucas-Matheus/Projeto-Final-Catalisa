@@ -32,11 +32,11 @@ public class ColaboradorController {
         return colaboradorService.exibirTodosOsColaboradores();
     }
 
-    @PutMapping
-    public Colaborador atualizarColaborador () {
+  /* @PutMapping
+   public Colaborador atualizarColaborador () {
 
         // Não soube fazer
-    }
+    }*/
 
     @DeleteMapping ("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
