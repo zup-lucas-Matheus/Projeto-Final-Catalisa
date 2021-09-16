@@ -27,5 +27,17 @@ public class IndicacaoService {
         indicacaoRepository.delete(findIndicacao(id));
     }
 
+    //Metódo para atualizar indicação...
+    public void atualizarIndicacao(Indicacao indicacao){
+        Indicacao indicacaoSalva = findIndicacao(indicacao.getId());
+
+        indicacaoSalva.setMensagem(indicacao.getMensagem());
+        indicacaoSalva.setDataDeIndicacao(indicacao.getDataDeIndicacao());
+        indicacaoSalva.setNome(indicacao.getNome());
+
+        indicacaoRepository.save(indicacaoSalva);
+
+    }
+
 
 }
