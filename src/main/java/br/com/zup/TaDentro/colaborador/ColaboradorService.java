@@ -19,6 +19,12 @@ public class ColaboradorService {
         return (List<Colaborador>) colaboradorRepository.findAll();
     }
 
+    public boolean colaboradorExistente (String id) {
+        return colaboradorRepository.existsById(id);
+    }
+
+
+
 
 
 
