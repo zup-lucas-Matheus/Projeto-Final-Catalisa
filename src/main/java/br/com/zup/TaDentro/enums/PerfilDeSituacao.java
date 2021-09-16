@@ -1,6 +1,6 @@
 package br.com.zup.TaDentro.enums;
 
-public enum Perfil {
+public enum PerfilDeSituacao {
 
     CONTRATADO,
     NAO_CONTRATADO,
