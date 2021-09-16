@@ -2,7 +2,7 @@ package br.com.zup.TaDentro.indicacao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import java.util.Optional;
 
 @org.springframework.stereotype.Service
 public class IndicacaoService {
@@ -14,6 +14,13 @@ public class IndicacaoService {
     public Indicacao saveIndicacao(Indicacao indicado){
         return indicacaoRepository.save(indicado);
     }
+
+    //Metódo para buscar indicado por id.
+    public Optional<Indicacao> findUsuario(int id){
+        return indicacaoRepository.findById(id);
+
+    }
+
 
 
 }
