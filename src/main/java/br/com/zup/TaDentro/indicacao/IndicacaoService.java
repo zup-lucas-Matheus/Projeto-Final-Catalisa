@@ -16,11 +16,16 @@ public class IndicacaoService {
     }
 
     //Metódo para buscar indicado por id.
-    public Optional<Indicacao> findUsuario(int id){
-        return indicacaoRepository.findById(id);
+    public Indicacao findIndicacao(int id){
+        return indicacaoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Indicação não encontrada"));
 
     }
 
+    //Metódo para deletar indicaçao com exption.
+    public void deleteIndicacao(int id){
+        indicacaoRepository.delete(findIndicacao(id));
+    }
 
 
 }
