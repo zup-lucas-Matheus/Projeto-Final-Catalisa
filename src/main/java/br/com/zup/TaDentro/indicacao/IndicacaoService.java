@@ -2,6 +2,7 @@ package br.com.zup.TaDentro.indicacao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
@@ -36,7 +37,11 @@ public class IndicacaoService {
         indicacaoSalva.setNome(indicacao.getNome());
 
         indicacaoRepository.save(indicacaoSalva);
+    }
 
+    //Metódo para trazer todas as indicações.
+    public List<Indicacao> indicacaoList(){
+        return (List<Indicacao>) indicacaoRepository.findAll();
     }
 
 
