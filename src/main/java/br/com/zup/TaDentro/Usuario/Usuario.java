@@ -26,6 +26,7 @@ public class Usuario {
         this.id = id;
     }
 
+
     public String getNome() {
         return nome;
     }
@@ -49,4 +50,7 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+  
+
 }
