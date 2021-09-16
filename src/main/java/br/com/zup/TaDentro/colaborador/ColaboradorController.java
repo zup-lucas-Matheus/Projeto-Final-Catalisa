@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping ("/colaborador")
@@ -22,4 +23,16 @@ public class ColaboradorController {
         return colaboradorService.salvarColaborador(colaborador);
 
     }
+
+    @GetMapping
+    public List <Colaborador> exibirTodosOsColaboradores () {
+
+        // Converter Model para DTO
+
+        return colaboradorService.exibirTodosOsColaboradores();
+    }
+
+
+
+
 }
