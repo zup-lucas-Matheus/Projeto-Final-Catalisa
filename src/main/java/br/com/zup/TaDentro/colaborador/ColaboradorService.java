@@ -35,7 +35,9 @@ public class ColaboradorService {
 
     }
 
-
+    public void deletarPorID (String id) {
+        colaboradorRepository.deleteById(id);
+    }
 
 }
 

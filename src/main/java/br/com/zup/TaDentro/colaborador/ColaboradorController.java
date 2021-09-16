@@ -32,6 +32,14 @@ public class ColaboradorController {
         return colaboradorService.exibirTodosOsColaboradores();
     }
 
+    @PutMapping
+    public Colaborador atualizarColaborador () {
+
+        // Não estou sabendo
+    }
+
+
+
 
 
 
