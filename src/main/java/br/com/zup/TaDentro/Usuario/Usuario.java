@@ -1,12 +1,29 @@
 package br.com.zup.TaDentro.Usuario;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "usuario")
 public class Usuario {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String nome;
     private String email;
-    private String cargo;
+    private String senha;
 
-    public Usuario() {
+
+    public Usuario(){
+
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
 
@@ -26,14 +43,14 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getCargo() {
-        return cargo;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
-
+  
 
 }
