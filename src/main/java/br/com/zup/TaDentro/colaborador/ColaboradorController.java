@@ -35,8 +35,16 @@ public class ColaboradorController {
     @PutMapping
     public Colaborador atualizarColaborador () {
 
-        // Não estou sabendo
+        // Não soube fazer
     }
+
+    @DeleteMapping ("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deltarPeloID (@PathVariable String id) {
+        colaboradorService.deletarPorID(id);
+    }
+
+    // Melhorar método montando String por meio de DTO
 
 
 
