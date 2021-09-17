@@ -30,15 +30,5 @@ public class UsuarioService {
         repository.delete(encontrarUsuario(id));
     }
 
-    public void atualizarUsuario(Usuario usuario){
-        Usuario user = encontrarUsuario(usuario.getId());
-
-        user.setNome(usuario.getNome());
-        user.setEmail(usuario.getEmail());
-        user.setSenha(usuario.getSenha());
-
-        repository.save(user);
-    }
-
 
 }
