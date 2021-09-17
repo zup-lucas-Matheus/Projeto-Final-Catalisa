@@ -6,7 +6,7 @@ import br.com.zup.TaDentro.enums.Cargo;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "colaboradores")
+@Table(name = "/colaboradores")
 public class Colaborador {
 
     @Id
