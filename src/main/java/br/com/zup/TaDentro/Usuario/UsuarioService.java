@@ -31,15 +31,4 @@ public class UsuarioService {
     }
 
 
-    public void atualizarUsuario(Usuario usuario){
-        Usuario user = encontrarUsuario(usuario.getId());
-
-
-        user.setNome(usuario.getNome());
-        user.setEmail(usuario.getEmail());
-        user.setSenha(usuario.getSenha());
-
-
-    }
-
 }

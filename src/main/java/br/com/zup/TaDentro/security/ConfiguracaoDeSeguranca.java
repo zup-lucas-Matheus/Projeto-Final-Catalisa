@@ -14,13 +14,25 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
+
+    private static final String[] GET_PUBLICOS = {
+            "/usuario/{\\d+}"
+    };
+    private static final String[] POST_PUBLICOS = {
+            "/usuarios",
+            "/colaborador",
+            "/indicacoes"
+
+    };
+
     //Metodo que configura toda nossa aplicação
     protected void configuracao(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable();
         httpSecurity.cors().configurationSource(configacaoDeCors());
 
         httpSecurity.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/usuarios").permitAll()
+                .antMatchers(HttpMethod.POST, POST_PUBLICOS).permitAll()
+                .antMatchers(HttpMethod.GET, GET_PUBLICOS).permitAll()
                 .anyRequest().authenticated();
 
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

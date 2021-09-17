@@ -17,36 +17,31 @@ public class ColaboradorController {
     @PostMapping
     @ResponseStatus (HttpStatus.CREATED)
     public Colaborador salvarColaborador (@RequestBody @Valid Colaborador colaborador) {
-
         // Converter Model em DTO
-
         return colaboradorService.salvarColaborador(colaborador);
-
     }
 
     @GetMapping
     public List <Colaborador> exibirTodosOsColaboradores () {
-
         // Converter Model para DTO
-
         return colaboradorService.exibirTodosOsColaboradores();
     }
 
-  /* @PutMapping
-   public Colaborador atualizarColaborador () {
-
-        // Não soube fazer
-    }*/
 
     @DeleteMapping ("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deltarPeloID (@PathVariable String id) {
+    public void deltarPeloID (@PathVariable int id) {
         colaboradorService.deletarPorID(id);
     }
 
-    // Melhorar método montando String por meio de DTO
 
+    /*
+ @PutMapping
+   public Colaborador atualizarColaborador () {
 
+        // Não soube fazer
+    }
+*/
 
 
 

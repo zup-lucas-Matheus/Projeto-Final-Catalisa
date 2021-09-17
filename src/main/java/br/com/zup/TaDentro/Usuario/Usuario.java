@@ -13,7 +13,6 @@ public class Usuario {
     private String email;
     private String senha;
 
-
     public Usuario(){
 
     }
@@ -25,7 +24,6 @@ public class Usuario {
     public void setId(Integer id) {
         this.id = id;
     }
-
 
     public String getNome() {
         return nome;
