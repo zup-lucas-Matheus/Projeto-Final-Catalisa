@@ -20,11 +20,11 @@ public class ColaboradorService {
         return (List<Colaborador>) colaboradorRepository.findAll();
     }
 
-    public boolean colaboradorExistente(String id) {
+    public boolean colaboradorExistente(int id) {
         return colaboradorRepository.existsById(id);
     }
 
-    public Colaborador procurarSeColaboradorJaExiste(String id) {
+    public Colaborador procurarSeColaboradorJaExiste(int id) {
         Optional<Colaborador> colaboradorOptional = colaboradorRepository.findById(id);
 
         if (colaboradorOptional.isPresent()) {
@@ -35,7 +35,7 @@ public class ColaboradorService {
 
     }
 
-    public void deletarPorID (String id) {
+    public void deletarPorID (int id) {
         colaboradorRepository.deleteById(id);
     }
 

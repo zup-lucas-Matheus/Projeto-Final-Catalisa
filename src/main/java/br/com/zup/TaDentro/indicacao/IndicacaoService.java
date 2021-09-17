@@ -1,11 +1,12 @@
 package br.com.zup.TaDentro.indicacao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@org.springframework.stereotype.Service
+@Service
 public class IndicacaoService {
 
     @Autowired
@@ -32,8 +33,9 @@ public class IndicacaoService {
     public void atualizarIndicacao(Indicacao indicacao){
         Indicacao indicacaoSalva = findIndicacao(indicacao.getId());
 
-        indicacaoSalva.setMensagem(indicacao.getMensagem());
-        indicacaoSalva.setDataDeIndicacao(indicacao.getDataDeIndicacao());
+        indicacaoSalva.setTelefone(indicacao.getTelefone());
+        indicacaoSalva.setEmail(indicacao.getEmail());
+        indicacaoSalva.setDataDaContratacao(indicacao.getDataDaContratacao());
         indicacaoSalva.setNome(indicacao.getNome());
 
         indicacaoRepository.save(indicacaoSalva);

@@ -14,6 +14,7 @@ public class Colaborador {
     private int id;
     private String nome;
     private String email;
+    @Enumerated(EnumType.STRING)
     private Cargo cargo;
 
     @OneToOne

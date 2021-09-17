@@ -21,4 +21,24 @@ public class UsuarioService {
         return (List<Usuario>) repository.findAll();
     }
 
+    //PesquisaUsuario
+    public Usuario encontrarUsuario(int id){
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    }
+
+    public void deletarUsuario(int id){
+        repository.delete(encontrarUsuario(id));
+    }
+
+    public void atualizarUsuario(Usuario usuario){
+        Usuario user = encontrarUsuario(usuario.getId());
+
+        user.setNome(usuario.getNome());
+        user.setEmail(usuario.getEmail());
+        user.setSenha(usuario.getSenha());
+
+        repository.save(user);
+    }
+
+
 }
