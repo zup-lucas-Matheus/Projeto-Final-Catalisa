@@ -40,5 +40,21 @@ public class JwtComponent {
 
     public static boolean isTokenValid(String token) {
 
+        try {
+            Claims claims = getClaims(token);
+            String username = claims.getSubject();
+            Date vencimento = claims.getExpiration();
+            Date dataAtual = new Date(System.currentTimeMillis());
+
+            if (username != null && vencimento != null && dataAtual.before(vencimento)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception exception) {
+            return false;
+
+        }
+    }
 
 }
