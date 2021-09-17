@@ -32,15 +32,18 @@ public class ColaboradorController {
         return colaboradorService.exibirTodosOsColaboradores();
     }
 
-  /* @PutMapping
+/*
+ @PutMapping
    public Colaborador atualizarColaborador () {
 
         // Não soube fazer
-    }*/
+    }
+*/
+
 
     @DeleteMapping ("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deltarPeloID (@PathVariable String id) {
+    public void deltarPeloID (@PathVariable int id) {
         colaboradorService.deletarPorID(id);
     }
 
