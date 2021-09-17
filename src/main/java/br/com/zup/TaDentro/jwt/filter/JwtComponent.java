@@ -14,5 +14,17 @@ public class JwtComponent {
     private static final String CHAVE = "xablau";
 
 
+    public static String gerarToken(String userName, int idUsuario){
+
+        return Jwts.builder()
+                .setSubject(userName)
+                .claim("idUsuario", idUsuario)
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
+                .signWith(SignatureAlgorithm.HS512, CHAVE)
+                .compact();
+
+    }
+
+
 
 }
