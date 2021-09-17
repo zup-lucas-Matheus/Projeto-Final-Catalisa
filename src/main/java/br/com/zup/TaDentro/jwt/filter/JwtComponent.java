@@ -25,6 +25,20 @@ public class JwtComponent {
 
     }
 
+    public static Claims getClaims(String token) throws Exception {
+
+        try {
+            return Jwts.parser()
+                    .setSigningKey(CHAVE)
+                    .parseClaimsJws(token).getBody();
+
+        }catch (Exception exception){
+            throw new Exception("Token Invalído");
+        }
+
+    }
+
+    public static boolean isTokenValid(String token) {
 
 
 }
