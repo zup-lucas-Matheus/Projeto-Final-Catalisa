@@ -18,9 +18,6 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
     private static final String[] GET_PUBLICOS = {
             "/usuario/{\\d+}"
     };
-    private static final String[] POST_PUBLICOS = {
-            "/colaborador",
-    };
 
     //Metodo que configura toda nossa aplicação
     protected void configuracao(HttpSecurity httpSecurity) throws Exception {
@@ -28,9 +25,9 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
         httpSecurity.cors().configurationSource(configacaoDeCors());
 
         httpSecurity.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/usuarios").permitAll()
+                .antMatchers(HttpMethod.POST, "/usuario").permitAll()
+                .antMatchers(HttpMethod.POST, "/indicacao").permitAll()
                 .antMatchers(HttpMethod.POST, "/colaborador").permitAll()
-                .antMatchers(HttpMethod.POST, "/colaboradores").permitAll()
                 .antMatchers(HttpMethod.GET, GET_PUBLICOS).permitAll()
                 .anyRequest().authenticated();
 
