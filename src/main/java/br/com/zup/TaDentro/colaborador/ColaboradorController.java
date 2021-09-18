@@ -8,7 +8,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/colaborador")
+@RequestMapping ("colaborador")
 public class ColaboradorController {
 
     @Autowired
@@ -35,14 +35,11 @@ public class ColaboradorController {
     }
 
 
-    /*
- @PutMapping
+/* @PutMapping
    public Colaborador atualizarColaborador () {
 
         // Não soube fazer
-    }
-*/
-
+    }*/
 
 
 

@@ -15,11 +15,11 @@ public class JwtComponent {
 
 
     public static String gerarToken(String userName, int idUsuario){
-
+        Date vencimento = new Date(System.currentTimeMillis() + EXPIRATIONTIME);
         return Jwts.builder()
                 .setSubject(userName)
                 .claim("idUsuario", idUsuario)
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
+                .setExpiration(vencimento)
                 .signWith(SignatureAlgorithm.HS512, CHAVE)
                 .compact();
 

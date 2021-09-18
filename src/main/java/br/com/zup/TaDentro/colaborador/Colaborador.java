@@ -4,21 +4,28 @@ import br.com.zup.TaDentro.Usuario.Usuario;
 import br.com.zup.TaDentro.enums.Cargo;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "/colaboradores")
+@Table(name = "colaborador")
 public class Colaborador {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
+    @NotNull
     private String nome;
-    private String email;
+    @NotNull
+    private String cpf;
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Cargo cargo;
+    @NotNull
+    private LocalDate dataContratacao;
 
     @OneToOne
-    @JoinColumn(name = "id_usuario")
+//    @JoinColumn(name = "id_usuario")
     private Usuario loginUsuario;
 
     public Colaborador() {
@@ -30,14 +37,6 @@ public class Colaborador {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public int getId() {
@@ -62,5 +61,21 @@ public class Colaborador {
 
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public LocalDate getDataContratacao() {
+        return dataContratacao;
+    }
+
+    public void setDataContratacao(LocalDate dataContratacao) {
+        this.dataContratacao = dataContratacao;
     }
 }

@@ -14,7 +14,7 @@ public class UsuarioController {
     @Autowired
     public UsuarioService service;
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Usuario cadastroUsuario(@RequestBody @Valid Usuario usuario){
         return service.salvarUsuario(usuario);

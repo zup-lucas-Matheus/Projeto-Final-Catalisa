@@ -5,19 +5,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "indicacoes")
+@Table(name = "indicacao")
 public class Indicacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotNull
     private String nome;
-    private String telefone;
+    @NotNull
+    private String cpf;
     private LocalDate dataDaContratacao;
     private String email;
+    @NotNull
     @Enumerated(EnumType.STRING)
     private PerfilDeSituacao situacao;
 
@@ -32,12 +36,12 @@ public class Indicacao {
         this.nome = nome;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public LocalDate getDataDaContratacao() {

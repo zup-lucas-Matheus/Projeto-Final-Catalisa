@@ -1,5 +1,8 @@
 package br.com.zup.TaDentro.security;
 
+import br.com.zup.TaDentro.jwt.filter.FiltroDeAutenticacaoJwt;
+import br.com.zup.TaDentro.jwt.filter.JwtComponent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,28 +18,31 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
 
-    private static final String[] GET_PUBLICOS = {
-            "/usuario/{\\d+}"
+    @Autowired
+    private JwtComponent jwtComponent;
+
+    private static final String[] POST_PUBLICOS = {
+            "/usuarios",
+            "/login"
     };
 
     //Metodo que configura toda nossa aplicação
-    protected void configuracao(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable();
-        httpSecurity.cors().configurationSource(configacaoDeCors());
-
-        httpSecurity.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/usuario").permitAll()
-                .antMatchers(HttpMethod.POST, "/indicacao").permitAll()
-                .antMatchers(HttpMethod.POST, "/colaborador").permitAll()
-                .antMatchers(HttpMethod.GET, GET_PUBLICOS).permitAll()
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.cors().configurationSource(configuracaoDeCors());
+        http.authorizeRequests()
+                .antMatchers(HttpMethod.POST, POST_PUBLICOS).permitAll()
                 .anyRequest().authenticated();
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilter(new FiltroDeAutenticacaoJwt(authenticationManager(), jwtComponent));
+
     }
 
     //Metodo que configura o CORS.
     @Bean
-    protected CorsConfigurationSource configacaoDeCors(){
+    protected CorsConfigurationSource configuracaoDeCors(){
 
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());

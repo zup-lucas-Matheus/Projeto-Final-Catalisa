@@ -9,7 +9,7 @@ import java.util.List;
 public class UsuarioService {
 
     @Autowired
-    public Repository repository;
+    public UsuarioRepository repository;
 
     //Usuário salvo
     public Usuario salvarUsuario(Usuario usuario){
@@ -33,7 +33,6 @@ public class UsuarioService {
     public void atualizarUsuario(Usuario usuario){
         Usuario user = encontrarUsuario(usuario.getId());
 
-        user.setNome(usuario.getNome());
         user.setEmail(usuario.getEmail());
         user.setSenha(usuario.getSenha());
 
