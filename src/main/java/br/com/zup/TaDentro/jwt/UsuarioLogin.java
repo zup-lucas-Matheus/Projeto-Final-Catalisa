@@ -11,6 +11,9 @@ public class UsuarioLogin implements UserDetails {
     private String email;
     private String senha;
 
+    public UsuarioLogin() {
+    }
+
     public UsuarioLogin(int id, String email, String senha) {
         this.id = id;
         this.email = email;
