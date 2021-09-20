@@ -4,11 +4,8 @@ import br.com.zup.TaDentro.Usuario.Usuario;
 import br.com.zup.TaDentro.colaborador.Colaborador;
 import br.com.zup.TaDentro.colaborador.ColaboradorRepository;
 import br.com.zup.TaDentro.colaborador.ColaboradorService;
-import br.com.zup.TaDentro.enums.Cargo;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +29,7 @@ public class ColaboradorServiceTest {
 
 
     @Test
-    public void testarSalvarColaborador () {
+    public void testarSalvarColaborador() {
 
         Colaborador colaborador = new Colaborador();
 
@@ -41,37 +38,52 @@ public class ColaboradorServiceTest {
 
         Colaborador colaboradorTeste = colaboradorService.salvarColaborador(colaborador);
 
-        Assertions.assertEquals(colaborador , colaboradorTeste);
+        Assertions.assertEquals(colaborador, colaboradorTeste);
     }
 
     @Test
-    public void testarExibirTodosOsColaboradores () {
+    public void testarExibirTodosOsColaboradores() {
 
         Colaborador colaborador = new Colaborador();
-
         Iterable<Colaborador> listaDeColaboradores = Arrays.asList(colaborador);
 
-        Mockito.when(colaboradorRepository.findAll()).thenReturn(listaDeColaboradores);
+        Mockito.when(colaboradorRepository.findAll())
+                .thenReturn(listaDeColaboradores);
 
-        Assertions.assertTrue(colaboradorService.exibirTodosOsColaboradores()instanceof List);
+        Assertions.assertTrue(colaboradorService.exibirTodosOsColaboradores() instanceof List);
     }
 
     @Test
-    public void testarSeColaboradorJaExiste () {
+    public void testarSeColaboradorJaExiste() {
 
         Colaborador colaborador = new Colaborador();
-
-        Optional <Colaborador> colaboradorOptional = Optional.of(colaborador);
+        Optional<Colaborador> colaboradorOptional = Optional.of(colaborador);
 
         Mockito.when(colaboradorRepository.findById(Mockito.anyInt()))
                 .thenReturn(colaboradorOptional);
 
-        Assertions.assertEquals(colaborador , colaboradorService.procurarSeColaboradorJaExiste(1));
+        Assertions.assertEquals(colaborador, colaboradorService.procurarSeColaboradorJaExiste(1));
 
     }
 
 
 
+   /*@Test
+    public void testarDeletarPorID() {
+
+        Colaborador colaborador = new Colaborador();
+
+        // Optional <Colaborador> colaboradorOptional = Optional.of(colaborador);
+
+        Colaborador colaboradorExistente = colaboradorService.deletarPorID(id);
+
+
+        Mockito.when(colaboradorRepository.deleteById(Mockito.anyInt(Colaborador.class)))
+                .thenReturn(colaboradorOptional);
+
+        Assertions.assertTrue(colaborador, colaboradorService.deletarPorID(1);
+
+    }*/
 
 
 }
