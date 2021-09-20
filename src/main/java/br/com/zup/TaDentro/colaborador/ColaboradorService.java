@@ -1,5 +1,6 @@
 package br.com.zup.TaDentro.colaborador;
 
+import br.com.zup.TaDentro.colaborador.dtos.ColaboradorResumidoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,7 @@ public class ColaboradorService {
 
     }
 
-    public void atualizarColaborador(Colaborador colaborador) throws Exception {
+    public Colaborador atualizarColaborador (Colaborador colaborador) {
         Colaborador objetoColaborador = procurarSeColaboradorJaExiste(colaborador.getId());
 
         colaborador.setNome(colaborador.getNome());
@@ -43,9 +44,9 @@ public class ColaboradorService {
         colaborador.setCpf(colaborador.getCpf());
         colaborador.setLoginUsuario(colaborador.getLoginUsuario());
         colaborador.setDataContratacao(colaborador.getDataContratacao());
-        colaboradorRepository.save(colaborador);
 
-        throw new RuntimeException("Colaborador nãp foi encontrado, por isso não pode ser atualziado");
+        return colaboradorRepository.save(colaborador);
+
     }
 
     public void deletarPorID(int id) {

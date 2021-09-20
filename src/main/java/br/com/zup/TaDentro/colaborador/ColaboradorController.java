@@ -39,6 +39,7 @@ public class ColaboradorController {
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public List<ColaboradorResumidoDTO> exibirTodosOsColaboradores() {
 
         return modelMapper.map(colaboradorService.exibirTodosOsColaboradores(), (Type) ColaboradorResumidoDTO.class);
@@ -53,11 +54,16 @@ public class ColaboradorController {
     }
 
 
-/* @PutMapping
-   public Colaborador atualizarColaborador () {
+    @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Colaborador atualizarColaborador() {
 
-        // Não soube fazer
-    }*/
+        ColaboradorResumidoDTO colaboradorResumidoDTO = new ColaboradorResumidoDTO();
+
+        return modelMapper.map(colaboradorResumidoDTO, Colaborador.class);
+
+
+    }
 
 
 }
