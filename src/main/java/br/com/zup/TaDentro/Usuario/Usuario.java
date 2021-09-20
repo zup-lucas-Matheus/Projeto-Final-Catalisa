@@ -2,7 +2,12 @@ package br.com.zup.TaDentro.Usuario;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import javax.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "usuario")
@@ -12,11 +17,11 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull
+    @NotBlank(message = "validacao.nome")
+    @Size(min = 2 , max = 30)
     private String nome;
-    @NotNull
-    @Email
+    @Email(message = "validacao.email")
     private String email;
-    @NotNull
     private String senha;
 
     public Usuario(){
