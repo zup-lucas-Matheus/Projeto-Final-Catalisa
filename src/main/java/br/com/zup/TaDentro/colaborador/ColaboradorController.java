@@ -1,51 +1,69 @@
 package br.com.zup.TaDentro.colaborador;
 
+import br.com.zup.TaDentro.colaborador.dtos.ColaboradorResumidoDTO;
 import br.com.zup.TaDentro.jwt.filter.JwtComponent;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.Type;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/colaborador")
+@RequestMapping("colaborador")
 public class ColaboradorController {
 
-    @Autowired
+
     private ColaboradorService colaboradorService;
-    @Autowired
     private JwtComponent jwtComponent;
+    private ModelMapper modelMapper;
+
+    @Autowired
+    public ColaboradorController(ColaboradorService colaboradorService, JwtComponent jwtComponent, ModelMapper modelMapper) {
+        this.colaboradorService = colaboradorService;
+        this.jwtComponent = jwtComponent;
+        this.modelMapper = modelMapper;
+    }
 
     @PostMapping
-    @ResponseStatus (HttpStatus.CREATED)
-    public Colaborador salvarColaborador (@RequestBody @Valid Colaborador colaborador, Authentication authentication) {
-        // Converter Model em DTO
+    @ResponseStatus(HttpStatus.CREATED)
+    public ColaboradorResumidoDTO salvarColaborador(@RequestBody @Valid Colaborador colaborador, Authentication authentication) {
+
         String email = authentication.getName();
-        return colaboradorService.salvarColaborador(colaborador);
+
+        return modelMapper.map(colaborador, ColaboradorResumidoDTO.class);
+
     }
 
     @GetMapping
-    public List <Colaborador> exibirTodosOsColaboradores () {
-        // Converter Model para DTO
-        return colaboradorService.exibirTodosOsColaboradores();
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<ColaboradorResumidoDTO> exibirTodosOsColaboradores() {
+
+        return modelMapper.map(colaboradorService.exibirTodosOsColaboradores(), (Type) ColaboradorResumidoDTO.class);
+
     }
 
 
-    @DeleteMapping ("/{id}")
+/*    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deltarPeloID (@PathVariable int id) {
+    public void deletarPorID(@PathVariable int id) {
         colaboradorService.deletarPorID(id);
-    }
-
-
-/* @PutMapping
-   public Colaborador atualizarColaborador () {
-
-        // Não soube fazer
     }*/
 
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Colaborador atualizarColaborador() {
+
+        ColaboradorResumidoDTO colaboradorResumidoDTO = new ColaboradorResumidoDTO();
+
+        return modelMapper.map(colaboradorResumidoDTO, Colaborador.class);
+
+
+    }
 
 
 }
