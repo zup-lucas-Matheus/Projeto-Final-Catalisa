@@ -8,7 +8,8 @@ public enum Cargo {
     BP,
     RH,
     ASSISTENTE,
-    TECH_LEAD
+    TECH_LEAD,
+    ASSISTENTE_TI
 
 
 }

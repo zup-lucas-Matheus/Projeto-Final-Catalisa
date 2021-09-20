@@ -6,6 +6,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import javax.validation.constraints.NotNull;
+
+
 @Entity
 @Table(name = "usuario")
 public class Usuario {
@@ -33,14 +36,6 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -57,6 +52,11 @@ public class Usuario {
         this.senha = senha;
     }
 
-  
+    public String getNome() {
+        return nome;
+    }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 }

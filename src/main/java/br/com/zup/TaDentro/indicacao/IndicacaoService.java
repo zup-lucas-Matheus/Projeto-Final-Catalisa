@@ -33,7 +33,7 @@ public class IndicacaoService {
     public void atualizarIndicacao(Indicacao indicacao){
         Indicacao indicacaoSalva = findIndicacao(indicacao.getId());
 
-        indicacaoSalva.setTelefone(indicacao.getTelefone());
+
         indicacaoSalva.setEmail(indicacao.getEmail());
         indicacaoSalva.setDataDaContratacao(indicacao.getDataDaContratacao());
         indicacaoSalva.setNome(indicacao.getNome());

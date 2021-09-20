@@ -1,5 +1,7 @@
 package br.com.zup.TaDentro.Usuario;
 
+import br.com.zup.TaDentro.Usuario.dto.UsuarioDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,18 +14,20 @@ import java.util.List;
 public class UsuarioController {
 
     @Autowired
-    public UsuarioService service;
+    private UsuarioService usuarioService;
+    @Autowired
+    private ModelMapper modelMapper;
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Usuario cadastroUsuario(@RequestBody @Valid Usuario usuario){
-        return service.salvarUsuario(usuario);
+    public UsuarioDto cadastroUsuario(@RequestBody @Valid Usuario usuario) throws Exception {
+        Usuario usuarioModel =  usuarioService.salvarUsuario(usuario);
+        return modelMapper.map(usuarioModel, UsuarioDto.class);
     }
-
 
     @GetMapping
     public List<Usuario> exibirUsuario(){
-        return service.exibirUsuario();
+        return usuarioService.exibirUsuario();
     }
 
 
