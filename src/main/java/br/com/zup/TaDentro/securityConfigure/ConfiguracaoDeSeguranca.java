@@ -1,12 +1,12 @@
-package br.com.zup.TaDentro.security;
+package br.com.zup.TaDentro.securityConfigure;
 
 import br.com.zup.TaDentro.jwt.filter.FiltroDeAutenticacaoJwt;
+import br.com.zup.TaDentro.jwt.filter.FiltroDeAutorizacao;
 import br.com.zup.TaDentro.jwt.filter.JwtComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -43,6 +43,7 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilter(new FiltroDeAutenticacaoJwt(authenticationManager(), jwtComponent));
+        http.addFilter(new FiltroDeAutorizacao(authenticationManager(), jwtComponent, userDetailsService));
 
     }
 
