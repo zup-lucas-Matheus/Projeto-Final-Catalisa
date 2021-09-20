@@ -31,7 +31,6 @@ public class ColaboradorService {
             throw new RuntimeException("Colaborador já existe!");
         }
 
-
     }
 
     public void deletarPorID (int id) {
