@@ -1,5 +1,6 @@
 package br.com.zup.TaDentro.colaborador;
 
+import br.com.zup.TaDentro.colaborador.dtos.ColaboradorResumidoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,19 +35,30 @@ public class ColaboradorService {
 
     }
 
+    public Colaborador atualizarColaborador (Colaborador colaborador) {
+        Colaborador objetoColaborador = procurarSeColaboradorJaExiste(colaborador.getId());
+
+        colaborador.setNome(colaborador.getNome());
+        colaborador.setId(colaborador.getId());
+        colaborador.setCpf(colaborador.getCpf());
+        colaborador.setLoginUsuario(colaborador.getLoginUsuario());
+        colaborador.setDataContratacao(colaborador.getDataContratacao());
+
+        return colaboradorRepository.save(colaborador);
+
+    }
+
     public void deletarPorID(int id) {
 
         if (colaboradorExistente(id)) {
             colaboradorRepository.deleteById(id);
-        }
-
-        else {
+        } else {
 
             throw new RuntimeException("Colaborador não está na lista");
         }
     }
 
-    }
+}
 
 
 
