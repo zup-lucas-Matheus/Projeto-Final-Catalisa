@@ -1,6 +1,7 @@
 package br.com.zup.TaDentro.Usuario;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "usuario")
@@ -9,8 +10,9 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String nome;
+    @NotNull
     private String email;
+    @NotNull
     private String senha;
 
     public Usuario(){
@@ -23,14 +25,6 @@ public class Usuario {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getEmail() {
