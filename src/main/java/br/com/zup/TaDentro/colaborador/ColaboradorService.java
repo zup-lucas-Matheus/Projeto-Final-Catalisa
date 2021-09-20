@@ -21,9 +21,6 @@ public class ColaboradorService {
         return (List<Colaborador>) colaboradorRepository.findAll();
     }
 
-    public boolean colaboradorExistente(int id) {
-        return colaboradorRepository.existsById(id);
-    }
 
     public Colaborador procurarSeColaboradorJaExiste(int id) {
         Optional<Colaborador> colaboradorOptional = colaboradorRepository.findById(id);
@@ -31,8 +28,10 @@ public class ColaboradorService {
         if (colaboradorOptional.isPresent()) {
             return colaboradorOptional.get();
         }
+        else {
+            throw new RuntimeException("Colaborador já existe!");
+        }
 
-        throw new RuntimeException("Colaborador não trabalha aqui");
 
     }
 
