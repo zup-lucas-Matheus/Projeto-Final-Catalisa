@@ -43,7 +43,7 @@ public class ColaboradorServiceTest {
         Assertions.assertEquals(colaborador , colaboradorTeste);
     }
 
-   /* @Test
+    @Test
     public void testarExibirTodosOsColaboradores () {
 
         Colaborador colaborador = new Colaborador();
@@ -54,7 +54,7 @@ public class ColaboradorServiceTest {
 
         Assertions.assertTrue(colaboradorService.exibirTodosOsColaboradores()instanceof List);
     }
-*/
+
 
 
 }
