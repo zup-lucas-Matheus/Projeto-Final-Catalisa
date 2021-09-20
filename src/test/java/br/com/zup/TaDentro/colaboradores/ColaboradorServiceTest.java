@@ -16,6 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 public class ColaboradorServiceTest {
@@ -54,6 +55,22 @@ public class ColaboradorServiceTest {
 
         Assertions.assertTrue(colaboradorService.exibirTodosOsColaboradores()instanceof List);
     }
+
+    @Test
+    public void testarSeColaboradorJaExiste () {
+
+        Colaborador colaborador = new Colaborador();
+
+        Optional <Colaborador> colaboradorOptional = Optional.of(colaborador);
+
+        Mockito.when(colaboradorRepository.findById(Mockito.anyInt()))
+                .thenReturn(colaboradorOptional);
+
+        Assertions.assertEquals(colaborador , colaboradorService.procurarSeColaboradorJaExiste(1));
+
+    }
+
+
 
 
 
