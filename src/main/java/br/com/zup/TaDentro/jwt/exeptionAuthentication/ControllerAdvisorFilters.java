@@ -17,7 +17,6 @@ public class ControllerAdvisorFilters {
                 AcessoNegadoException.builder()
                 .statusCode(403)
                 .mensagem(exception.getMessage())
-
                 .titulo("FORBIDDEN")
                 .build(), HttpStatus.FORBIDDEN
         );

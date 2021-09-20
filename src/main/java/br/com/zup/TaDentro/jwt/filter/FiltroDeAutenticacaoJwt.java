@@ -1,9 +1,10 @@
 package br.com.zup.TaDentro.jwt.filter;
 
-import br.com.zup.TaDentro.exeption.AcessoNegado;
+
 import br.com.zup.TaDentro.jwt.UsuarioLogin;
+import br.com.zup.TaDentro.jwt.dto.UsuarioLoginDto;
+import br.com.zup.TaDentro.jwt.exeptionAuthentication.MensagemAcessoNegado;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,16 +34,16 @@ public class FiltroDeAutenticacaoJwt extends UsernamePasswordAuthenticationFilte
 
         try {
 
-            UsuarioLogin usuarioLogin = objectMapper.readValue(request.getInputStream(), UsuarioLogin.class);
+            UsuarioLoginDto usuarioLoginDto = objectMapper.readValue(request.getInputStream(), UsuarioLoginDto.class);
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    usuarioLogin.getEmail(), usuarioLogin.getSenha(), new ArrayList<>()
+                    usuarioLoginDto.getEmail(), usuarioLoginDto.getSenha(), new ArrayList<>()
             );
 
             Authentication auth = authenticationManager.authenticate(authToken);
             return auth;
 
         }catch (IOException exception){
-            throw new AcessoNegado();
+            throw new MensagemAcessoNegado("Acesso negado!");
         }
     }
 

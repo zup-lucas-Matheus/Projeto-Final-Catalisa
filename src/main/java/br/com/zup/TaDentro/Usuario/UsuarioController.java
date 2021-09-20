@@ -14,21 +14,20 @@ import java.util.List;
 public class UsuarioController {
 
     @Autowired
-    private UsuarioService service;
+    private UsuarioService usuarioService;
     @Autowired
     private ModelMapper modelMapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Usuario cadastroUsuario(@RequestBody @Valid UsuarioDto usuarioDto){
-        Usuario usuario = modelMapper.map(usuarioDto, Usuario.class);
-        return service.salvarUsuario(usuario);
+    public UsuarioDto cadastroUsuario(@RequestBody @Valid Usuario usuario) throws Exception {
+        Usuario usuarioModel =  usuarioService.salvarUsuario(usuario);
+        return modelMapper.map(usuarioModel, UsuarioDto.class);
     }
-
 
     @GetMapping
     public List<Usuario> exibirUsuario(){
-        return service.exibirUsuario();
+        return usuarioService.exibirUsuario();
     }
 
 
