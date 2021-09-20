@@ -47,11 +47,11 @@ public class ColaboradorController {
     }
 
 
-    @DeleteMapping("/{id}")
+/*    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletarPorID(@PathVariable int id) {
         colaboradorService.deletarPorID(id);
-    }
+    }*/
 
 
     @PutMapping

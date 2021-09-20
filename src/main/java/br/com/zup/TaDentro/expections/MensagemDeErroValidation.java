@@ -14,5 +14,19 @@ public class MensagemDeErroValidation {
         this.erros = erros;
     }
 
+    public int getStatusCode() {
+        return statusCode;
+    }
 
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public List<Erro> getErros() {
+        return erros;
+    }
+
+    public void setErros(List<Erro> erros) {
+        this.erros = erros;
+    }
 }

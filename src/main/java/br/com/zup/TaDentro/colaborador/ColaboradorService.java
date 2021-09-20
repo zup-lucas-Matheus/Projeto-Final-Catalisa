@@ -48,7 +48,7 @@ public class ColaboradorService {
 
     }
 
-    public void deletarPorID(int id) {
+/*    public void deletarPorID(int id) {
 
         if (colaboradorExistente(id)) {
             colaboradorRepository.deleteById(id);
@@ -56,7 +56,7 @@ public class ColaboradorService {
 
             throw new RuntimeException("Colaborador não está na lista");
         }
-    }
+    }*/
 
 }
 

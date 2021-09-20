@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
-public class HandlerCaption {
+public class HandlerExceptionValidation {
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
