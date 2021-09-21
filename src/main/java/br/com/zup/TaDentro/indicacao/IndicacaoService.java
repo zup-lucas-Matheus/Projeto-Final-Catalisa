@@ -1,8 +1,10 @@
 package br.com.zup.TaDentro.indicacao;
 
+import br.com.zup.TaDentro.enums.PerfilDeSituacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +16,10 @@ public class IndicacaoService {
 
     //Metódo para cadastrar indicação.
     public Indicacao saveIndicacao(Indicacao indicado){
+        indicacaoDuplicada(indicado.getCpf());
+        indicado.setDataDaContratacao(LocalDate.now());
+        indicado.setSituacao(PerfilDeSituacao.EM_PROCESSO_SELETIVO);
+
         return indicacaoRepository.save(indicado);
     }
 
@@ -38,6 +44,15 @@ public class IndicacaoService {
         indicacaoSalva.setNome(indicacao.getNome());
 
         indicacaoRepository.save(indicacaoSalva);
+    }
+
+    public Optional<Indicacao> indicacaoDuplicada(String cpf){
+        Optional<Indicacao> indicacao = indicacaoRepository.findByCpf(cpf);
+
+        if (indicacao.isPresent()) {
+            throw new RuntimeException("Indicação já cadastrada");
+        }
+        return indicacao;
     }
 
     //Metódo para trazer todas as indicações.
