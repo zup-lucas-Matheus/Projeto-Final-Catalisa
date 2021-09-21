@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class Colaborador {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull
     private String nome;
