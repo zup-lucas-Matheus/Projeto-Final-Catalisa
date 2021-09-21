@@ -1,4 +1,4 @@
-package br.com.zup.TaDentro.expections;
+package br.com.zup.TaDentro.expectionsValidation;
 
 import java.util.ArrayList;
 import java.util.List;

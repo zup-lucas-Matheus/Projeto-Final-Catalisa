@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,11 +15,18 @@ public class IndicacaoService {
     @Autowired
     private IndicacaoRepository indicacaoRepository;
 
+    private List<Indicacao> indicacaoList = new ArrayList<>();
+
     //Metódo para cadastrar indicação.
     public Indicacao saveIndicacao(Indicacao indicado){
         indicacaoDuplicada(indicado.getCpf());
         indicado.setDataDaContratacao(LocalDate.now());
-        indicado.setSituacao(PerfilDeSituacao.EM_PROCESSO_SELETIVO);
+        if (!indicado.equals(PerfilDeSituacao.CONTRATADO)) {
+            indicado.setSituacao(PerfilDeSituacao.EM_PROCESSO_SELETIVO);
+        }
+        else {
+            indicacaoList.add(indicado);
+        }
 
         return indicacaoRepository.save(indicado);
     }

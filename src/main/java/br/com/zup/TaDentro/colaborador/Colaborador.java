@@ -2,9 +2,13 @@ package br.com.zup.TaDentro.colaborador;
 
 import br.com.zup.TaDentro.Usuario.Usuario;
 import br.com.zup.TaDentro.enums.Cargo;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
@@ -17,6 +21,7 @@ public class Colaborador {
     @NotNull
     private String nome;
     @NotNull
+    @Length(min = 11, message = "{validacao.cpf.digito}")
     private String cpf;
     @NotNull
     @Enumerated(EnumType.STRING)
