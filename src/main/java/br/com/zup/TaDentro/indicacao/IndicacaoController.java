@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.Type;
 import java.util.List;
 
 @RestController
@@ -25,7 +26,7 @@ public class IndicacaoController {
     public Indicacao cadastrarIndicacao(@RequestBody @Valid Indicacao indicacao, Authentication authentication){
         String cpf = authentication.getName();
         Indicacao indicacaoModel = indicacaoService.saveIndicacao(cpf,indicacao);
-        return modelMapper.map(indicacaoModel , IndicacaoResumidaDTO.class);
+        return modelMapper.map(indicacaoModel , (Type) IndicacaoResumidaDTO.class);
 
     }
 
