@@ -5,25 +5,33 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+<<<<<<< HEAD
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+=======
+>>>>>>> cd55390c2f7d35ee984264b9d01df604bf600cb7
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "indicacoes")
+@Table(name = "indicacao")
 public class Indicacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull
+<<<<<<< HEAD
     @NotBlank(message = "validacao.nome")
+=======
+>>>>>>> cd55390c2f7d35ee984264b9d01df604bf600cb7
     private String nome;
-    private String telefone;
+    @NotNull
+    private String cpf;
     private LocalDate dataDaContratacao;
     @Email(message = "validacao.email")
     private String email;
+    @NotNull
     @Enumerated(EnumType.STRING)
     private PerfilDeSituacao situacao;
 
@@ -38,12 +46,12 @@ public class Indicacao {
         this.nome = nome;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public LocalDate getDataDaContratacao() {
