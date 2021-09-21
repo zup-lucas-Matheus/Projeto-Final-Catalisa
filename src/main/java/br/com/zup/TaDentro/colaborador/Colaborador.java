@@ -23,19 +23,18 @@ public class Colaborador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull
-    @NotBlank(message = "validacao.nome")
+    @NotBlank(message = "{validacao.nome.colaborador}")
     @Size(min = 3, max = 20)
     private String nome;
-    @Email(message = "validacao.email")
-    private String email;
     @NotNull
-    @Length(min = 11, message = "{validacao.cpf.digito}")
+    @Length(min = 11,max = 11, message = "{validacao.cpf.digito}")
     private String cpf;
     @NotNull
     @Enumerated(EnumType.STRING)
     private Cargo cargo;
     @NotNull
     private LocalDate dataContratacao;
+    private String email;
 
     @OneToOne
 //    @JoinColumn(name = "id_usuario")
@@ -90,5 +89,13 @@ public class Colaborador {
 
     public void setDataContratacao(LocalDate dataContratacao) {
         this.dataContratacao = dataContratacao;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

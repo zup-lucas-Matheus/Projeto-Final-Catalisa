@@ -1,5 +1,6 @@
 package br.com.zup.TaDentro.colaborador;
 
+
 import br.com.zup.TaDentro.colaborador.dtos.ColaboradorResumidoDTO;
 import br.com.zup.TaDentro.jwt.filter.JwtComponent;
 import org.modelmapper.ModelMapper;
@@ -9,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.Type;
 import java.util.List;
 
 @RestController
@@ -38,10 +40,9 @@ public class ColaboradorController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public List<Colaborador> exibirTodosOsColaboradores() {
 
-        return colaboradorService.exibirTodosOsColaboradores();
+        return modelMapper.map(colaboradorService.exibirTodosOsColaboradores(), (Type) ColaboradorResumidoDTO.class);
 
     }
 
