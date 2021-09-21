@@ -19,6 +19,7 @@ public class Usuario {
     private String nome;
     @Email(message = "validacao.email")
     private String email;
+    @NotBlank(message = "validacao.senha")
     private String senha;
 
     public Usuario(){

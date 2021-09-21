@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -14,9 +17,12 @@ public class Indicacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotNull
+    @NotBlank(message = "validacao.nome")
     private String nome;
     private String telefone;
     private LocalDate dataDaContratacao;
+    @Email(message = "validacao.email")
     private String email;
     @Enumerated(EnumType.STRING)
     private PerfilDeSituacao situacao;

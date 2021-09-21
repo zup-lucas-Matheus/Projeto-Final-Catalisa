@@ -4,6 +4,10 @@ import br.com.zup.TaDentro.Usuario.Usuario;
 import br.com.zup.TaDentro.enums.Cargo;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "/colaboradores")
@@ -12,7 +16,11 @@ public class Colaborador {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
+    @NotNull
+    @NotBlank(message = "validacao.nome")
+    @Size(min = 3, max = 20)
     private String nome;
+    @Email(message = "validacao.email")
     private String email;
     @Enumerated(EnumType.STRING)
     private Cargo cargo;
