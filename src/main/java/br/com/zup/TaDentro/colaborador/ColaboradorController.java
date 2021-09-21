@@ -42,9 +42,9 @@ public class ColaboradorController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public List<ColaboradorResumidoDTO> exibirTodosOsColaboradores() {
+    public List<Colaborador> exibirTodosOsColaboradores() {
 
-        return modelMapper.map(colaboradorService.exibirTodosOsColaboradores(), (Type) ColaboradorResumidoDTO.class);
+        return colaboradorService.exibirTodosOsColaboradores();
 
     }
 
