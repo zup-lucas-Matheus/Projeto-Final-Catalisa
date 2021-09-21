@@ -31,14 +31,13 @@ public class ColaboradorService {
 
         if (colaboradorOptional.isPresent()) {
             return colaboradorOptional.get();
-        }
-        else {
+        } else {
             throw new MensagemErroColaborador("Colaborador já existe!");
         }
 
     }
 
-    public Colaborador atualizarColaborador (Colaborador colaborador) {
+    public Colaborador atualizarColaborador(Colaborador colaborador) {
         Colaborador objetoColaborador = procurarSeColaboradorJaExiste(colaborador.getId());
 
         colaborador.setNome(colaborador.getNome());
@@ -51,12 +50,12 @@ public class ColaboradorService {
 
     }
 
-    public void deletarColaborador(int id){
+    public void deletarColaborador(int id) {
         colaboradorRepository.delete(procurarSeColaboradorJaExiste(id));
     }
 
-    public Optional<Colaborador> colaboradorDuplicado(String cpf){
-            Optional<Colaborador> colaborador = colaboradorRepository.findByCpf(cpf);
+    public Optional<Colaborador> colaboradorDuplicado(String cpf) {
+        Optional<Colaborador> colaborador = colaboradorRepository.findByCpf(cpf);
 
         if (colaborador.isPresent()) {
             throw new MensagemErroColaborador("Colaborador já cadastrado");
