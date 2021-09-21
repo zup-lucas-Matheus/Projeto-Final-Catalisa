@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
@@ -19,13 +20,12 @@ public class Indicacao {
     private int id;
     @NotNull
     @NotBlank(message = "validacao.nome")
+    @Size(min = 3, max = 30)
     private String nome;
-    @NotNull
     private String cpf;
     private LocalDate dataDaContratacao;
     @Email(message = "validacao.email")
     private String email;
-    @NotNull
     @Enumerated(EnumType.STRING)
     private PerfilDeSituacao situacao;
 

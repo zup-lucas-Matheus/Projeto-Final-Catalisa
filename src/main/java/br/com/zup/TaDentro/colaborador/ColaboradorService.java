@@ -1,6 +1,9 @@
 package br.com.zup.TaDentro.colaborador;
 
+import br.com.zup.TaDentro.Usuario.Usuario;
+import br.com.zup.TaDentro.Usuario.exceptionUsuario.MensagemErroUsuario;
 import br.com.zup.TaDentro.colaborador.dtos.ColaboradorResumidoDTO;
+import br.com.zup.TaDentro.colaborador.exceptionColaborador.MensagemErroColaborador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,7 @@ public class ColaboradorService {
     private ColaboradorRepository colaboradorRepository;
 
     public Colaborador salvarColaborador(Colaborador colaborador) {
+        colaboradorDuplicado(colaborador.getCpf());
         return colaboradorRepository.save(colaborador);
     }
 
@@ -29,9 +33,8 @@ public class ColaboradorService {
             return colaboradorOptional.get();
         }
         else {
-            throw new RuntimeException("Colaborador já existe!");
+            throw new MensagemErroColaborador("Colaborador já existe!");
         }
-
 
     }
 
@@ -48,14 +51,18 @@ public class ColaboradorService {
 
     }
 
-    public void deletarPorID(int id) {
+    public void deletarColaborador(int id){
+        colaboradorRepository.delete(procurarSeColaboradorJaExiste(id));
+    }
 
-        if (colaboradorExistente(id)) {
-            colaboradorRepository.deleteById(id);
-        } else {
+    public Optional<Colaborador> colaboradorDuplicado(String cpf){
+            Optional<Colaborador> colaborador = colaboradorRepository.findByCpf(cpf);
 
-            throw new RuntimeException("Colaborador não está na lista");
+        if (colaborador.isPresent()) {
+            throw new MensagemErroColaborador("Colaborador já cadastrado");
         }
+        return colaborador;
+
     }
 
 }

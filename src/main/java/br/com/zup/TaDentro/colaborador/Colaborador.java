@@ -2,17 +2,18 @@ package br.com.zup.TaDentro.colaborador;
 
 import br.com.zup.TaDentro.Usuario.Usuario;
 import br.com.zup.TaDentro.enums.Cargo;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
-<<<<<<< HEAD
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-=======
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
->>>>>>> cd55390c2f7d35ee984264b9d01df604bf600cb7
 
 @Entity
 @Table(name = "colaborador")
@@ -22,18 +23,15 @@ public class Colaborador {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull
-<<<<<<< HEAD
     @NotBlank(message = "validacao.nome")
     @Size(min = 3, max = 20)
     private String nome;
     @Email(message = "validacao.email")
     private String email;
-=======
-    private String nome;
     @NotNull
+    @Length(min = 11, message = "{validacao.cpf.digito}")
     private String cpf;
     @NotNull
->>>>>>> cd55390c2f7d35ee984264b9d01df604bf600cb7
     @Enumerated(EnumType.STRING)
     private Cargo cargo;
     @NotNull
