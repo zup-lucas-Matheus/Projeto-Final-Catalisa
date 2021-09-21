@@ -4,9 +4,13 @@ import br.com.zup.TaDentro.colaborador.Colaborador;
 import br.com.zup.TaDentro.enums.PerfilDeSituacao;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
@@ -17,12 +21,16 @@ public class Indicacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull
+    @NotBlank(message = "{validacao.nome.indicacao}")
+    @Size(min = 3, max = 30)
     private String nome;
     @NotNull
+    @NotBlank(message = "{validacao.cpf.vazio}")
+    @CPF(message = "{validacao.cpf.indicacao}")
     private String cpf;
     private LocalDate dataDaContratacao;
+    @Email(message = "{validacao.email.indicacao}")
     private String email;
-    @NotNull
     @Enumerated(EnumType.STRING)
     private PerfilDeSituacao situacao;
 

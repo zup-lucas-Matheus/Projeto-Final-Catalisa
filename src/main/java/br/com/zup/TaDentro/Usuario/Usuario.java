@@ -20,10 +20,10 @@ public class Usuario {
     private int id;
     @NotNull
     @NotBlank(message = "{validacao.nome}")
-    @Size(min = 2 , max = 30)
+    @Size(min = 2 , max = 30, message = "{validacao.nome.tamanho}")
     private String nome;
+    @NotBlank(message ="{validacao.email.vazio}" )
     @Email(message = "{validacao.email}")
-    @NotBlank(message = "{validacao.email.vazio}")
     private String email;
     @NotNull
     @NotBlank(message = "{validacao.senha.vazio}")

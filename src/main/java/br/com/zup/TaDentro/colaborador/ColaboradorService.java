@@ -33,7 +33,6 @@ public class ColaboradorService {
         return colaboradorRepository.save(colaborador);
     }
 
-
     public List<Colaborador> exibirTodosOsColaboradores() {
         return (List<Colaborador>) colaboradorRepository.findAll();
     }

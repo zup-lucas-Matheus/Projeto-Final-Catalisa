@@ -1,7 +1,6 @@
 package br.com.zup.TaDentro.colaborador;
 
-import br.com.zup.TaDentro.Usuario.Usuario;
-import br.com.zup.TaDentro.Usuario.dto.UsuarioDto;
+
 import br.com.zup.TaDentro.colaborador.dtos.ColaboradorResumidoDTO;
 import br.com.zup.TaDentro.jwt.filter.JwtComponent;
 import org.modelmapper.ModelMapper;
@@ -35,13 +34,13 @@ public class ColaboradorController {
     public ColaboradorResumidoDTO salvarColaborador(@RequestBody @Valid Colaborador colaborador, Authentication authentication) {
 
         String email = authentication.getName();
-        Colaborador colaboradorModel = colaboradorService.salvarColaborador(email, colaborador);
+        Colaborador colaboradorModel = colaboradorService.salvarColaborador(email,colaborador);
         return modelMapper.map(colaboradorModel, ColaboradorResumidoDTO.class);
 
     }
 
     @GetMapping
-    public List<ColaboradorResumidoDTO> exibirTodosOsColaboradores() {
+    public List<Colaborador> exibirTodosOsColaboradores() {
 
         return modelMapper.map(colaboradorService.exibirTodosOsColaboradores(), (Type) ColaboradorResumidoDTO.class);
 

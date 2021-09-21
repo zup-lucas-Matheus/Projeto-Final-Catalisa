@@ -1,11 +1,14 @@
 package br.com.zup.TaDentro.indicacao;
 
+import br.com.zup.TaDentro.indicacao.dtos.IndicacaoResumidaDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.Type;
 import java.util.List;
 
 @RestController
@@ -14,12 +17,17 @@ public class IndicacaoController {
 
     @Autowired
     private IndicacaoService indicacaoService;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Indicacao cadastrarIndicacao(@RequestBody @Valid Indicacao indicacao, Authentication authentication){
+
+    public IndicacaoResumidaDTO cadastrarIndicacao(@RequestBody @Valid Indicacao indicacao, Authentication authentication){
         String cpf = authentication.getName();
-        return indicacaoService.saveIndicacao(cpf, indicacao);
+        Indicacao indicacaoModel = indicacaoService.saveIndicacao(cpf,indicacao);
+        return modelMapper.map(indicacaoModel ,  IndicacaoResumidaDTO.class);
+
     }
 
     @GetMapping

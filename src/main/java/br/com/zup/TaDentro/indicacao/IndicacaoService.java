@@ -4,6 +4,7 @@ import br.com.zup.TaDentro.colaborador.Colaborador;
 import br.com.zup.TaDentro.colaborador.ColaboradorService;
 import br.com.zup.TaDentro.enums.PerfilDeSituacao;
 import br.com.zup.TaDentro.jwt.UsuarioLoginService;
+import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroIndicacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +48,7 @@ public class IndicacaoService {
     //Metódo para buscar indicado por id.
     public Indicacao findIndicacao(int id){
         return indicacaoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Indicação não encontrada"));
+                .orElseThrow(() -> new MensagemErroIndicacao("Indicação não encontrada"));
 
     }
 
@@ -71,7 +72,7 @@ public class IndicacaoService {
         Optional<Indicacao> indicacao = indicacaoRepository.findByCpf(cpf);
 
         if (indicacao.isPresent()) {
-            throw new RuntimeException("Indicação já cadastrada");
+            throw new MensagemErroIndicacao("Indicação já cadastrada");
         }
         return indicacao;
     }
