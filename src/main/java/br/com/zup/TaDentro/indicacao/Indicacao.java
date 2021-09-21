@@ -1,5 +1,6 @@
 package br.com.zup.TaDentro.indicacao;
 
+import br.com.zup.TaDentro.colaborador.Colaborador;
 import br.com.zup.TaDentro.enums.PerfilDeSituacao;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,18 @@ public class Indicacao {
     @Enumerated(EnumType.STRING)
     private PerfilDeSituacao situacao;
 
+    @ManyToOne
+    private Colaborador colaborador;
+
     public Indicacao() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -68,11 +80,11 @@ public class Indicacao {
         this.situacao = situacao;
     }
 
-    public int getId() {
-        return id;
+    public Colaborador getColaborador() {
+        return colaborador;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setColaborador(Colaborador colaborador) {
+        this.colaborador = colaborador;
     }
 }
