@@ -1,5 +1,8 @@
 package br.com.zup.TaDentro.colaborador.exceptionColaborador;
 
+import lombok.Builder;
+
+@Builder
 public class ErroBadRequestColaborador {
 
     private int StatusCode;

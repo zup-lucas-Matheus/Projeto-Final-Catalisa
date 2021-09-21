@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/indicacao")
 public class IndicacaoController {
@@ -13,7 +15,7 @@ public class IndicacaoController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Indicacao cadastrarIndicacao(@RequestBody Indicacao indicacao){
+    public Indicacao cadastrarIndicacao(@RequestBody @Valid Indicacao indicacao){
         return indicacaoService.saveIndicacao(indicacao);
     }
 

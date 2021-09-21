@@ -18,6 +18,7 @@ public class UsuarioService {
 
     //Usuário salvo
     public Usuario salvarUsuario(Usuario usuario){
+        usuarioDuplicado(usuario.getEmail());
         String encode = bCryptPasswordEncoder.encode(usuario.getSenha());
         usuario.setSenha(encode);
         return repository.save(usuario);
@@ -37,17 +38,17 @@ public class UsuarioService {
         repository.delete(encontrarUsuario(id));
     }
 
-    public void usuarioDuplica(String email){
-        Optional<Usuario> usuarioOptional = repository.findByEmail(email);
+    public Optional<Usuario> usuarioDuplicado(String email){
 
-        if (usuarioOptional.isPresent()) {
-            usuarioOptional.get();
+       Optional<Usuario> usuario =  repository.findByEmail(email);
+        if (usuario.isPresent()) {
+            throw new MensagemErroUsuario("Usuário já cadastrado!");
         }
-        else {
-            throw new MensagemErroUsuario("Usuário já cadastrado");
-        }
+
+        return usuario;
 
     }
+
 
 
 }

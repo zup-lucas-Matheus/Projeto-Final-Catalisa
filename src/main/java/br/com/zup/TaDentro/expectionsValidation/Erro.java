@@ -1,4 +1,4 @@
-package br.com.zup.TaDentro.expections;
+package br.com.zup.TaDentro.expectionsValidation;
 
 public class Erro {
 

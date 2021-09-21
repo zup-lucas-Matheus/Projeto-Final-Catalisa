@@ -1,5 +1,7 @@
 package br.com.zup.TaDentro.Usuario;
 
+import org.hibernate.engine.spi.ManagedEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -21,7 +23,10 @@ public class Usuario {
     @Size(min = 2 , max = 30)
     private String nome;
     @Email(message = "{validacao.email}")
+    @NotBlank(message = "{validacao.email.vazio}")
     private String email;
+    @NotNull
+    @NotBlank(message = "{validacao.senha.vazio}")
     private String senha;
 
     public Usuario(){

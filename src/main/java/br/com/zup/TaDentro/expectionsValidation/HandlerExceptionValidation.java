@@ -1,4 +1,4 @@
-package br.com.zup.TaDentro.expections;
+package br.com.zup.TaDentro.expectionsValidation;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -18,9 +18,7 @@ public class HandlerExceptionValidation {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public MensagemDeErroValidation manipulacaoExcecao(MethodArgumentNotValidException exception){
 
-
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
-
         List<Erro> erros = fieldErrors.stream().map(objeto -> new Erro(objeto.getDefaultMessage())).collect(Collectors.toList());
 
         return new MensagemDeErroValidation(400, erros);
