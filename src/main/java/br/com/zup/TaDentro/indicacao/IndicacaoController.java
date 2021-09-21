@@ -1,5 +1,7 @@
 package br.com.zup.TaDentro.indicacao;
 
+import br.com.zup.TaDentro.indicacao.dtos.IndicacaoResumidaDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +14,15 @@ public class IndicacaoController {
 
     @Autowired
     private IndicacaoService indicacaoService;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Indicacao cadastrarIndicacao(@RequestBody @Valid Indicacao indicacao){
-        return indicacaoService.saveIndicacao(indicacao);
+    public IndicacaoResumidaDTO cadastrarIndicacao(@RequestBody @Valid Indicacao indicacao){
+
+        Indicacao indicacaoModel = indicacaoService.saveIndicacao(indicacao);
+        return modelMapper.map(indicacaoModel , IndicacaoResumidaDTO.class);
     }
 
 
