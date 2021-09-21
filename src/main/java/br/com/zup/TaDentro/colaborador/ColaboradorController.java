@@ -1,7 +1,5 @@
 package br.com.zup.TaDentro.colaborador;
 
-import br.com.zup.TaDentro.Usuario.Usuario;
-import br.com.zup.TaDentro.Usuario.dto.UsuarioDto;
 import br.com.zup.TaDentro.colaborador.dtos.ColaboradorResumidoDTO;
 import br.com.zup.TaDentro.jwt.filter.JwtComponent;
 import org.modelmapper.ModelMapper;
@@ -11,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.lang.reflect.Type;
 import java.util.List;
 
 @RestController
