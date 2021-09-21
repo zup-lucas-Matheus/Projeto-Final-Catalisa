@@ -5,11 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-<<<<<<< HEAD
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-=======
->>>>>>> cd55390c2f7d35ee984264b9d01df604bf600cb7
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -21,10 +18,7 @@ public class Indicacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull
-<<<<<<< HEAD
     @NotBlank(message = "validacao.nome")
-=======
->>>>>>> cd55390c2f7d35ee984264b9d01df604bf600cb7
     private String nome;
     @NotNull
     private String cpf;
