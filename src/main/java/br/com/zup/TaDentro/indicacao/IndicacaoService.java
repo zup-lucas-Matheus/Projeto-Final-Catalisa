@@ -1,6 +1,9 @@
 package br.com.zup.TaDentro.indicacao;
 
+import br.com.zup.TaDentro.colaborador.Colaborador;
+import br.com.zup.TaDentro.colaborador.ColaboradorService;
 import br.com.zup.TaDentro.enums.PerfilDeSituacao;
+import br.com.zup.TaDentro.jwt.UsuarioLoginService;
 import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroIndicacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,21 +19,31 @@ public class IndicacaoService {
     @Autowired
     private IndicacaoRepository indicacaoRepository;
 
-    private List<Indicacao> indicacaoList = new ArrayList<>();
+    private ColaboradorService colaboradorService;
 
     //Metódo para cadastrar indicação.
-    public Indicacao saveIndicacao(Indicacao indicado){
-        indicacaoDuplicada(indicado.getCpf());
-        indicado.setDataDaContratacao(LocalDate.now());
-        if (!indicado.equals(PerfilDeSituacao.CONTRATADO)) {
-            indicado.setSituacao(PerfilDeSituacao.EM_PROCESSO_SELETIVO);
-        }
-        else {
-            indicacaoList.add(indicado);
-        }
+    public Indicacao saveIndicacao(int idColaborador, Indicacao indicado){
 
+        Colaborador colaborador = colaboradorService.buscarColaboradorPorId(idColaborador);
+        indicacaoDuplicada(indicado.getCpf());
+        indicado.setColaborador(colaborador);
+        indicado.setDataDaContratacao(LocalDate.now());
+        indicado.setSituacao(PerfilDeSituacao.EM_PROCESSO_SELETIVO);
         return indicacaoRepository.save(indicado);
     }
+
+
+    public Indicacao saveIndicacao(String cpf, Indicacao indicacao){
+        Colaborador colaborador = colaboradorService.buscarColaboradorPorCpf(cpf);
+
+        indicacao.setColaborador(colaborador);
+        indicacao.setDataDaContratacao(LocalDate.now());
+
+        return indicacaoRepository.save(indicacao);
+
+
+    }
+
 
     //Metódo para buscar indicado por id.
     public Indicacao findIndicacao(int id){

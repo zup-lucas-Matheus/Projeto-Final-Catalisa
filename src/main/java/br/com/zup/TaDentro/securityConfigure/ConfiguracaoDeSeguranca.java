@@ -32,6 +32,12 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
             "/login"
     };
 
+    private static final String[] GET_PUBLICOS = {
+        "/usuarios",
+        "/indicacao"
+
+    };
+
     //Metodo que configura toda nossa aplicação
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -39,6 +45,7 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
         http.cors().configurationSource(configuracaoDeCors());
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, POST_PUBLICOS).permitAll()
+                .antMatchers(HttpMethod.GET, GET_PUBLICOS).permitAll()
                 .anyRequest().authenticated();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

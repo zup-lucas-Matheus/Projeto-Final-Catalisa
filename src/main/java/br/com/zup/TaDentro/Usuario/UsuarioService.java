@@ -34,18 +34,23 @@ public class UsuarioService {
         return repository.findById(id).orElseThrow(() -> new MensagemErroUsuario("Usuário não encontrado"));
     }
 
+    //Pesquisar Usuário Por Email.
+    public Usuario encontrarUsuarioPorEmail(String email){
+        return repository.findByEmail(email).orElseThrow(() -> new MensagemErroUsuario("Usuário não encontrado"));
+    }
+
+    //Deletar Usuário
     public void deletarUsuario(int id){
         repository.delete(encontrarUsuario(id));
     }
 
-    public Optional<Usuario> usuarioDuplicado(String email){
+    //Verificar se o Usuário é duplicado.
+    public void usuarioDuplicado(String email){
 
        Optional<Usuario> usuario =  repository.findByEmail(email);
         if (usuario.isPresent()) {
             throw new MensagemErroUsuario("Usuário já cadastrado!");
         }
-
-        return usuario;
 
     }
 
