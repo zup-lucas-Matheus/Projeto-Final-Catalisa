@@ -19,14 +19,12 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull
-    @NotBlank(message = "{validacao.nome}")
+    @NotBlank(message = "validacao.nome")
     @Size(min = 2 , max = 30)
     private String nome;
-    @Email(message = "{validacao.email}")
-    @NotBlank(message = "{validacao.email.vazio}")
+    @Email(message = "validacao.email")
     private String email;
-    @NotNull
-    @NotBlank(message = "{validacao.senha.vazio}")
+    @NotBlank(message = "validacao.senha")
     private String senha;
 
     public Usuario(){
