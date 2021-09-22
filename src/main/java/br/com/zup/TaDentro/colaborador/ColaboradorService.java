@@ -19,13 +19,12 @@ public class ColaboradorService {
     @Autowired
     private UsuarioService usuarioService;
 
-    public Colaborador salvarColaborador(int id,Colaborador colaborador) {
-        Usuario usuario = usuarioService.encontrarUsuario(id);
-        colaboradorDuplicado(colaborador.getCpf());
-        colaborador.setLoginUsuario(usuario);
-        return colaboradorRepository.save(colaborador);
-    }
 
+    /**
+     *
+     * vinculo do Usuário ao Colaborador
+     * Para que ele tenha acesso ao sistema
+     */
     public Colaborador salvarColaborador(String email,Colaborador colaborador) {
         Usuario usuario = usuarioService.encontrarUsuarioPorEmail(email);
         colaboradorDuplicado(colaborador.getCpf());
@@ -62,6 +61,17 @@ public class ColaboradorService {
 
     public Colaborador buscarColaboradorPorCpf(String cpf){
         Optional<Colaborador> colaboradorOptional = colaboradorRepository.findByCpf(cpf);
+
+        if (colaboradorOptional.isEmpty()) {
+            throw new MensagemErroColaborador("Colaborador não encontrado");
+        }
+        return colaboradorOptional.get();
+
+    }
+
+    //Metódo para buscar colaborador por Usuario
+    public Colaborador buscarColaboradorPorUsuario(Usuario usuario){
+        Optional<Colaborador> colaboradorOptional = colaboradorRepository.findByLoginUsuario(usuario);
 
         if (colaboradorOptional.isEmpty()) {
             throw new MensagemErroColaborador("Colaborador não encontrado");
