@@ -36,14 +36,17 @@ public class UsuarioController {
 
         //List<Usuario> usuarioDtos = usuarioService.exibirUsuario();
 
+
         List<UsuarioDto> dtos = usuarioService.exibirUsuario()
                 .stream()
                 .map(user -> modelMapper.map(user, UsuarioDto.class))
                 .collect(Collectors.toList());
         return dtos;
+
+
     }
 
-    public List<UsuarioDto> exibirUsuario() {
+    public List<UsuarioDto> exibirUser(){
 
         return modelMapper.map(usuarioService.exibirUsuario(), (Type) UsuarioDto.class);
     }

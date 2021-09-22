@@ -44,11 +44,13 @@ public class IndicacaoController {
 
     @DeleteMapping("/{id}")
     public void deletarIndicacao(int id){
+
         indicacaoService.deleteIndicacao(id);
     }
 
     @PutMapping
     public void atualizarIndicacao(@RequestBody Indicacao indicacao){
+
         indicacaoService.atualizarIndicacao(indicacao);
     }
 
