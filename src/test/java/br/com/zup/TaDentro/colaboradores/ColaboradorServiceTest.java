@@ -43,6 +43,7 @@ public class ColaboradorServiceTest {
 
 /*
     @Test
+
     public void testarExibirTodosOsColaboradores() {
 
         Colaborador colaborador = new Colaborador();
@@ -84,7 +85,7 @@ public class ColaboradorServiceTest {
 
         Assertions.assertTrue(colaborador, colaboradorService.deletarPorID(1);
 
-    }*//*
+    }
 
 
 }*/
