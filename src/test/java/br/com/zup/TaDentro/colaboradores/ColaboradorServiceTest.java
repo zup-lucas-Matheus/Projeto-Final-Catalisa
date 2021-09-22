@@ -1,4 +1,4 @@
-package br.com.zup.TaDentro.colaboradores;
+/*package br.com.zup.TaDentro.colaboradores;
 
 import br.com.zup.TaDentro.Usuario.Usuario;
 import br.com.zup.TaDentro.colaborador.Colaborador;
@@ -41,7 +41,7 @@ public class ColaboradorServiceTest {
         Assertions.assertEquals(colaborador, colaboradorTeste);
     }*/
 
-    @Test
+    /*@Test
     public void testarExibirTodosOsColaboradores() {
 
         Colaborador colaborador = new Colaborador();
@@ -68,7 +68,7 @@ public class ColaboradorServiceTest {
 
 
 
-   /*@Test
+   @Test
     public void testarDeletarPorID() {
 
         Colaborador colaborador = new Colaborador();
@@ -83,7 +83,7 @@ public class ColaboradorServiceTest {
 
         Assertions.assertTrue(colaborador, colaboradorService.deletarPorID(1);
 
-    }*/
+    }
 
 
-}
+}*/

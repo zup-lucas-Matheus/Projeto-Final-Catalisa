@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface IndicacaoRepository extends CrudRepository<Indicacao, Integer> {
 
     Optional<Indicacao> findByCpf(String cpf);
+
+
 }

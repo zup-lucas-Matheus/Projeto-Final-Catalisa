@@ -19,20 +19,18 @@ public class ColaboradorService {
     @Autowired
     private UsuarioService usuarioService;
 
-    public Colaborador salvarColaborador(int id,Colaborador colaborador) {
-        Usuario usuario = usuarioService.encontrarUsuario(id);
-        colaboradorDuplicado(colaborador.getCpf());
-        colaborador.setLoginUsuario(usuario);
-        return colaboradorRepository.save(colaborador);
-    }
 
+    /**
+     *
+     * vinculo do Usuário ao Colaborador
+     * Para que ele tenha acesso ao sistema
+     */
     public Colaborador salvarColaborador(String email,Colaborador colaborador) {
         Usuario usuario = usuarioService.encontrarUsuarioPorEmail(email);
         colaboradorDuplicado(colaborador.getCpf());
         colaborador.setLoginUsuario(usuario);
         return colaboradorRepository.save(colaborador);
     }
-
 
     public List<Colaborador> exibirTodosOsColaboradores() {
         return (List<Colaborador>) colaboradorRepository.findAll();
@@ -44,12 +42,12 @@ public class ColaboradorService {
 
         if (colaboradorOptional.isPresent()) {
             return colaboradorOptional.get();
-        } else {
+        }
+        else {
             throw new MensagemErroColaborador("Colaborador já existe!");
         }
 
     }
-
 
     public Colaborador buscarColaboradorPorId(int id){
         Optional<Colaborador> colaboradorOptional = colaboradorRepository.findById(id);
@@ -71,10 +69,19 @@ public class ColaboradorService {
 
     }
 
+    //Metódo para buscar colaborador por Usuario
+    public Colaborador buscarColaboradorPorUsuario(Usuario usuario){
+        Optional<Colaborador> colaboradorOptional = colaboradorRepository.findByLoginUsuario(usuario);
+
+        if (colaboradorOptional.isEmpty()) {
+            throw new MensagemErroColaborador("Colaborador não encontrado");
+        }
+        return colaboradorOptional.get();
+
+    }
 
 
-    public Colaborador atualizarColaborador(Colaborador colaborador) {
-
+    public Colaborador atualizarColaborador (Colaborador colaborador) {
         Colaborador objetoColaborador = procurarSeColaboradorJaExiste(colaborador.getId());
 
         colaborador.setNome(colaborador.getNome());
@@ -87,13 +94,13 @@ public class ColaboradorService {
 
     }
 
-    public void deletarColaborador(int id) {
+    public void deletarColaborador(int id){
         colaboradorRepository.delete(procurarSeColaboradorJaExiste(id));
     }
 
 
-    public Optional<Colaborador> colaboradorDuplicado(String cpf) {
-        Optional<Colaborador> colaborador = colaboradorRepository.findByCpf(cpf);
+    public Optional<Colaborador> colaboradorDuplicado(String cpf){
+            Optional<Colaborador> colaborador = colaboradorRepository.findByCpf(cpf);
 
         if (colaborador.isPresent()) {
             throw new MensagemErroColaborador("Colaborador já cadastrado");

@@ -1,6 +1,8 @@
 package br.com.zup.TaDentro.Usuario;
 
 import br.com.zup.TaDentro.Usuario.exceptionUsuario.MensagemErroUsuario;
+import br.com.zup.TaDentro.colaborador.Colaborador;
+import br.com.zup.TaDentro.colaborador.ColaboradorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,11 @@ public class UsuarioService {
     public UsuarioRepository repository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private ColaboradorService colaboradorService;
+
+
+
 
     //Usuário salvo
     public Usuario salvarUsuario(Usuario usuario){
@@ -38,6 +45,7 @@ public class UsuarioService {
     public Usuario encontrarUsuarioPorEmail(String email){
         return repository.findByEmail(email).orElseThrow(() -> new MensagemErroUsuario("Usuário não encontrado"));
     }
+
 
     //Deletar Usuário
     public void deletarUsuario(int id){

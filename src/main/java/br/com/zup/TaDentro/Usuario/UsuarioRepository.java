@@ -1,5 +1,6 @@
 package br.com.zup.TaDentro.Usuario;
 
+import br.com.zup.TaDentro.colaborador.Colaborador;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
