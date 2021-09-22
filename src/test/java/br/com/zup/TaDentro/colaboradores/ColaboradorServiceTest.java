@@ -28,7 +28,7 @@ public class ColaboradorServiceTest {
     private Usuario usuario;
 
 
-    @Test
+    /*@Test
     public void testarSalvarColaborador() {
 
         Colaborador colaborador = new Colaborador();
@@ -39,7 +39,7 @@ public class ColaboradorServiceTest {
         Colaborador colaboradorTeste = colaboradorService.salvarColaborador(colaborador);
 
         Assertions.assertEquals(colaborador, colaboradorTeste);
-    }
+    }*/
 
     @Test
     public void testarExibirTodosOsColaboradores() {
