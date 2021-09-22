@@ -41,6 +41,7 @@ public class ColaboradorServiceTest {
         Assertions.assertEquals(colaborador, colaboradorTeste);
     }*/
 
+/*
     @Test
     public void testarExibirTodosOsColaboradores() {
 
@@ -68,7 +69,7 @@ public class ColaboradorServiceTest {
 
 
 
-   *//*@Test
+   @Test
     public void testarDeletarPorID() {
 
         Colaborador colaborador = new Colaborador();
