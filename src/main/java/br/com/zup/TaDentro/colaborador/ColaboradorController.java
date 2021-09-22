@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/colaborador")
@@ -43,13 +44,15 @@ public class ColaboradorController {
     }
 
     @GetMapping
-    public ColaboradorResumidoDTO exibirTodosOsColaboradores(Colaborador colaborador) {
+    public List<ColaboradorResumidoDTO> exibirTodosOsColaboradores() {
 
-        List<ColaboradorResumidoDTO> listaDeColaboradores = new ArrayList<>();
+        List<Colaborador> listaDeColaboradores = colaboradorService.exibirTodosOsColaboradores();
 
-        Colaborador colaboradorModel = colaboradorService.exibirTodosOsColaboradores();
+        return listaDeColaboradores
+                .stream()
+                .map(colaborador -> modelMapper.map(colaborador, ColaboradorResumidoDTO.class))
+                .collect(Collectors.toList());
 
-        return modelMapper.map(colaborador, ColaboradorResumidoDTO.class);
     }
 
     @DeleteMapping("/{id}")
