@@ -30,5 +30,4 @@ public class UsuarioController {
         return usuarioService.exibirUsuario();
     }
 
-
 }

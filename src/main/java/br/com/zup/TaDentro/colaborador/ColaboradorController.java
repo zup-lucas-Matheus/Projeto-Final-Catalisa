@@ -14,7 +14,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 @RestController
-@RequestMapping("colaborador")
+@RequestMapping("/colaborador")
 public class ColaboradorController {
 
 
