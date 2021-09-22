@@ -27,7 +27,6 @@ public class IndicacaoController {
         String cpf = authentication.getName();
         Indicacao indicacaoModel = indicacaoService.saveIndicacao(cpf,indicacao);
         return modelMapper.map(indicacaoModel ,  IndicacaoResumidaDTO.class);
-
     }
 
     @GetMapping
