@@ -2,18 +2,16 @@ package br.com.zup.TaDentro.colaborador;
 
 import br.com.zup.TaDentro.Usuario.Usuario;
 import br.com.zup.TaDentro.enums.Cargo;
+import br.com.zup.TaDentro.indicacao.Indicacao;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.validation.constraints.Max;
+import javax.validation.constraints.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "colaborador")
@@ -34,11 +32,13 @@ public class Colaborador {
     private Cargo cargo;
     @NotNull
     private LocalDate dataContratacao;
-    private String email;
+
 
     @OneToOne
 //    @JoinColumn(name = "id_usuario")
     private Usuario loginUsuario;
+    @OneToMany(mappedBy = "colaborador")
+    private List<Indicacao> listDeIndicacao;
 
     public Colaborador() {
     }
@@ -91,11 +91,4 @@ public class Colaborador {
         this.dataContratacao = dataContratacao;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }
