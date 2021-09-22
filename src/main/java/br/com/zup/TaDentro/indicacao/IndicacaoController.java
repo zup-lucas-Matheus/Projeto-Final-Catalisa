@@ -40,8 +40,6 @@ public class IndicacaoController {
                 .collect(Collectors.toList());
 
         return indicacaoResumidaDTOS;
-
-        //return indicacaoService.indicacaoList();
     }
 
     @DeleteMapping("/{id}")
