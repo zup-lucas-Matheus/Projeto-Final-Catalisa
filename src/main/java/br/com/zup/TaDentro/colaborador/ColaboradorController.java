@@ -32,7 +32,7 @@ public class ColaboradorController {
     public ColaboradorResumidoDTO salvarColaborador(@RequestBody @Valid Colaborador colaborador, Authentication authentication) {
 
         String email = authentication.getName();
-        Colaborador colaboradorModel = colaboradorService.salvarColaborador(colaborador);
+        Colaborador colaboradorModel = colaboradorService.salvarColaborador(email , colaborador);
         return modelMapper.map(colaboradorModel, ColaboradorResumidoDTO.class);
 
     }

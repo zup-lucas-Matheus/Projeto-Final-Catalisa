@@ -22,7 +22,7 @@ public class IndicacaoController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
 
-    public Indicacao cadastrarIndicacao(@RequestBody @Valid Indicacao indicacao, Authentication authentication){
+    public IndicacaoResumidaDTO cadastrarIndicacao(@RequestBody @Valid Indicacao indicacao, Authentication authentication){
         String cpf = authentication.getName();
         Indicacao indicacaoModel = indicacaoService.saveIndicacao(cpf,indicacao);
         return modelMapper.map(indicacaoModel , IndicacaoResumidaDTO.class);
