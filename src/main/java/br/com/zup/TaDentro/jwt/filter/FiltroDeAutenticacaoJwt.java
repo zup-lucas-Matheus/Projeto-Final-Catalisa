@@ -3,6 +3,7 @@ package br.com.zup.TaDentro.jwt.filter;
 
 import br.com.zup.TaDentro.jwt.UsuarioLogin;
 import br.com.zup.TaDentro.jwt.dto.UsuarioLoginDto;
+import br.com.zup.TaDentro.jwt.exeptionAuthentication.AcessoNegadoException;
 import br.com.zup.TaDentro.jwt.exeptionAuthentication.MensagemAcessoNegado;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,7 +44,7 @@ public class FiltroDeAutenticacaoJwt extends UsernamePasswordAuthenticationFilte
             return auth;
 
         }catch (IOException exception){
-            throw new MensagemAcessoNegado("Acesso negado!");
+            throw new MensagemAcessoNegado("Acesso Negado!");
         }
     }
 

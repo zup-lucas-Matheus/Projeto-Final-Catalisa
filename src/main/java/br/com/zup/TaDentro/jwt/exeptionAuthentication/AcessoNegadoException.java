@@ -32,4 +32,5 @@ public class AcessoNegadoException {
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
+
 }

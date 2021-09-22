@@ -1,5 +1,7 @@
 package br.com.zup.TaDentro.indicacao;
 
+import br.com.zup.TaDentro.Usuario.Usuario;
+import br.com.zup.TaDentro.Usuario.UsuarioService;
 import br.com.zup.TaDentro.colaborador.Colaborador;
 import br.com.zup.TaDentro.colaborador.ColaboradorService;
 import br.com.zup.TaDentro.enums.PerfilDeSituacao;
@@ -18,30 +20,24 @@ public class IndicacaoService {
 
     @Autowired
     private IndicacaoRepository indicacaoRepository;
-
+    @Autowired
     private ColaboradorService colaboradorService;
+    @Autowired
+    private UsuarioService usuarioService;
 
-    //Metódo para cadastrar indicação.
-    public Indicacao saveIndicacao(int idColaborador, Indicacao indicado){
-
-        Colaborador colaborador = colaboradorService.buscarColaboradorPorId(idColaborador);
+    /**
+     *
+     * Vinculo as Indicações ao Colaborador da empresa
+     * Para utilizar essas informações em relatórios.
+     */
+    public Indicacao saveIndicacao(String email, Indicacao indicado){
+        Usuario usuario = usuarioService.encontrarUsuarioPorEmail(email);
+        Colaborador colaborador = colaboradorService.buscarColaboradorPorUsuario(usuario);
         indicacaoDuplicada(indicado.getCpf());
         indicado.setColaborador(colaborador);
         indicado.setDataDaContratacao(LocalDate.now());
         indicado.setSituacao(PerfilDeSituacao.EM_PROCESSO_SELETIVO);
         return indicacaoRepository.save(indicado);
-    }
-
-
-    public Indicacao saveIndicacao(String cpf, Indicacao indicacao){
-        Colaborador colaborador = colaboradorService.buscarColaboradorPorCpf(cpf);
-
-        indicacao.setColaborador(colaborador);
-        indicacao.setDataDaContratacao(LocalDate.now());
-
-        return indicacaoRepository.save(indicacao);
-
-
     }
 
 
