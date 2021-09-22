@@ -41,7 +41,9 @@ public class ColaboradorServiceTest {
         Assertions.assertEquals(colaborador, colaboradorTeste);
     }*/
 
-    /*@Test
+/*
+    @Test
+
     public void testarExibirTodosOsColaboradores() {
 
         Colaborador colaborador = new Colaborador();
