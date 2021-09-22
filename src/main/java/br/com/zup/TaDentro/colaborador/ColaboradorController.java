@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -35,19 +36,21 @@ public class ColaboradorController {
 
         String email = authentication.getName();
 
-        Colaborador colaboradorModel = colaboradorService.salvarColaborador(email , colaborador);
+        Colaborador colaboradorModel = colaboradorService.salvarColaborador(email, colaborador);
 
         return modelMapper.map(colaboradorModel, ColaboradorResumidoDTO.class);
 
     }
 
     @GetMapping
-    public List<Colaborador> exibirTodosOsColaboradores() {
+    public ColaboradorResumidoDTO exibirTodosOsColaboradores(Colaborador colaborador) {
 
-        return modelMapper.map(colaboradorService.exibirTodosOsColaboradores(), (Type) ColaboradorResumidoDTO.class);
+        List<ColaboradorResumidoDTO> listaDeColaboradores = new ArrayList<>();
 
+        Colaborador colaboradorModel = colaboradorService.exibirTodosOsColaboradores();
+
+        return modelMapper.map(colaborador, ColaboradorResumidoDTO.class);
     }
-
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
