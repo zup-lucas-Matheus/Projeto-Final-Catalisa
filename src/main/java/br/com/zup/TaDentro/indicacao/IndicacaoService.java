@@ -56,11 +56,9 @@ public class IndicacaoService {
 
     //Metódo para atualizar indicação...
     public void atualizarIndicacao(Indicacao indicacao){
-        Indicacao indicacaoSalva = findIndicacao(indicacao.getId());
-
-        indicacaoSalva.setEmail(indicacao.getEmail());
-        indicacaoSalva.setDataDaContratacao(indicacao.getDataDaContratacao());
-        indicacaoSalva.setNome(indicacao.getNome());
+        validaSituacao(indicacao);
+        Indicacao indicacaoSalva = findIndicacaoPorCpf(indicacao.getCpf());
+        ajustarSituacaoEdata(indicacao, indicacaoSalva);
 
         indicacaoRepository.save(indicacaoSalva);
     }
