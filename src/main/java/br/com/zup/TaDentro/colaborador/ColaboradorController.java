@@ -71,8 +71,8 @@ public class ColaboradorController {
         return modelMapper.map(colaboradorResumidoDTO, Colaborador.class);
     }
 
-    @GetMapping
-    public List<IndicacaoResumidaDTO> indicacaoList(@RequestBody IndicacaoPesquisaDTO indicacaoPesquisaDto, Authentication authentication){
+    /*@GetMapping
+    public List<IndicacaoResumidaDTO> indicacaoList(@RequestBody IndicacaoPesquisaDto indicacaoPesquisaDto, Authentication authentication) {
         String email = authentication.getName();
         List<Indicacao> retorno = colaboradorService.pesquisaPorData(email, indicacaoPesquisaDto.getDataInicial(), indicacaoPesquisaDto.getDataFinal());
 
@@ -83,6 +83,6 @@ public class ColaboradorController {
         return dtos;
 
     }
-
+*/
 
 }
