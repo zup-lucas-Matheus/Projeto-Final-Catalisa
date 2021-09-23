@@ -1,6 +1,7 @@
 package br.com.zup.TaDentro.indicacao;
 
 import br.com.zup.TaDentro.Usuario.dto.UsuarioDto;
+import br.com.zup.TaDentro.indicacao.dtos.IndicacaoPUTDto;
 import br.com.zup.TaDentro.indicacao.dtos.IndicacaoResumidaDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +50,11 @@ public class IndicacaoController {
     }
 
     @PutMapping
-    public void atualizarIndicacao(@RequestBody IndicacaoPUTDto indicacao){
+    public void atualizarIndicacao(@RequestBody IndicacaoPUTDto indicacao) {
 
-        Indicacao indicacaoModel = modelMapper.map(indicacao,  Indicacao.class);
+        Indicacao indicacaoModel = modelMapper.map(indicacao, Indicacao.class);
 
         indicacaoService.atualizarIndicacao(indicacaoModel);
+    }
 
 }
