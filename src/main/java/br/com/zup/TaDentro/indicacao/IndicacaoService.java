@@ -98,4 +98,9 @@ public class IndicacaoService {
     }
 
 
+    //Metódo para deletar indicaçao com exption.
+    public void deleteIndicacao(int id){
+        indicacaoRepository.delete(findIndicacao(id));
+    }
+
 }
