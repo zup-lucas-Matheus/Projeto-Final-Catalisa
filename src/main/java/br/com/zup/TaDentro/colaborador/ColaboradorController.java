@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("colaborador")
+@RequestMapping("/colaborador")
 public class ColaboradorController {
 
 
@@ -34,18 +36,24 @@ public class ColaboradorController {
     public ColaboradorResumidoDTO salvarColaborador(@RequestBody @Valid Colaborador colaborador, Authentication authentication) {
 
         String email = authentication.getName();
-        Colaborador colaboradorModel = colaboradorService.salvarColaborador(email,colaborador);
+
+        Colaborador colaboradorModel = colaboradorService.salvarColaborador(email, colaborador);
+
         return modelMapper.map(colaboradorModel, ColaboradorResumidoDTO.class);
 
     }
 
     @GetMapping
-    public List<Colaborador> exibirTodosOsColaboradores() {
+    public List<ColaboradorResumidoDTO> exibirTodosOsColaboradores() {
 
-        return modelMapper.map(colaboradorService.exibirTodosOsColaboradores(), (Type) ColaboradorResumidoDTO.class);
+        List<Colaborador> listaDeColaboradores = colaboradorService.exibirTodosOsColaboradores();
+
+        return listaDeColaboradores
+                .stream()
+                .map(colaborador -> modelMapper.map(colaborador, ColaboradorResumidoDTO.class))
+                .collect(Collectors.toList());
 
     }
-
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

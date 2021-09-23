@@ -7,7 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -26,9 +29,20 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public List<Usuario> exibirUsuario(){
-        return usuarioService.exibirUsuario();
+    public List<UsuarioDto> exibirUsuario() {
+
+        List<UsuarioDto> dtos = usuarioService.exibirUsuario()
+                .stream()
+                .map(user -> modelMapper.map(user, UsuarioDto.class))
+                .collect(Collectors.toList());
+        return dtos;
+
+
     }
 
+    public List<UsuarioDto> exibirUser(){
+
+        return modelMapper.map(usuarioService.exibirUsuario(), (Type) UsuarioDto.class);
+    }
 
 }

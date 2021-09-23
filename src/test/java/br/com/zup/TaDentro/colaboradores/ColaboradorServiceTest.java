@@ -28,7 +28,7 @@ public class ColaboradorServiceTest {
     private Usuario usuario;
 
 
-    @Test
+    /*@Test
     public void testarSalvarColaborador() {
 
         Colaborador colaborador = new Colaborador();
@@ -39,9 +39,11 @@ public class ColaboradorServiceTest {
         Colaborador colaboradorTeste = colaboradorService.salvarColaborador(colaborador);
 
         Assertions.assertEquals(colaborador, colaboradorTeste);
-    }
+    }*/
 
+/*
     @Test
+
     public void testarExibirTodosOsColaboradores() {
 
         Colaborador colaborador = new Colaborador();
@@ -68,7 +70,7 @@ public class ColaboradorServiceTest {
 
 
 
-   *//*@Test
+   @Test
     public void testarDeletarPorID() {
 
         Colaborador colaborador = new Colaborador();
@@ -83,7 +85,7 @@ public class ColaboradorServiceTest {
 
         Assertions.assertTrue(colaborador, colaboradorService.deletarPorID(1);
 
-    }*//*
+    }
 
 
 }*/
