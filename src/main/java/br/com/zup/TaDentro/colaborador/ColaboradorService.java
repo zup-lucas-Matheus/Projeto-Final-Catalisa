@@ -5,9 +5,12 @@ import br.com.zup.TaDentro.Usuario.UsuarioService;
 import br.com.zup.TaDentro.Usuario.exceptionUsuario.MensagemErroUsuario;
 import br.com.zup.TaDentro.colaborador.dtos.ColaboradorResumidoDTO;
 import br.com.zup.TaDentro.colaborador.exceptionColaborador.MensagemErroColaborador;
+import br.com.zup.TaDentro.indicacao.Indicacao;
+import br.com.zup.TaDentro.indicacao.IndicacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +21,8 @@ public class ColaboradorService {
     private ColaboradorRepository colaboradorRepository;
     @Autowired
     private UsuarioService usuarioService;
-
+    @Autowired
+    private IndicacaoRepository indicacaoRepository;
 
     /**
      *
@@ -106,6 +110,15 @@ public class ColaboradorService {
             throw new MensagemErroColaborador("Colaborador já cadastrado");
         }
         return colaborador;
+
+    }
+
+    //Metódo formulario
+    public List<Indicacao> pesquisaPorData(String email, LocalDate dataInicial, LocalDate dataFinal){
+        Usuario usuario = usuarioService.encontrarUsuarioPorEmail(email);
+        Optional<Colaborador> colaborador = colaboradorRepository.findByLoginUsuario(usuario);
+
+        return indicacaoRepository.findByColaboradorAndDataDeCadastroBetween(colaborador.get(), dataInicial, dataFinal);
 
     }
 

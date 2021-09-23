@@ -48,21 +48,40 @@ public class IndicacaoService {
 
     }
 
-    //Metódo para deletar indicaçao com exption.
-    public void deleteIndicacao(int id){
-        indicacaoRepository.delete(findIndicacao(id));
+    public Indicacao findIndicacaoPorCpf(String cpf){
+        return indicacaoRepository.findByCpf(cpf)
+                .orElseThrow(() -> new MensagemErroIndicacao("CPF da indicação é obrigatório"));
+
     }
 
     //Metódo para atualizar indicação...
     public void atualizarIndicacao(Indicacao indicacao){
-        Indicacao indicacaoSalva = findIndicacao(indicacao.getId());
-
-        indicacaoSalva.setEmail(indicacao.getEmail());
-        indicacaoSalva.setDataDaContratacao(indicacao.getDataDaContratacao());
-        indicacaoSalva.setNome(indicacao.getNome());
+        validaSituacao(indicacao);
+        Indicacao indicacaoSalva = findIndicacaoPorCpf(indicacao.getCpf());
+        ajustarSituacaoEdata(indicacao, indicacaoSalva);
 
         indicacaoRepository.save(indicacaoSalva);
     }
+
+    private void ajustarSituacaoEdata(Indicacao indicacao, Indicacao indicacaoSalva) {
+        if (!Objects.isNull(indicacao.getDataDaContratacao())) {
+            indicacaoSalva.setSituacao(PerfilDeSituacao.CONTRATADO);
+            indicacaoSalva.setDataDaContratacao(indicacao.getDataDaContratacao());
+        }
+        if (!Objects.isNull(indicacao.getSituacao())) {
+            indicacaoSalva.setSituacao(indicacao.getSituacao());
+            if (indicacaoSalva.getSituacao() == PerfilDeSituacao.EX_COLABORADOR)
+                indicacaoSalva.setDataDaContratacao(null);
+        }
+    }
+
+    public void validaSituacao(Indicacao indicacao){
+        if (Objects.isNull(indicacao.getSituacao()) && Objects.isNull(indicacao.getDataDaContratacao())) {
+            throw new MensagemErroIndicacao("O campo situação ou a data da contratação é obrigatório");
+        }
+
+    }
+
 
     public Optional<Indicacao> indicacaoDuplicada(String cpf){
         Optional<Indicacao> indicacao = indicacaoRepository.findByCpf(cpf);
@@ -78,5 +97,10 @@ public class IndicacaoService {
         return (List<Indicacao>) indicacaoRepository.findAll();
     }
 
+
+    //Metódo para deletar indicaçao com exption.
+    public void deleteIndicacao(int id){
+        indicacaoRepository.delete(findIndicacao(id));
+    }
 
 }
