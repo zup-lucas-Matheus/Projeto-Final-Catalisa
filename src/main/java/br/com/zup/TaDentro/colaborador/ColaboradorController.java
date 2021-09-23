@@ -70,9 +70,7 @@ public class ColaboradorController {
     public void atualizarColaborador(@RequestBody ColaboradorPUTDto colaboradorPUTDto) {
 
         Colaborador colaboradorModel = modelMapper.map(colaboradorPUTDto, Colaborador.class);
-
         colaboradorService.atualizarColaborador(colaboradorModel);
-
     }
 
    /*@GetMapping
