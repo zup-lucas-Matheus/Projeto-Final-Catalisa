@@ -2,6 +2,8 @@ package br.com.zup.TaDentro.colaborador;
 
 
 import br.com.zup.TaDentro.colaborador.dtos.ColaboradorResumidoDTO;
+import br.com.zup.TaDentro.indicacao.Indicacao;
+import br.com.zup.TaDentro.indicacao.dtos.IndicacaoPesquisaDTO;
 import br.com.zup.TaDentro.indicacao.dtos.IndicacaoResumidaDTO;
 import br.com.zup.TaDentro.jwt.filter.JwtComponent;
 import org.modelmapper.ModelMapper;
@@ -70,7 +72,7 @@ public class ColaboradorController {
     }
 
     @GetMapping
-    public List<IndicacaoResumidaDTO> indicacaoList(@RequestBody IndicacaoPesquisaDto indicacaoPesquisaDto, Authentication authentication){
+    public List<IndicacaoResumidaDTO> indicacaoList(@RequestBody IndicacaoPesquisaDTO indicacaoPesquisaDto, Authentication authentication){
         String email = authentication.getName();
         List<Indicacao> retorno = colaboradorService.pesquisaPorData(email, indicacaoPesquisaDto.getDataInicial(), indicacaoPesquisaDto.getDataFinal());
 
