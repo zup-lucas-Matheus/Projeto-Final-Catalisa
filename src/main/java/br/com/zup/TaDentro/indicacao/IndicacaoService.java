@@ -48,9 +48,10 @@ public class IndicacaoService {
 
     }
 
-    //Metódo para deletar indicaçao com exption.
-    public void deleteIndicacao(int id){
-        indicacaoRepository.delete(findIndicacao(id));
+    public Indicacao findIndicacaoPorCpf(String cpf){
+        return indicacaoRepository.findByCpf(cpf)
+                .orElseThrow(() -> new MensagemErroIndicacao("CPF da indicação é obrigatório"));
+
     }
 
     //Metódo para atualizar indicação...
