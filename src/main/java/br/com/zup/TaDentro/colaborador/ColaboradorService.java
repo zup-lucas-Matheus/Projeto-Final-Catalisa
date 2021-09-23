@@ -86,13 +86,10 @@ public class ColaboradorService {
 
 
     public Colaborador atualizarColaborador (Colaborador colaborador) {
-        Colaborador objetoColaborador = procurarSeColaboradorJaExiste(colaborador.getId());
+        Colaborador objetoColaborador = buscarColaboradorPorCpf(colaborador.getCpf());
 
-        colaborador.setNome(colaborador.getNome());
-        colaborador.setId(colaborador.getId());
-        colaborador.setCpf(colaborador.getCpf());
-        colaborador.setLoginUsuario(colaborador.getLoginUsuario());
         colaborador.setDataContratacao(colaborador.getDataContratacao());
+        colaborador.setCargo(colaborador.getCargo());
 
         return colaboradorRepository.save(colaborador);
 
@@ -113,14 +110,14 @@ public class ColaboradorService {
 
     }
 
-    //Metódo formulario
+   /* //Metódo formulario
     public List<Indicacao> pesquisaPorData(String email, LocalDate dataInicial, LocalDate dataFinal){
         Usuario usuario = usuarioService.encontrarUsuarioPorEmail(email);
         Optional<Colaborador> colaborador = colaboradorRepository.findByLoginUsuario(usuario);
 
         return indicacaoRepository.findByColaboradorAndDataDeCadastroBetween(colaborador.get(), dataInicial, dataFinal);
 
-    }
+    }*/
 
 }
 
