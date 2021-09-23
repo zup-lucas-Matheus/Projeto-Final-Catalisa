@@ -64,6 +64,26 @@ public class IndicacaoService {
         indicacaoRepository.save(indicacaoSalva);
     }
 
+    private void ajustarSituacaoEdata(Indicacao indicacao, Indicacao indicacaoSalva) {
+        if (!Objects.isNull(indicacao.getDataDaContratacao())) {
+            indicacaoSalva.setSituacao(PerfilDeSituacao.CONTRATADO);
+            indicacaoSalva.setDataDaContratacao(indicacao.getDataDaContratacao());
+        }
+        if (!Objects.isNull(indicacao.getSituacao())) {
+            indicacaoSalva.setSituacao(indicacao.getSituacao());
+            if (indicacaoSalva.getSituacao() == PerfilDeSituacao.EX_COLABORADOR)
+                indicacaoSalva.setDataDaContratacao(null);
+        }
+    }
+
+    public void validaSituacao(Indicacao indicacao){
+        if (Objects.isNull(indicacao.getSituacao()) && Objects.isNull(indicacao.getDataDaContratacao())) {
+            throw new MensagemErroIndicacao("O campo situação ou a data da contratação é obrigatório");
+        }
+
+    }
+
+
     public Optional<Indicacao> indicacaoDuplicada(String cpf){
         Optional<Indicacao> indicacao = indicacaoRepository.findByCpf(cpf);
 
