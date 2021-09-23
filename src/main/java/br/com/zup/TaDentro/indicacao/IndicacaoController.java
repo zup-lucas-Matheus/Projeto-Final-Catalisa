@@ -40,8 +40,11 @@ public class IndicacaoController {
     }
 
     @PutMapping
-    public void atualizarIndicacao(@RequestBody Indicacao indicacao){
-        indicacaoService.atualizarIndicacao(indicacao);
+    public void atualizarIndicacao(@RequestBody IndicacaoPUTDto indicacao){
+
+        Indicacao indicacaoModel = modelMapper.map(indicacao,  Indicacao.class);
+
+        indicacaoService.atualizarIndicacao(indicacaoModel);
     }
 
 }
