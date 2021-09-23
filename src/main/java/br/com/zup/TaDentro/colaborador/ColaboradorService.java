@@ -86,7 +86,7 @@ public class ColaboradorService {
 
 
     public Colaborador atualizarColaborador (Colaborador colaborador) {
-        Colaborador objetoColaborador = procurarSeColaboradorJaExiste(colaborador.getId());
+        Colaborador objetoColaborador = buscarColaboradorPorCpf(colaborador.getCpf());
 
         colaborador.setDataContratacao(colaborador.getDataContratacao());
         colaborador.setCargo(colaborador.getCargo());

@@ -6,19 +6,19 @@ import java.time.LocalDate;
 
 public class ColaboradorPUTDto {
 
-    private int id;
+    private String cpf;
     private Cargo cargo;
     private LocalDate dataContratacao;
 
     public ColaboradorPUTDto() {
     }
 
-    public int getId() {
-        return id;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public Cargo getCargo() {
