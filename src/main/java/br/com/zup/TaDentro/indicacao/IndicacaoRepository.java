@@ -17,5 +17,4 @@ public interface IndicacaoRepository extends CrudRepository<Indicacao, Integer> 
 
     List<Indicacao> findByColaborador(Colaborador colaborador);
 
-
 }

@@ -82,19 +82,13 @@ public class ColaboradorService {
             throw new MensagemErroColaborador("Colaborador não encontrado");
         }
         return colaboradorOptional.get();
-
     }
 
+    public Colaborador atualizarColaborador (Colaborador colaborador) {
 
-    public void atualizarColaborador (Colaborador colaborador) {
         Colaborador objetoColaborador = buscarColaboradorPorCpf(colaborador.getCpf());
-
-        colaborador.setNome(colaborador.getNome());
-        colaborador.setId(colaborador.getId());
-        colaborador.setCpf(colaborador.getCpf());
-        colaborador.setLoginUsuario(colaborador.getLoginUsuario());
         colaborador.setDataContratacao(colaborador.getDataContratacao());
-
+        colaborador.setCargo(colaborador.getCargo());
         colaboradorRepository.save(colaborador);
 
     }
@@ -113,9 +107,6 @@ public class ColaboradorService {
         return colaborador;
 
     }
-
-
-
 
 }
 
