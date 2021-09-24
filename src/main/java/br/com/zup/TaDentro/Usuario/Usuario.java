@@ -1,14 +1,12 @@
 package br.com.zup.TaDentro.Usuario;
 
-import org.hibernate.engine.spi.ManagedEntity;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import javax.validation.constraints.NotNull;
 
 
 @Entity

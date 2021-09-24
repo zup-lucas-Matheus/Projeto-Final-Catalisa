@@ -24,6 +24,7 @@ public class ColaboradorService {
     @Autowired
     private IndicacaoRepository indicacaoRepository;
 
+
     /**
      *
      * vinculo do Usuário ao Colaborador
@@ -85,8 +86,8 @@ public class ColaboradorService {
     }
 
 
-    public Colaborador atualizarColaborador (Colaborador colaborador) {
-        Colaborador objetoColaborador = procurarSeColaboradorJaExiste(colaborador.getId());
+    public void atualizarColaborador (Colaborador colaborador) {
+        Colaborador objetoColaborador = buscarColaboradorPorCpf(colaborador.getCpf());
 
         colaborador.setNome(colaborador.getNome());
         colaborador.setId(colaborador.getId());
@@ -94,12 +95,12 @@ public class ColaboradorService {
         colaborador.setLoginUsuario(colaborador.getLoginUsuario());
         colaborador.setDataContratacao(colaborador.getDataContratacao());
 
-        return colaboradorRepository.save(colaborador);
+        colaboradorRepository.save(colaborador);
 
     }
 
     public void deletarColaborador(int id){
-        colaboradorRepository.delete(procurarSeColaboradorJaExiste(id));
+        colaboradorRepository.delete(buscarColaboradorPorId(id));
     }
 
 
@@ -113,14 +114,8 @@ public class ColaboradorService {
 
     }
 
-    //Metódo formulario
-    public List<Indicacao> pesquisaPorData(String email, LocalDate dataInicial, LocalDate dataFinal){
-        Usuario usuario = usuarioService.encontrarUsuarioPorEmail(email);
-        Optional<Colaborador> colaborador = colaboradorRepository.findByLoginUsuario(usuario);
 
-        return indicacaoRepository.findByColaboradorAndDataDeCadastroBetween(colaborador.get(), dataInicial, dataFinal);
 
-    }
 
 }
 

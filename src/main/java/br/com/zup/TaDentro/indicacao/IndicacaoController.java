@@ -25,7 +25,6 @@ public class IndicacaoController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-
     public IndicacaoResumidaDTO cadastrarIndicacao(@RequestBody @Valid Indicacao indicacao, Authentication authentication){
         String cpf = authentication.getName();
         Indicacao indicacaoModel = indicacaoService.saveIndicacao(cpf,indicacao);
@@ -43,6 +42,7 @@ public class IndicacaoController {
         return indicacaoResumidaDTOS;
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void deletarIndicacao(int id){
 
@@ -50,6 +50,7 @@ public class IndicacaoController {
     }
 
     @PutMapping
+    @ResponseStatus(HttpStatus.OK)
     public void atualizarIndicacao(@RequestBody IndicacaoPUTDto indicacao) {
 
         Indicacao indicacaoModel = modelMapper.map(indicacao, Indicacao.class);

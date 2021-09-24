@@ -34,6 +34,7 @@ public class Colaborador {
     private LocalDate dataContratacao;
 
 
+
     @OneToOne
 //    @JoinColumn(name = "id_usuario")
     private Usuario loginUsuario;
@@ -41,14 +42,6 @@ public class Colaborador {
     private List<Indicacao> listDeIndicacao;
 
     public Colaborador() {
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public int getId() {
@@ -59,20 +52,12 @@ public class Colaborador {
         this.id = id;
     }
 
-    public Usuario getLoginUsuario() {
-        return loginUsuario;
+    public String getNome() {
+        return nome;
     }
 
-    public void setLoginUsuario(Usuario loginUsuario) {
-        this.loginUsuario = loginUsuario;
-    }
-
-    public Cargo getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(Cargo cargo) {
-        this.cargo = cargo;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getCpf() {
@@ -83,6 +68,14 @@ public class Colaborador {
         this.cpf = cpf;
     }
 
+    public Cargo getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
+    }
+
     public LocalDate getDataContratacao() {
         return dataContratacao;
     }
@@ -91,4 +84,19 @@ public class Colaborador {
         this.dataContratacao = dataContratacao;
     }
 
+    public Usuario getLoginUsuario() {
+        return loginUsuario;
+    }
+
+    public void setLoginUsuario(Usuario loginUsuario) {
+        this.loginUsuario = loginUsuario;
+    }
+
+    public List<Indicacao> getListDeIndicacao() {
+        return listDeIndicacao;
+    }
+
+    public void setListDeIndicacao(List<Indicacao> listDeIndicacao) {
+        this.listDeIndicacao = listDeIndicacao;
+    }
 }

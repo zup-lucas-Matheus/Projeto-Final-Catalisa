@@ -3,6 +3,7 @@ package br.com.zup.TaDentro.colaborador;
 
 import br.com.zup.TaDentro.colaborador.dtos.ColaboradorResumidoDTO;
 import br.com.zup.TaDentro.indicacao.Indicacao;
+import br.com.zup.TaDentro.indicacao.dtos.IndicacaoPUTDto;
 import br.com.zup.TaDentro.indicacao.dtos.IndicacaoPesquisaDto;
 import br.com.zup.TaDentro.indicacao.dtos.IndicacaoResumidaDTO;
 import br.com.zup.TaDentro.jwt.filter.JwtComponent;
@@ -13,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,7 @@ public class ColaboradorController {
 
     }
 
-    @GetMapping
+/*    @GetMapping
     public List<ColaboradorResumidoDTO> exibirTodosOsColaboradores() {
 
         List<Colaborador> listaDeColaboradores = colaboradorService.exibirTodosOsColaboradores();
@@ -56,34 +58,24 @@ public class ColaboradorController {
                 .map(colaborador -> modelMapper.map(colaborador, ColaboradorResumidoDTO.class))
                 .collect(Collectors.toList());
 
-    }
+    }*/
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletarPorID(@PathVariable int id) {
+
         colaboradorService.deletarColaborador(id);
     }
 
 
     @PutMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Colaborador atualizarColaborador() {
+    @ResponseStatus(HttpStatus.OK)
+    public void atualizarColaborador(Colaborador colaboradorResumidoDTO) {
 
-        ColaboradorResumidoDTO colaboradorResumidoDTO = new ColaboradorResumidoDTO();
-        return modelMapper.map(colaboradorResumidoDTO, Colaborador.class);
-    }
+        colaboradorService.atualizarColaborador(colaboradorResumidoDTO);
 
-    @GetMapping
-    public List<IndicacaoResumidaDTO> indicacaoList(@RequestBody IndicacaoPesquisaDto indicacaoPesquisaDto, Authentication authentication){
-        String email = authentication.getName();
-        List<Indicacao> retorno = colaboradorService.pesquisaPorData(email, indicacaoPesquisaDto.getDataInicial(), indicacaoPesquisaDto.getDataFinal());
-
-        List<IndicacaoResumidaDTO> dtos = retorno
-                .stream()
-                .map(dto -> modelMapper.map(dto, IndicacaoResumidaDTO.class))
-                .collect(Collectors.toList());
-        return dtos;
-
+        /*Colaborador colaboradorModel = modelMapper.map(colaboradorResumidoDTO, Colaborador.class);
+        colaboradorService.atualizarColaborador(colaboradorModel);*/
     }
 
 

@@ -38,6 +38,7 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
 
     };
 
+
     //Metodo que configura toda nossa aplicação
     @Override
     protected void configure(HttpSecurity http) throws Exception {

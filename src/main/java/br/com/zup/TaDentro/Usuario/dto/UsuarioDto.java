@@ -5,9 +5,9 @@ import javax.validation.constraints.NotNull;
 
 public class UsuarioDto {
 
-
-    private String nome;
     private String email;
+    private String nome;
+
 
     public String getNome() {
         return nome;

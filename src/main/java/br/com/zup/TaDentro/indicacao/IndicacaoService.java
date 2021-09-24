@@ -5,6 +5,7 @@ import br.com.zup.TaDentro.Usuario.UsuarioService;
 import br.com.zup.TaDentro.colaborador.Colaborador;
 import br.com.zup.TaDentro.colaborador.ColaboradorService;
 import br.com.zup.TaDentro.enums.PerfilDeSituacao;
+import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroFiltroIndicacao;
 import br.com.zup.TaDentro.jwt.UsuarioLoginService;
 import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroIndicacao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,13 @@ public class IndicacaoService {
      * Vinculo as Indicações ao Colaborador da empresa
      * Para utilizar essas informações em relatórios.
      */
+
     public Indicacao saveIndicacao(String email, Indicacao indicado){
         Usuario usuario = usuarioService.encontrarUsuarioPorEmail(email);
         Colaborador colaborador = colaboradorService.buscarColaboradorPorUsuario(usuario);
         indicacaoDuplicada(indicado.getCpf());
         indicado.setColaborador(colaborador);
-        indicado.setDataDaContratacao(LocalDate.now());
+        indicado.setDataDeCadastro(LocalDate.now());
         indicado.setSituacao(PerfilDeSituacao.EM_PROCESSO_SELETIVO);
         return indicacaoRepository.save(indicado);
     }
