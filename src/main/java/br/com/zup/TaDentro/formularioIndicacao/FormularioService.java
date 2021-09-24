@@ -30,12 +30,12 @@ public class FormularioService {
     }
 
     //Metódo formulario
-    public List<Indicacao> pesquisaPorData(String email, String dataInicial, String dataFinal){
+    public List<Indicacao> pesquisaPorDataESituacao(String email, String dataInicial, String dataFinal, String situacao){
 
         Usuario usuario = usuarioService.encontrarUsuarioPorEmail(email);
         Optional<Colaborador> colaborador = Optional.ofNullable(colaboradorService.buscarColaboradorPorUsuario(usuario));
 
-        return indicacaoService.pesquisarIndicacao(colaborador.get(), dataInicial, dataFinal);
+        return indicacaoService.pesquisarIndicacao(colaborador.get(), dataInicial, dataFinal, situacao);
 
     }
 
