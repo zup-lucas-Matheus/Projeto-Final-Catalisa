@@ -5,6 +5,7 @@ import br.com.zup.TaDentro.Usuario.UsuarioService;
 import br.com.zup.TaDentro.colaborador.Colaborador;
 import br.com.zup.TaDentro.colaborador.ColaboradorService;
 import br.com.zup.TaDentro.enums.PerfilDeSituacao;
+import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroFiltroIndicacao;
 import br.com.zup.TaDentro.jwt.UsuarioLoginService;
 import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroIndicacao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +27,22 @@ public class IndicacaoService {
     @Autowired
     private UsuarioService usuarioService;
 
+
+    private static final String MENSAGEM_SEM_FILTRO = "Não existem Indicações cadastradas";
+    private static final String MENSAGEM_COM_FILTRO = "Não existem Indicações cadastradas no período";
+
     /**
      *
      * Vinculo as Indicações ao Colaborador da empresa
      * Para utilizar essas informações em relatórios.
      */
+
     public Indicacao saveIndicacao(String email, Indicacao indicado){
         Usuario usuario = usuarioService.encontrarUsuarioPorEmail(email);
         Colaborador colaborador = colaboradorService.buscarColaboradorPorUsuario(usuario);
         indicacaoDuplicada(indicado.getCpf());
         indicado.setColaborador(colaborador);
-        indicado.setDataDaContratacao(LocalDate.now());
+        indicado.setDataDeCadastro(LocalDate.now());
         indicado.setSituacao(PerfilDeSituacao.EM_PROCESSO_SELETIVO);
         return indicacaoRepository.save(indicado);
     }
@@ -103,5 +109,56 @@ public class IndicacaoService {
     public void deleteIndicacao(int id){
         indicacaoRepository.delete(findIndicacao(id));
     }
+
+    //Para a service de Formulario
+    public List<Indicacao> pesquisarIndicacao(Colaborador colaborador, String dataInicial, String dataFinal){
+
+        List<Indicacao> indicacaoListRetorno = null;
+        //Trás toda as indicações sem passa a data.
+        if (Objects.isNull(dataInicial) && Objects.isNull(dataFinal)) {
+            indicacaoListRetorno =  indicacaoRepository.findByColaborador(colaborador);
+            validacaoFiltroSemIndicacao(indicacaoListRetorno,MENSAGEM_SEM_FILTRO);
+        }
+
+        validacaoPorDataInicialORdataFinal(dataInicial, dataFinal);
+        var dataInicialConvert = LocalDate.parse(dataInicial);
+        var dataFinalConvert = LocalDate.parse(dataFinal);
+        validacaoPorDataInicialMaiorQueDataFinal(dataInicialConvert, dataFinalConvert);
+        //retorna a indicacao com data.
+        indicacaoListRetorno = indicacaoRepository.
+                findByColaboradorAndDataDeCadastroBetween(colaborador, dataInicialConvert, dataFinalConvert);
+         validacaoFiltroSemIndicacao(indicacaoListRetorno, MENSAGEM_COM_FILTRO);
+
+        if (situacao != null) {
+            return indicacaoListRetorno.stream()
+                    .filter(indicacao -> indicacao.getSituacao().equals(PerfilDeSituacao.valueOf(situacao)))
+                    .collect(Collectors.toList());
+        }
+         return indicacaoListRetorno;
+    }
+
+
+    public void validacaoPorDataInicialMaiorQueDataFinal(LocalDate dataInicial, LocalDate dataFinal){
+
+        if (dataInicial.isAfter(dataFinal)) {
+            throw new MensagemErroIndicacao("Data Inicial maior que Data Final");
+        }
+    }
+
+
+    public void validacaoPorDataInicialORdataFinal(String dataInicial, String dataFinal){
+
+        if (Objects.isNull(dataInicial) || Objects.isNull(dataFinal)) {
+            throw new MensagemErroIndicacao("A data precisa ser preenchida corretamente");
+        }
+    }
+
+    public void validacaoFiltroSemIndicacao(List<Indicacao> indicacaoList, String mensagem){
+
+        if (indicacaoList.isEmpty()) {
+            throw new MensagemErroFiltroIndicacao(mensagem);
+        }
+    }
+
 
 }

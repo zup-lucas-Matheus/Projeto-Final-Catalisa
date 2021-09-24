@@ -15,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,19 +74,5 @@ public class ColaboradorController {
         Colaborador colaboradorModel = modelMapper.map(colaboradorPUTDto, Colaborador.class);
         colaboradorService.atualizarColaborador(colaboradorModel);
     }
-
-   /*@GetMapping
-    public List<IndicacaoResumidaDTO> indicacaoList(@RequestBody IndicacaoPesquisaDto indicacaoPesquisaDto, Authentication authentication) {
-        String email = authentication.getName();
-        List<Indicacao> retorno = colaboradorService.pesquisaPorData(email, indicacaoPesquisaDto.getDataInicial(), indicacaoPesquisaDto.getDataFinal());
-
-        List<IndicacaoResumidaDTO> dtos = retorno
-                .stream()
-                .map(dto -> modelMapper.map(dto, IndicacaoResumidaDTO.class))
-                .collect(Collectors.toList());
-        return dtos;
-
-    }
-*/
 
 }

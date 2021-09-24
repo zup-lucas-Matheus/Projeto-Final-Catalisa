@@ -11,8 +11,10 @@ public interface IndicacaoRepository extends CrudRepository<Indicacao, Integer> 
 
     Optional<Indicacao> findByCpf(String cpf);
 
+    List<Indicacao> findByColaboradorAndDataDeCadastroBetween(Colaborador colaborador,
+                                                              LocalDate dataInicial, LocalDate dataFinal);
 
-/*
-    List<Indicacao> findByColaboradorAndDataDeCadastroBetween(Colaborador colaborador, LocalDate dataInicial, LocalDate dataFinal);
-*/
+
+    List<Indicacao> findByColaborador(Colaborador colaborador);
+
 }
