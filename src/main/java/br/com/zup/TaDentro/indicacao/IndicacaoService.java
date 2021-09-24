@@ -104,4 +104,51 @@ public class IndicacaoService {
         indicacaoRepository.delete(findIndicacao(id));
     }
 
+    //Para a service de Formulario
+    public List<Indicacao> pesquisarIndicacao(Colaborador colaborador, String dataInicial, String dataFinal){
+
+        if (Objects.isNull(dataInicial) && Objects.isNull(dataFinal)) {
+            List<Indicacao> indicacaoListSemIndicacaoEdata = indicacaoRepository.findByColaborador(colaborador);
+            validacaoFiltroSemIndicacao(indicacaoListSemIndicacaoEdata,MENSAGEM_SEM_FILTRO);
+
+            return indicacaoListSemIndicacaoEdata;
+
+        }
+
+        validacaoPorDataInicialORdataFinal(dataInicial, dataFinal);
+        var dataInicialConvert = LocalDate.parse(dataInicial);
+        var dataFinalConvert = LocalDate.parse(dataFinal);
+        validacaoPorDataInicialMaiorQueDataFinal(dataInicialConvert, dataFinalConvert);
+
+        List<Indicacao> indicacaoListPdataCompleta = indicacaoRepository.
+                findByColaboradorAndDataDeCadastroBetween(colaborador, dataInicialConvert, dataFinalConvert);
+         validacaoFiltroSemIndicacao(indicacaoListPdataCompleta, MENSAGEM_COM_FILTRO);
+
+         return indicacaoListPdataCompleta;
+    }
+
+
+    public void validacaoPorDataInicialMaiorQueDataFinal(LocalDate dataInicial, LocalDate dataFinal){
+
+        if (dataInicial.isAfter(dataFinal)) {
+            throw new MensagemErroIndicacao("Data Inicial maior que Data Final");
+        }
+    }
+
+
+    public void validacaoPorDataInicialORdataFinal(String dataInicial, String dataFinal){
+
+        if (Objects.isNull(dataInicial) || Objects.isNull(dataFinal)) {
+            throw new MensagemErroIndicacao("A data precisa ser preenchida corretamente");
+        }
+    }
+
+    public void validacaoFiltroSemIndicacao(List<Indicacao> indicacaoList, String mensagem){
+
+        if (indicacaoList.isEmpty()) {
+            throw new MensagemErroFiltroIndicacao(mensagem);
+        }
+    }
+
+
 }
