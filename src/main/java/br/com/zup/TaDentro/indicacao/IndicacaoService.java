@@ -113,24 +113,28 @@ public class IndicacaoService {
     //Para a service de Formulario
     public List<Indicacao> pesquisarIndicacao(Colaborador colaborador, String dataInicial, String dataFinal){
 
+        List<Indicacao> indicacaoListRetorno = null;
+        //Trás toda as indicações sem passa a data.
         if (Objects.isNull(dataInicial) && Objects.isNull(dataFinal)) {
-            List<Indicacao> indicacaoListSemIndicacaoEdata = indicacaoRepository.findByColaborador(colaborador);
-            validacaoFiltroSemIndicacao(indicacaoListSemIndicacaoEdata,MENSAGEM_SEM_FILTRO);
-
-            return indicacaoListSemIndicacaoEdata;
-
+            indicacaoListRetorno =  indicacaoRepository.findByColaborador(colaborador);
+            validacaoFiltroSemIndicacao(indicacaoListRetorno,MENSAGEM_SEM_FILTRO);
         }
 
         validacaoPorDataInicialORdataFinal(dataInicial, dataFinal);
         var dataInicialConvert = LocalDate.parse(dataInicial);
         var dataFinalConvert = LocalDate.parse(dataFinal);
         validacaoPorDataInicialMaiorQueDataFinal(dataInicialConvert, dataFinalConvert);
-
-        List<Indicacao> indicacaoListPdataCompleta = indicacaoRepository.
+        //retorna a indicacao com data.
+        indicacaoListRetorno = indicacaoRepository.
                 findByColaboradorAndDataDeCadastroBetween(colaborador, dataInicialConvert, dataFinalConvert);
-         validacaoFiltroSemIndicacao(indicacaoListPdataCompleta, MENSAGEM_COM_FILTRO);
+         validacaoFiltroSemIndicacao(indicacaoListRetorno, MENSAGEM_COM_FILTRO);
 
-         return indicacaoListPdataCompleta;
+        if (situacao != null) {
+            return indicacaoListRetorno.stream()
+                    .filter(indicacao -> indicacao.getSituacao().equals(PerfilDeSituacao.valueOf(situacao)))
+                    .collect(Collectors.toList());
+        }
+         return indicacaoListRetorno;
     }
 
 
