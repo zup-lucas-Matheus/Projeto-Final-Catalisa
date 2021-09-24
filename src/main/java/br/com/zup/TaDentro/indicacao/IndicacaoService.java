@@ -110,7 +110,7 @@ public class IndicacaoService {
     }
 
     //Para a service de Formulario
-    public List<Indicacao> pesquisarIndicacao(Colaborador colaborador, String dataInicial, String dataFinal){
+    public List<Indicacao> pesquisarIndicacao(Colaborador colaborador, String dataInicial, String dataFinal , String situacao){
 
         List<Indicacao> indicacaoListRetorno = null;
         //Trás toda as indicações sem passa a data.

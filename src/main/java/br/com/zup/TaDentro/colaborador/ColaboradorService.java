@@ -84,17 +84,17 @@ public class ColaboradorService {
         colaborador.setDataContratacao(colaborador.getDataContratacao());
         colaborador.setCargo(colaborador.getCargo());
 
-      return colaboradorRepository.save(colaborador);
+        return colaboradorRepository.save(colaborador);
 
     }
 
-    public void deletarColaborador(int id){
+    public void deletarColaborador(int id) {
         colaboradorRepository.delete(buscarColaboradorPorId(id));
     }
 
 
-    public Optional<Colaborador> colaboradorDuplicado(String cpf){
-            Optional<Colaborador> colaborador = colaboradorRepository.findByCpf(cpf);
+    public Optional<Colaborador> colaboradorDuplicado(String cpf) {
+        Optional<Colaborador> colaborador = colaboradorRepository.findByCpf(cpf);
 
         if (colaborador.isPresent()) {
             throw new MensagemErroColaborador("Colaborador já cadastrado");
