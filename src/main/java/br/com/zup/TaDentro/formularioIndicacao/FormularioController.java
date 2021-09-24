@@ -26,10 +26,11 @@ public class FormularioController {
     @GetMapping
     public List<IndicacaoResumidaDTO> indicacaoList(@RequestParam(required = false) String dataInicial,
                                                     @RequestParam(required = false) String dataFinal,
+                                                    @RequestParam(required = false) String situacao,
                                                     Authentication authentication){
         String email = authentication.getName();
         List<Indicacao> retorno =
-                formularioService.pesquisaPorData(email, dataInicial,dataFinal);
+                formularioService.pesquisaPorDataESituacao(email, dataInicial,dataFinal, situacao);
 
         List<IndicacaoResumidaDTO> dtos = retorno
                 .stream()
