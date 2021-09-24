@@ -21,7 +21,9 @@ public class ControllerAdvIndicacao {
                         .build(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler (MensagemErroFiltroIndicacao.class)
+
+
+    @ExceptionHandler(MensagemErroFiltroIndicacao.class)
     @ResponseStatus (HttpStatus.NO_CONTENT)
     @ResponseBody
     public ResponseEntity<ErroBadRequestIndicacao> handlerBadRequestNoContent(MensagemErroFiltroIndicacao expIndicacao) {
