@@ -26,6 +26,10 @@ public class IndicacaoService {
     @Autowired
     private UsuarioService usuarioService;
 
+
+    private static final String MENSAGEM_SEM_FILTRO = "Não existem Indicações cadastradas";
+    private static final String MENSAGEM_COM_FILTRO = "Não existem Indicações cadastradas no período";
+
     /**
      *
      * Vinculo as Indicações ao Colaborador da empresa
