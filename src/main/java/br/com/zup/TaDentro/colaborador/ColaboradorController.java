@@ -3,7 +3,6 @@ package br.com.zup.TaDentro.colaborador;
 
 import br.com.zup.TaDentro.colaborador.dtos.ColaboradorResumidoDTO;
 import br.com.zup.TaDentro.indicacao.Indicacao;
-import br.com.zup.TaDentro.indicacao.dtos.IndicacaoPUTDto;
 import br.com.zup.TaDentro.indicacao.dtos.IndicacaoPesquisaDto;
 import br.com.zup.TaDentro.indicacao.dtos.IndicacaoResumidaDTO;
 import br.com.zup.TaDentro.jwt.filter.JwtComponent;
@@ -14,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +46,7 @@ public class ColaboradorController {
 
     }
 
-/*    @GetMapping
+    @GetMapping
     public List<ColaboradorResumidoDTO> exibirTodosOsColaboradores() {
 
         List<Colaborador> listaDeColaboradores = colaboradorService.exibirTodosOsColaboradores();
@@ -58,25 +56,24 @@ public class ColaboradorController {
                 .map(colaborador -> modelMapper.map(colaborador, ColaboradorResumidoDTO.class))
                 .collect(Collectors.toList());
 
-    }*/
+    }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletarPorID(@PathVariable int id) {
-
         colaboradorService.deletarColaborador(id);
     }
 
 
     @PutMapping
-    @ResponseStatus(HttpStatus.OK)
-    public void atualizarColaborador(Colaborador colaboradorResumidoDTO) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Colaborador atualizarColaborador() {
 
-        colaboradorService.atualizarColaborador(colaboradorResumidoDTO);
-
-        /*Colaborador colaboradorModel = modelMapper.map(colaboradorResumidoDTO, Colaborador.class);
-        colaboradorService.atualizarColaborador(colaboradorModel);*/
+        ColaboradorResumidoDTO colaboradorResumidoDTO = new ColaboradorResumidoDTO();
+        return modelMapper.map(colaboradorResumidoDTO, Colaborador.class);
     }
+
+
 
 
 }
