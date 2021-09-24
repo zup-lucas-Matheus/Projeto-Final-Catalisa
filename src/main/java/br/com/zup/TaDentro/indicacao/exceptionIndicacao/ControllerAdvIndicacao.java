@@ -24,15 +24,16 @@ public class ControllerAdvIndicacao {
 
 
     @ExceptionHandler(MensagemErroFiltroIndicacao.class)
-    @ResponseStatus (HttpStatus.NO_CONTENT)
+    @ResponseStatus (HttpStatus.NOT_FOUND)
     @ResponseBody
-    public ResponseEntity<ErroBadRequestIndicacao> handlerBadRequestNoContent(MensagemErroFiltroIndicacao expIndicacao) {
+    public ResponseEntity<ErroBadRequestIndicacao> handlerBadRequestNoContent(MensagemErroFiltroIndicacao expIndicacao){
         return new ResponseEntity<>(
                 ErroBadRequestIndicacao.builder()
-                        .titulo("NO CONTENT")
+                        .titulo("NO FOUND")
                         .mensagem(expIndicacao.getMessage())
-                        .StatusCode(204)
-                        .build(), HttpStatus.NO_CONTENT);
+                        .StatusCode(404)
+                        .build(), HttpStatus.NOT_FOUND);
     }
+
 
 }
