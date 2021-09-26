@@ -44,7 +44,7 @@ public class IndicacaoController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void deletarIndicacao(int id){
+    public void deletarIndicacao(@PathVariable int id){
 
         indicacaoService.deleteIndicacao(id);
     }
