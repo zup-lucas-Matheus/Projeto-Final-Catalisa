@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class IndicacaoService {
@@ -62,12 +63,12 @@ public class IndicacaoService {
     }
 
     //Metódo para atualizar indicação...
-    public void atualizarIndicacao(Indicacao indicacao){
+    public Indicacao atualizarIndicacao(Indicacao indicacao){
         validaSituacao(indicacao);
         Indicacao indicacaoSalva = findIndicacaoPorCpf(indicacao.getCpf());
         ajustarSituacaoEdata(indicacao, indicacaoSalva);
 
-        indicacaoRepository.save(indicacaoSalva);
+        return indicacaoRepository.save(indicacaoSalva);
     }
 
     private void ajustarSituacaoEdata(Indicacao indicacao, Indicacao indicacaoSalva) {
@@ -111,7 +112,7 @@ public class IndicacaoService {
     }
 
     //Para a service de Formulario
-    public List<Indicacao> pesquisarIndicacao(Colaborador colaborador, String dataInicial, String dataFinal){
+    public List<Indicacao> pesquisarIndicacao(Colaborador colaborador, String dataInicial, String dataFinal, String situacao){
 
         List<Indicacao> indicacaoListRetorno = null;
         //Trás toda as indicações sem passa a data.
@@ -121,15 +122,17 @@ public class IndicacaoService {
         }
 
         validacaoPorDataInicialORdataFinal(dataInicial, dataFinal);
-        var dataInicialConvert = LocalDate.parse(dataInicial);
-        var dataFinalConvert = LocalDate.parse(dataFinal);
-        validacaoPorDataInicialMaiorQueDataFinal(dataInicialConvert, dataFinalConvert);
-        //retorna a indicacao com data.
-        indicacaoListRetorno = indicacaoRepository.
-                findByColaboradorAndDataDeCadastroBetween(colaborador, dataInicialConvert, dataFinalConvert);
-         validacaoFiltroSemIndicacao(indicacaoListRetorno, MENSAGEM_COM_FILTRO);
+        if (dataInicial != null && dataFinal != null) {
+            var dataInicialConvert = LocalDate.parse(dataInicial);
+            var dataFinalConvert = LocalDate.parse(dataFinal);
+            validacaoPorDataInicialMaiorQueDataFinal(dataInicialConvert, dataFinalConvert);
+            //retorna a indicacao com data.
+            indicacaoListRetorno = indicacaoRepository.
+                    findByColaboradorAndDataDeCadastroBetween(colaborador, dataInicialConvert, dataFinalConvert);
+            validacaoFiltroSemIndicacao(indicacaoListRetorno, MENSAGEM_COM_FILTRO);
+        }
 
-        if (situacao != null) {
+        if (situacao != null && indicacaoListRetorno != null) {
             return indicacaoListRetorno.stream()
                     .filter(indicacao -> indicacao.getSituacao().equals(PerfilDeSituacao.valueOf(situacao)))
                     .collect(Collectors.toList());
@@ -137,7 +140,7 @@ public class IndicacaoService {
          return indicacaoListRetorno;
     }
 
-
+    // Validacao se a data Inicial for maior que a data final
     public void validacaoPorDataInicialMaiorQueDataFinal(LocalDate dataInicial, LocalDate dataFinal){
 
         if (dataInicial.isAfter(dataFinal)) {
@@ -145,10 +148,11 @@ public class IndicacaoService {
         }
     }
 
-
+    // Validacao para filtro sem indicação/E no periodo And uma data preenchida e outra não.
     public void validacaoPorDataInicialORdataFinal(String dataInicial, String dataFinal){
 
-        if (Objects.isNull(dataInicial) || Objects.isNull(dataFinal)) {
+        if ((Objects.isNull(dataInicial) && Objects.nonNull(dataFinal)) ||
+                (Objects.nonNull(dataInicial) && Objects.isNull(dataFinal)))  {
             throw new MensagemErroIndicacao("A data precisa ser preenchida corretamente");
         }
     }
