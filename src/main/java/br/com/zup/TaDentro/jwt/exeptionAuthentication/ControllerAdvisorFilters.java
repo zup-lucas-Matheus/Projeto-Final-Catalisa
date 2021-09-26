@@ -16,7 +16,6 @@ public class ControllerAdvisorFilters {
         return new ResponseEntity<>(
                 AcessoNegadoException.builder()
                         .statusCode(403)
-                        .mensagem(exception.getMessage())
                         .titulo("FORBIDDEN")
                         .build(), HttpStatus.FORBIDDEN
         );
@@ -28,7 +27,6 @@ public class ControllerAdvisorFilters {
         return new ResponseEntity(
                 TokenInvalidoException.builder()
                         .statusCode(401)
-                        .mensagem("TOKEN INVALID")
                         .titulo("Unauthorized")
                         .build(), HttpStatus.UNAUTHORIZED
 

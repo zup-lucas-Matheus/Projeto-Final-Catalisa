@@ -3,10 +3,6 @@ package br.com.zup.TaDentro.colaborador;
 
 import br.com.zup.TaDentro.colaborador.dtos.ColaboradorPUTDto;
 import br.com.zup.TaDentro.colaborador.dtos.ColaboradorResumidoDTO;
-import br.com.zup.TaDentro.indicacao.Indicacao;
-import br.com.zup.TaDentro.indicacao.dtos.IndicacaoPUTDto;
-import br.com.zup.TaDentro.indicacao.dtos.IndicacaoPesquisaDto;
-import br.com.zup.TaDentro.indicacao.dtos.IndicacaoResumidaDTO;
 import br.com.zup.TaDentro.jwt.filter.JwtComponent;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

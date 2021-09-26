@@ -4,6 +4,7 @@ import br.com.zup.TaDentro.Usuario.Usuario;
 import br.com.zup.TaDentro.Usuario.UsuarioService;
 import br.com.zup.TaDentro.colaborador.Colaborador;
 import br.com.zup.TaDentro.colaborador.ColaboradorService;
+import br.com.zup.TaDentro.enums.PerfilDeSituacao;
 import br.com.zup.TaDentro.indicacao.Indicacao;
 import br.com.zup.TaDentro.indicacao.IndicacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class FormularioService {
         return indicacaoService.pesquisarIndicacao(colaborador.get(), dataInicial, dataFinal, situacao);
 
     }
+
 
 
 

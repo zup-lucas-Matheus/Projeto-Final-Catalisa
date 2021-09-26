@@ -2,7 +2,6 @@ package br.com.zup.TaDentro.formularioIndicacao;
 
 import br.com.zup.TaDentro.colaborador.ColaboradorService;
 import br.com.zup.TaDentro.indicacao.Indicacao;
-import br.com.zup.TaDentro.indicacao.dtos.IndicacaoPesquisaDto;
 import br.com.zup.TaDentro.indicacao.dtos.IndicacaoResumidaDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
