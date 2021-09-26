@@ -3,6 +3,7 @@ package br.com.zup.TaDentro.colaborador;
 
 import br.com.zup.TaDentro.colaborador.dtos.ColaboradorResumidoDTO;
 import br.com.zup.TaDentro.indicacao.Indicacao;
+import br.com.zup.TaDentro.indicacao.dtos.IndicacaoPesquisaDto;
 import br.com.zup.TaDentro.indicacao.dtos.IndicacaoResumidaDTO;
 import br.com.zup.TaDentro.jwt.filter.JwtComponent;
 import org.modelmapper.ModelMapper;
@@ -65,14 +66,11 @@ public class ColaboradorController {
 
 
     @PutMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Colaborador atualizarColaborador() {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void atualizarColaborador(@RequestBody ColaboradorPUTDto colaboradorPUTDto) {
 
-        ColaboradorResumidoDTO colaboradorResumidoDTO = new ColaboradorResumidoDTO();
-        return modelMapper.map(colaboradorResumidoDTO, Colaborador.class);
+        Colaborador colaboradorModel = modelMapper.map(colaboradorPUTDto, Colaborador.class);
+        colaboradorService.atualizarColaborador(colaboradorModel);
     }
-
-
-
 
 }
