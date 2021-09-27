@@ -7,6 +7,7 @@ import br.com.zup.TaDentro.colaborador.ColaboradorRepository;
 import br.com.zup.TaDentro.colaborador.ColaboradorService;
 import br.com.zup.TaDentro.colaborador.exceptionColaborador.MensagemErroColaborador;
 import br.com.zup.TaDentro.enums.Cargo;
+import br.com.zup.TaDentro.indicacao.Indicacao;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -97,6 +98,27 @@ public class ColaboradorServiceTest {
         Assertions.assertEquals(colaborador, colaboradorService.procurarSeColaboradorJaExiste(1));
 
     }
+
+
+    @Test
+    public void testarBuscarColaboradorPorCpfCaminhoPositivo () {
+
+        Colaborador colaborador = new Colaborador();
+
+        Mockito.when(colaboradorRepository.findByCpf(Mockito.anyString()))
+                .thenReturn(Optional.of(colaborador));
+
+        Assertions.assertEquals(colaborador , colaboradorService.buscarColaboradorPorCpf("12345678910"));
+    }
+
+
+
+
+
+
+
+
+
 
 
     @Test
