@@ -5,6 +5,7 @@ import br.com.zup.TaDentro.Usuario.UsuarioService;
 import br.com.zup.TaDentro.colaborador.Colaborador;
 import br.com.zup.TaDentro.colaborador.ColaboradorRepository;
 import br.com.zup.TaDentro.colaborador.ColaboradorService;
+import br.com.zup.TaDentro.colaborador.exceptionColaborador.MensagemErroColaborador;
 import br.com.zup.TaDentro.enums.Cargo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -109,5 +110,28 @@ public class ColaboradorServiceTest {
         Mockito.verify(colaboradorRepository).delete(colaborador);
     }
 
+    @Test
+    public void testrarDeletarPorIDCaminhoNegativo() {
 
+        MensagemErroColaborador mensagemErroColaborador = new MensagemErroColaborador("Colaborador não encontrado");
+
+        Mockito.when(colaboradorRepository.findById(Mockito.anyInt()))
+                .thenThrow(mensagemErroColaborador);
+
+        RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> {
+            colaboradorService.deletarColaborador(1);
+        });
+
+        Assertions.assertNotNull(exception);
+
+    }
 }
+
+
+
+
+
+
+
+
+
