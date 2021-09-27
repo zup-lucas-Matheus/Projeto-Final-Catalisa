@@ -51,7 +51,7 @@ public class IndicacaoServiceTest {
 
         Colaborador colaborador = new Colaborador();
         colaborador.setCpf("12345678910");
-        colaborador.setNome("lilian");
+        colaborador.setNome("Teste");
         colaborador.setDataContratacao(LocalDate.now());
         colaborador.setCargo(Cargo.DEV_JR);
 
@@ -63,7 +63,7 @@ public class IndicacaoServiceTest {
     public void testarMetódoSalvarIndicacaoPositivo(){
 
         Usuario usuario = new Usuario();
-        usuario.setEmail("lucas@123");
+        usuario.setEmail("andre@123.com");
 
         Mockito.when(usuarioService.encontrarUsuarioPorEmail(usuario.getEmail()))
                 .thenReturn(usuario);
