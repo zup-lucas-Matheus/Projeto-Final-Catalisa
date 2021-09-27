@@ -9,6 +9,7 @@ import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroFiltroIndica
 import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroIndicacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,7 +36,6 @@ public class IndicacaoService {
      * Vinculo as Indicações ao Colaborador da empresa
      * Para utilizar essas informações em relatórios.
      */
-
     public Indicacao saveIndicacao(String email, Indicacao indicado){
         Usuario usuario = usuarioService.encontrarUsuarioPorEmail(email);
         Colaborador colaborador = colaboradorService.buscarColaboradorPorUsuario(usuario);
@@ -106,6 +106,7 @@ public class IndicacaoService {
 
     //Metódo para deletar indicaçao com exption.
     public void deleteIndicacao(int id){
+
         indicacaoRepository.delete(findIndicacao(id));
     }
 

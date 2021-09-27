@@ -29,12 +29,15 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
 
     private static final String[] POST_PUBLICOS = {
             "/usuarios",
-            "/login"
+            "/login",
+            "/colaborador",
+            "/indicacao"
     };
 
     private static final String[] GET_PUBLICOS = {
         "/usuarios",
-        "/indicacao"
+        "/indicacao",
+        "/colaborador",
 
     };
 
