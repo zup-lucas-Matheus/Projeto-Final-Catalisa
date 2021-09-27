@@ -4,6 +4,7 @@ import br.com.zup.TaDentro.colaborador.Colaborador;
 import br.com.zup.TaDentro.enums.PerfilDeSituacao;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
@@ -26,13 +27,15 @@ public class Indicacao {
     private String nome;
     @NotNull
     @NotBlank(message = "{validacao.cpf.vazio}")
-    @CPF(message = "{validacao.cpf.indicacao}")
+    @Length(min = 11, max = 11,message = "{validacao.cpf.indicacao}")
     private String cpf;
     private LocalDate dataDaContratacao;
     @Email(message = "{validacao.email.indicacao}")
     private String email;
     @Enumerated(EnumType.STRING)
     private PerfilDeSituacao situacao;
+    private LocalDate dataDeCadastro;
+
 
     @ManyToOne
     private Colaborador colaborador;
@@ -94,5 +97,13 @@ public class Indicacao {
 
     public void setColaborador(Colaborador colaborador) {
         this.colaborador = colaborador;
+    }
+
+    public LocalDate getDataDeCadastro() {
+        return dataDeCadastro;
+    }
+
+    public void setDataDeCadastro(LocalDate dataDeCadastro) {
+        this.dataDeCadastro = dataDeCadastro;
     }
 }

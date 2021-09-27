@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 public class ColaboradorResumidoDTO {
 
+
     @NotNull
     private String nome;
     @NotNull

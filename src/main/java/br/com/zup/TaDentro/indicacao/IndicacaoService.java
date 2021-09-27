@@ -5,17 +5,17 @@ import br.com.zup.TaDentro.Usuario.UsuarioService;
 import br.com.zup.TaDentro.colaborador.Colaborador;
 import br.com.zup.TaDentro.colaborador.ColaboradorService;
 import br.com.zup.TaDentro.enums.PerfilDeSituacao;
-import br.com.zup.TaDentro.jwt.UsuarioLoginService;
+import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroFiltroIndicacao;
 import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroIndicacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class IndicacaoService {
@@ -27,6 +27,10 @@ public class IndicacaoService {
     @Autowired
     private UsuarioService usuarioService;
 
+
+    private static final String MENSAGEM_SEM_FILTRO = "Não existem Indicações cadastradas";
+    private static final String MENSAGEM_COM_FILTRO = "Não existem Indicações cadastradas no período";
+
     /**
      *
      * Vinculo as Indicações ao Colaborador da empresa
@@ -37,7 +41,7 @@ public class IndicacaoService {
         Colaborador colaborador = colaboradorService.buscarColaboradorPorUsuario(usuario);
         indicacaoDuplicada(indicado.getCpf());
         indicado.setColaborador(colaborador);
-        indicado.setDataDaContratacao(LocalDate.now());
+        indicado.setDataDeCadastro(LocalDate.now());
         indicado.setSituacao(PerfilDeSituacao.EM_PROCESSO_SELETIVO);
         return indicacaoRepository.save(indicado);
     }
@@ -57,12 +61,12 @@ public class IndicacaoService {
     }
 
     //Metódo para atualizar indicação...
-    public void atualizarIndicacao(Indicacao indicacao){
+    public Indicacao atualizarIndicacao(Indicacao indicacao){
         validaSituacao(indicacao);
         Indicacao indicacaoSalva = findIndicacaoPorCpf(indicacao.getCpf());
         ajustarSituacaoEdata(indicacao, indicacaoSalva);
 
-        indicacaoRepository.save(indicacaoSalva);
+        return indicacaoRepository.save(indicacaoSalva);
     }
 
     private void ajustarSituacaoEdata(Indicacao indicacao, Indicacao indicacaoSalva) {
@@ -105,5 +109,60 @@ public class IndicacaoService {
 
         indicacaoRepository.delete(findIndicacao(id));
     }
+
+    //Para a service de Formulario
+
+    public List<Indicacao> pesquisarIndicacao(Colaborador colaborador, String dataInicial, String dataFinal , String situacao){
+
+        List<Indicacao> indicacaoListRetorno = null;
+        //Trás toda as indicações sem passa a data.
+        if (Objects.isNull(dataInicial) && Objects.isNull(dataFinal)) {
+            indicacaoListRetorno =  indicacaoRepository.findByColaborador(colaborador);
+            validacaoFiltroSemIndicacao(indicacaoListRetorno,MENSAGEM_SEM_FILTRO);
+        }
+
+        validacaoPorDataInicialORdataFinal(dataInicial, dataFinal);
+        if (dataInicial != null && dataFinal != null) {
+            var dataInicialConvert = LocalDate.parse(dataInicial);
+            var dataFinalConvert = LocalDate.parse(dataFinal);
+            validacaoPorDataInicialMaiorQueDataFinal(dataInicialConvert, dataFinalConvert);
+            //retorna a indicacao com data.
+            indicacaoListRetorno = indicacaoRepository.
+                    findByColaboradorAndDataDeCadastroBetween(colaborador, dataInicialConvert, dataFinalConvert);
+            validacaoFiltroSemIndicacao(indicacaoListRetorno, MENSAGEM_COM_FILTRO);
+        }
+
+        if (situacao != null && indicacaoListRetorno != null) {
+            return indicacaoListRetorno.stream()
+                    .filter(indicacao -> indicacao.getSituacao().equals(PerfilDeSituacao.valueOf(situacao)))
+                    .collect(Collectors.toList());
+        }
+         return indicacaoListRetorno;
+    }
+
+    // Validacao se a data Inicial for maior que a data final
+    public void validacaoPorDataInicialMaiorQueDataFinal(LocalDate dataInicial, LocalDate dataFinal){
+
+        if (dataInicial.isAfter(dataFinal)) {
+            throw new MensagemErroIndicacao("Data Inicial maior que Data Final");
+        }
+    }
+
+    // Validacao para filtro sem indicação/E no periodo And uma data preenchida e outra não.
+    public void validacaoPorDataInicialORdataFinal(String dataInicial, String dataFinal){
+
+        if ((Objects.isNull(dataInicial) && Objects.nonNull(dataFinal)) ||
+                (Objects.nonNull(dataInicial) && Objects.isNull(dataFinal)))  {
+            throw new MensagemErroIndicacao("A data precisa ser preenchida corretamente");
+        }
+    }
+
+    public void validacaoFiltroSemIndicacao(List<Indicacao> indicacaoList, String mensagem){
+
+        if (indicacaoList.isEmpty()) {
+            throw new MensagemErroFiltroIndicacao(mensagem);
+        }
+    }
+
 
 }

@@ -3,10 +3,8 @@ package br.com.zup.TaDentro.colaborador;
 
 import br.com.zup.TaDentro.Usuario.Usuario;
 import br.com.zup.TaDentro.Usuario.dto.UsuarioDto;
+import br.com.zup.TaDentro.colaborador.dtos.ColaboradorPUTDto;
 import br.com.zup.TaDentro.colaborador.dtos.ColaboradorResumidoDTO;
-import br.com.zup.TaDentro.indicacao.Indicacao;
-import br.com.zup.TaDentro.indicacao.dtos.IndicacaoPesquisaDto;
-import br.com.zup.TaDentro.indicacao.dtos.IndicacaoResumidaDTO;
 import br.com.zup.TaDentro.jwt.filter.JwtComponent;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,8 +84,12 @@ public class ColaboradorController {
                 .map(dto -> modelMapper.map(dto, IndicacaoResumidaDTO.class))
                 .collect(Collectors.toList());
         return dtos;
+        
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void atualizarColaborador(@RequestBody ColaboradorPUTDto colaboradorPUTDto) {
 
+
+        Colaborador colaboradorModel = modelMapper.map(colaboradorPUTDto, Colaborador.class);
+        colaboradorService.atualizarColaborador(colaboradorModel);
     }
-*/
-
 }

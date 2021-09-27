@@ -1,6 +1,8 @@
 package br.com.zup.TaDentro.Usuario;
 
 import br.com.zup.TaDentro.Usuario.dto.UsuarioDto;
+import br.com.zup.TaDentro.indicacao.Indicacao;
+import br.com.zup.TaDentro.indicacao.dtos.IndicacaoPUTDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,14 +43,16 @@ public class UsuarioController {
 
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletarPorID(@PathVariable int id) {
+    public void deletarUsuario(@PathVariable int id){
+
         usuarioService.deletarUsuario(id);
     }
 
-    public List<UsuarioDto> exibirUser(){
+    @PutMapping
+    public void atualizarUsuario(UsuarioDto usuario){
+        Usuario usuarioModel = modelMapper.map(usuario, Usuario.class);
+        usuarioService.atualizarUsuario(usuarioModel);
 
-        return modelMapper.map(usuarioService.exibirUsuario(), (Type) UsuarioDto.class);
     }
 
 
