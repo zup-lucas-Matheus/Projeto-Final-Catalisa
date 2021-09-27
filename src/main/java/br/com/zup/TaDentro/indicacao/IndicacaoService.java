@@ -35,7 +35,6 @@ public class IndicacaoService {
      * Vinculo as Indicações ao Colaborador da empresa
      * Para utilizar essas informações em relatórios.
      */
-
     public Indicacao saveIndicacao(String email, Indicacao indicado){
         Usuario usuario = usuarioService.encontrarUsuarioPorEmail(email);
         Colaborador colaborador = colaboradorService.buscarColaboradorPorUsuario(usuario);

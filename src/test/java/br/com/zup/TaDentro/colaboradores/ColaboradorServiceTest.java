@@ -6,8 +6,8 @@ import br.com.zup.TaDentro.colaborador.Colaborador;
 import br.com.zup.TaDentro.colaborador.ColaboradorRepository;
 import br.com.zup.TaDentro.colaborador.ColaboradorService;
 import br.com.zup.TaDentro.colaborador.exceptionColaborador.MensagemErroColaborador;
+
 import br.com.zup.TaDentro.enums.Cargo;
-import br.com.zup.TaDentro.indicacao.Indicacao;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -26,15 +26,14 @@ public class ColaboradorServiceTest {
 
     @Autowired
     private ColaboradorService colaboradorService;
-
     @MockBean
     private ColaboradorRepository colaboradorRepository;
-
+    @Mock
+    private UsuarioService usuarioService;
     private Colaborador colaborador = criarColaborador();
     private Usuario usuario;
 
-    @Mock
-    private UsuarioService usuarioService;
+
 
     private Colaborador criarColaborador() {
         colaborador = new Colaborador();
@@ -74,17 +73,9 @@ public class ColaboradorServiceTest {
         Assertions.assertNotNull(objetoColaborador.getCpf());
     }
 
-    @Test
-    public void testarExibirTodosOsColaboradores() {
 
-        Colaborador colaborador = new Colaborador();
-        Iterable<Colaborador> listaDeColaboradores = Arrays.asList(colaborador);
 
-        Mockito.when(colaboradorRepository.findAll())
-                .thenReturn(listaDeColaboradores);
 
-        Assertions.assertTrue(colaboradorService.exibirTodosOsColaboradores() instanceof List);
-    }
 
     @Test
     public void testarSeColaboradorJaExiste() {
@@ -102,8 +93,12 @@ public class ColaboradorServiceTest {
 
     @Test
     public void testarBuscarColaboradorPorCpfCaminhoPositivo() {
+        Usuario usuario = new Usuario();
+        usuario.setEmail("lucas@123");
 
-        Colaborador colaborador = new Colaborador();
+
+        Mockito.when(usuarioService.encontrarUsuarioPorEmail(usuario.getEmail()))
+                .thenReturn(usuario);
 
         Mockito.when(colaboradorRepository.findByCpf(Mockito.anyString()))
                 .thenReturn(Optional.of(colaborador));
@@ -123,10 +118,8 @@ public class ColaboradorServiceTest {
         RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> {
             colaboradorService.buscarColaboradorPorCpf("12345678910");
         });
-
         Assertions.assertFalse(exception.getMessage().equals("Colaborador não cadastrado"));
     }
-
 
     @Test
     public void testarDeletarPorIDCaminhoPositivo() {
@@ -155,12 +148,5 @@ public class ColaboradorServiceTest {
 
     }
 }
-
-
-
-
-
-
-
 
 
