@@ -1,6 +1,8 @@
 package br.com.zup.TaDentro.colaborador;
 
 
+import br.com.zup.TaDentro.Usuario.Usuario;
+import br.com.zup.TaDentro.Usuario.dto.UsuarioDto;
 import br.com.zup.TaDentro.colaborador.dtos.ColaboradorPUTDto;
 import br.com.zup.TaDentro.colaborador.dtos.ColaboradorResumidoDTO;
 import br.com.zup.TaDentro.jwt.filter.JwtComponent;
@@ -34,9 +36,9 @@ public class ColaboradorController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ColaboradorResumidoDTO salvarColaborador(@RequestBody @Valid Colaborador colaborador, Authentication authentication) {
+    public ColaboradorResumidoDTO salvarColaborador(@RequestBody @Valid Colaborador colaborador, Authentication authentication) throws Exception {
 
-        String email = authentication.getName();
+        String email ="yanna@gmail.com";
 
         Colaborador colaboradorModel = colaboradorService.salvarColaborador(email, colaborador);
 
@@ -64,11 +66,30 @@ public class ColaboradorController {
 
 
     @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Colaborador atualizarColaborador() {
+
+        ColaboradorResumidoDTO colaboradorResumidoDTO = new ColaboradorResumidoDTO();
+        return modelMapper.map(colaboradorResumidoDTO, Colaborador.class);
+    }
+
+    /*/Indicação de Pesquisa -
+    @GetMapping
+    public List<IndicacaoResumidaDTO> indicacaoList(@RequestBody IndicacaoPesquisaDto indicacaoPesquisaDto, Authentication authentication){
+        String email = authentication.getName();
+        List<Indicacao> retorno = colaboradorService.pesquisaPorData(email, indicacaoPesquisaDto.getDataInicial(), indicacaoPesquisaDto.getDataFinal());
+
+        List<IndicacaoResumidaDTO> dtos = retorno
+                .stream()
+                .map(dto -> modelMapper.map(dto, IndicacaoResumidaDTO.class))
+                .collect(Collectors.toList());
+        return dtos;
+        
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void atualizarColaborador(@RequestBody ColaboradorPUTDto colaboradorPUTDto) {
+
 
         Colaborador colaboradorModel = modelMapper.map(colaboradorPUTDto, Colaborador.class);
         colaboradorService.atualizarColaborador(colaboradorModel);
     }
-
 }

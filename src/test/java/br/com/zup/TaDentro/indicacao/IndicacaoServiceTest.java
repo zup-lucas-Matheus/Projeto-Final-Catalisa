@@ -7,6 +7,7 @@ import br.com.zup.TaDentro.colaborador.ColaboradorService;
 import br.com.zup.TaDentro.enums.Cargo;
 import br.com.zup.TaDentro.enums.PerfilDeSituacao;
 import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroFiltroIndicacao;
+import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroIndicacao;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -16,8 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
 
 @SpringBootTest
 public class IndicacaoServiceTest {
@@ -64,12 +65,10 @@ public class IndicacaoServiceTest {
         Usuario usuario = new Usuario();
         usuario.setEmail("andre@123.com");
 
-
         Mockito.when(usuarioService.encontrarUsuarioPorEmail(usuario.getEmail()))
                 .thenReturn(usuario);
         Mockito.when(colaboradorService.buscarColaboradorPorUsuario(usuario))
                 .thenReturn(colaborador);
-
 
         Mockito.when(indicacaoRepository.findByCpf(indicacao.getCpf()))
                 .thenReturn(Optional.empty());
@@ -305,5 +304,69 @@ public class IndicacaoServiceTest {
 
         Assertions.assertTrue(exception.getMessage().equals("O campo situação ou a data da contratação é obrigatório"));
     }
+
+    @Test
+    public void testeDeletarIndicacaoPorIdPositivo(){
+
+        Mockito.when(indicacaoRepository.findById(Mockito.anyInt()))
+                .thenReturn(Optional.ofNullable(indicacao));
+        indicacaoService.deleteIndicacao(1);
+        Mockito.verify(indicacaoRepository).delete(indicacao);
+
+    }
+
+    @Test
+    public void testeDeletarIndicacaoPorIdNegativo(){
+
+        MensagemErroIndicacao mensagemErroIndicacao
+                = new MensagemErroIndicacao("Indicação não encontrada");
+
+        Mockito.when(indicacaoRepository.findById(Mockito.anyInt()))
+                .thenThrow(mensagemErroIndicacao);
+
+        RuntimeException exception = Assertions
+         .assertThrows(RuntimeException.class, () -> {indicacaoService.deleteIndicacao(1);});
+       /* Assertions.assertNotNull(exception);*/
+        Assertions.assertEquals("Indicação não encontrada", exception.getMessage());
+
+    }
+
+    @Test
+    public void testeValidacaoCpfDuplicadoNegativoParaLancaException(){
+
+        MensagemErroIndicacao mensagemErroIndicacao
+                = new MensagemErroIndicacao("Indicação já cadastrada");
+        Mockito.when(indicacaoRepository.findByCpf(Mockito.anyString()))
+                .thenThrow(mensagemErroIndicacao);
+
+        RuntimeException exception = Assertions
+                .assertThrows(RuntimeException.class, () -> {indicacaoService.indicacaoDuplicada("12345678");});
+        /* Assertions.assertNotNull(exception);*/
+        Assertions.assertEquals("Indicação já cadastrada", exception.getMessage());
+
+    }
+
+
+    @Test
+    public void testarMetodoQueRetornaTodasAsIndicacoes(){
+
+        List<Indicacao> indicacaoList = Arrays.asList(indicacao);
+        Mockito.when(indicacaoRepository.findAll()).thenReturn(indicacaoList);
+
+        List<Indicacao> indicacaoListTest = Arrays.asList(indicacao);
+        Assertions.assertEquals(indicacaoList, indicacaoListTest);
+    }
+
+
+    @Test
+    public void testeValidacaoCpfDuplicadoPositivo(){
+
+        Mockito.when(indicacaoRepository.findByCpf(indicacao.getCpf()))
+                .thenReturn(Optional.of(indicacao));
+
+        Assertions.assertEquals("1234", indicacaoService.indicacaoDuplicada("123"));
+
+    }
+
 
 }
