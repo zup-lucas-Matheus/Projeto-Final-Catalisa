@@ -64,7 +64,7 @@ public class ColaboradorServiceTest {
 
         Colaborador objetoColaborador = colaboradorService.salvarColaborador(usuario.getEmail(), colaborador);
 
-        Assertions.assertEquals(colaborador , objetoColaborador);
+        Assertions.assertEquals(colaborador, objetoColaborador);
         Assertions.assertEquals(colaborador.getCpf(), objetoColaborador.getCpf());
         Assertions.assertEquals(colaborador.getNome(), objetoColaborador.getNome());
         Assertions.assertEquals(colaborador.getDataContratacao(), objetoColaborador.getDataContratacao());
@@ -98,20 +98,16 @@ public class ColaboradorServiceTest {
     }
 
 
+    @Test
+    public void testarDeletarPorIDCaminhoPositivo() {
 
-  /* @Test
-    public void testarDeletarPorID() {
+        Mockito.when(colaboradorRepository.findById(Mockito.anyInt()))
+                .thenReturn(Optional.ofNullable(colaborador));
 
-        Colaborador colaborador = new Colaborador();
+        colaboradorService.deletarColaborador(1);
 
-        Optional <Colaborador> colaboradorOptional = Optional.of(colaborador);
-
-       Mockito.when(colaboradorRepository.deleteById(Mockito.anyInt()))
-               .thenReturn(colaboradorOptional);
-
-        Assertions.assertEquals(colaborador , colaboradorService.deletarColaborador(1);
-
-    }*/
+        Mockito.verify(colaboradorRepository).delete(colaborador);
+    }
 
 
 }
