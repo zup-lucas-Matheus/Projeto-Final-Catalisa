@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest (ColaboradorController.class)
 public class ColaboradorControllerTest {
-
+/*
     @MockBean
     private ColaboradorService colaboradorService;
 
@@ -23,17 +23,16 @@ public class ColaboradorControllerTest {
     private MockMvc mockMvc;
 
 
-
-    /*@BeforeEach
-    public void setUp () {
+    @BeforeEach
+    public void setUp() {
         colaborador = new Colaborador();
         usuario = new Usuario();
 
         colaborador.setNome("Lucas");
         colaborador.setEmail("lucas@123.com");
         colaborador.setCargo(Cargo.DEV_JR);
-        colaborador.setLoginUsuario(usuario);*/
+        colaborador.setLoginUsuario(usuario);
 
     }
-
-
+*/
+}
