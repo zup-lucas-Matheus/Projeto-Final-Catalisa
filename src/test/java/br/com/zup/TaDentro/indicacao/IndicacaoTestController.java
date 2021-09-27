@@ -1,8 +1,10 @@
 package br.com.zup.TaDentro.indicacao;
 
 import br.com.zup.TaDentro.enums.PerfilDeSituacao;
+import br.com.zup.TaDentro.indicacao.dtos.IndicacaoPUTDto;
 import br.com.zup.TaDentro.indicacao.dtos.IndicacaoResumidaDTO;
 import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroIndicacao;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,12 +18,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 
 @WithMockUser(username = "xablau", password = "123")
@@ -64,6 +70,33 @@ public class IndicacaoTestController {
                         .content(json))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
 
+    }
+    @Test
+    void testarMetodoAtualizarIndicacaoComSucesso() throws Exception {
+
+        Indicacao indicacaoSalva = modelMapper.map(indicacao, Indicacao.class);
+
+        Mockito.when(indicacaoService.atualizarIndicacao(Mockito.any()))
+                .thenReturn(indicacaoSalva);
+
+        String json = objectMapper.writeValueAsString(indicacao);
+
+        ResultActions resultActions = mockMvc
+                .perform(MockMvcRequestBuilders.put("/indicacao")
+                 .contentType(MediaType.APPLICATION_JSON)
+                 .content(json))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+    }
+
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void atualizarIndicacao(@RequestBody IndicacaoPUTDto indicacao) {
+
+        Indicacao indicacaoModel = modelMapper.map(indicacao, Indicacao.class);
+
+        indicacaoService.atualizarIndicacao(indicacaoModel);
     }
 
 
