@@ -1,16 +1,20 @@
 package br.com.zup.TaDentro.colaboradores;
 
 import br.com.zup.TaDentro.Usuario.Usuario;
+import br.com.zup.TaDentro.Usuario.UsuarioService;
 import br.com.zup.TaDentro.colaborador.Colaborador;
 import br.com.zup.TaDentro.colaborador.ColaboradorRepository;
 import br.com.zup.TaDentro.colaborador.ColaboradorService;
+import br.com.zup.TaDentro.enums.Cargo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -24,25 +28,51 @@ public class ColaboradorServiceTest {
     @MockBean
     private ColaboradorRepository colaboradorRepository;
 
-    private Colaborador colaborador;
+    private Colaborador colaborador = criarColaborador();
     private Usuario usuario;
 
+    @Mock
+    private UsuarioService usuarioService;
+
+    private Colaborador criarColaborador() {
+        colaborador = new Colaborador();
+
+        Colaborador colaborador = new Colaborador();
+        colaborador.setCpf("12345678910");
+        colaborador.setNome("Teste");
+        colaborador.setDataContratacao(LocalDate.now());
+        colaborador.setCargo(Cargo.DEV_JR);
+
+        return colaborador;
+    }
 
     @Test
     public void testarSalvarColaborador() {
 
-        Colaborador colaborador = new Colaborador();
+        Usuario usuario = new Usuario();
+        usuario.setEmail("andre@123.com");
 
-        Mockito.when(colaboradorRepository.save(Mockito.any(Colaborador.class)))
+        Mockito.when(usuarioService.encontrarUsuarioPorEmail(usuario.getEmail()))
+                .thenReturn(usuario);
+
+        Mockito.when(colaboradorRepository.findByCpf(colaborador.getCpf()))
+                .thenReturn(Optional.empty());
+
+        colaborador.setLoginUsuario(usuario);
+        Mockito.when(colaboradorRepository.save(Mockito.any()))
                 .thenReturn(colaborador);
 
-        Colaborador colaboradorTeste = colaboradorService.salvarColaborador(usuario.getEmail(), colaborador);
-        Assertions.assertEquals(colaborador, colaboradorTeste);
+        Colaborador objetoColaborador = colaboradorService.salvarColaborador(usuario.getEmail(), colaborador);
+
+        Assertions.assertEquals(colaborador , objetoColaborador);
+        Assertions.assertEquals(colaborador.getCpf(), objetoColaborador.getCpf());
+        Assertions.assertEquals(colaborador.getNome(), objetoColaborador.getNome());
+        Assertions.assertEquals(colaborador.getDataContratacao(), objetoColaborador.getDataContratacao());
+        Assertions.assertEquals(colaborador.getCargo(), objetoColaborador.getCargo());
+        Assertions.assertNotNull(objetoColaborador.getCpf());
     }
 
-
     @Test
-
     public void testarExibirTodosOsColaboradores() {
 
         Colaborador colaborador = new Colaborador();
