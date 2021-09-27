@@ -45,7 +45,7 @@ public class IndicacaoTestController {
     private ModelMapper modelMapper;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
 
         indicacao = new Indicacao();
         indicacao.setEmail("lmatheus@123");
@@ -71,6 +71,7 @@ public class IndicacaoTestController {
                 .andExpect(MockMvcResultMatchers.status().isCreated());
 
     }
+
     @Test
     void testarMetodoAtualizarIndicacaoComSucesso() throws Exception {
 
@@ -83,21 +84,12 @@ public class IndicacaoTestController {
 
         ResultActions resultActions = mockMvc
                 .perform(MockMvcRequestBuilders.put("/indicacao")
-                 .contentType(MediaType.APPLICATION_JSON)
-                 .content(json))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
     }
 
-
-    @PutMapping
-    @ResponseStatus(HttpStatus.OK)
-    public void atualizarIndicacao(@RequestBody IndicacaoPUTDto indicacao) {
-
-        Indicacao indicacaoModel = modelMapper.map(indicacao, Indicacao.class);
-
-        indicacaoService.atualizarIndicacao(indicacaoModel);
-    }
 
 
     @Test
