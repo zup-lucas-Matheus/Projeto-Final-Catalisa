@@ -1,4 +1,4 @@
-/*package br.com.zup.TaDentro.colaboradores;
+package br.com.zup.TaDentro.colaboradores;
 
 import br.com.zup.TaDentro.Usuario.Usuario;
 import br.com.zup.TaDentro.colaborador.Colaborador;
@@ -28,7 +28,7 @@ public class ColaboradorServiceTest {
     private Usuario usuario;
 
 
-    /*@Test
+    @Test
     public void testarSalvarColaborador() {
 
         Colaborador colaborador = new Colaborador();
@@ -36,12 +36,12 @@ public class ColaboradorServiceTest {
         Mockito.when(colaboradorRepository.save(Mockito.any(Colaborador.class)))
                 .thenReturn(colaborador);
 
-        Colaborador colaboradorTeste = colaboradorService.salvarColaborador(colaborador);
+        Colaborador colaboradorTeste = colaboradorService.salvarColaborador(usuario.getEmail(), colaborador);
 
         Assertions.assertEquals(colaborador, colaboradorTeste);
-    }*/
+    }
 
-/*
+
     @Test
 
     public void testarExibirTodosOsColaboradores() {
@@ -70,7 +70,7 @@ public class ColaboradorServiceTest {
 
 
 
-   @Test
+   /*@Test
     public void testarDeletarPorID() {
 
         Colaborador colaborador = new Colaborador();
@@ -85,7 +85,7 @@ public class ColaboradorServiceTest {
 
         Assertions.assertTrue(colaborador, colaboradorService.deletarPorID(1);
 
-    }
+    }*/
 
 
-}*/
+}

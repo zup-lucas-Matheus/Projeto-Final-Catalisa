@@ -7,28 +7,20 @@ import br.com.zup.TaDentro.colaborador.ColaboradorService;
 import br.com.zup.TaDentro.enums.Cargo;
 import br.com.zup.TaDentro.enums.PerfilDeSituacao;
 import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroFiltroIndicacao;
-import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroIndicacao;
-import org.apache.tomcat.jni.Local;
-import org.assertj.core.util.VisibleForTesting;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import javax.persistence.Table;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @SpringBootTest
-public class IndicacaoTestService {
+public class IndicacaoServiceTest {
 
     @Autowired
     private IndicacaoService indicacaoService;
