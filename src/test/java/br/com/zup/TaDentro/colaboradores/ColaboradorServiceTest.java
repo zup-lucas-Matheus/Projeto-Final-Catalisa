@@ -70,22 +70,28 @@ public class ColaboradorServiceTest {
 
 
 
-   /*@Test
+   @Test
     public void testarDeletarPorID() {
 
         Colaborador colaborador = new Colaborador();
 
-        // Optional <Colaborador> colaboradorOptional = Optional.of(colaborador);
+        Optional <Colaborador> colaboradorOptional = Optional.of(colaborador);
 
-        Colaborador colaboradorExistente = colaboradorService.deletarPorID(id);
+       Mockito.when(colaboradorRepository.deleteById(Mockito.anyInt())).thenReturn(colaboradorOptional);
+
+        Assertions.assertEquals(colaborador , colaboradorService.deletarColaborador(1);
+
+    }
 
 
-        Mockito.when(colaboradorRepository.deleteById(Mockito.anyInt(Colaborador.class)))
-                .thenReturn(colaboradorOptional);
+    @Test
+    public void testarMetodoBuscarContatoPorIDCaminhoPositivo(){
+        Contato contato = new Contato();
+        Optional<Contato> contatoOptional = Optional.of(contato);
+        Mockito.when(contatoRepository.findById(Mockito.anyInt())).thenReturn(contatoOptional);
 
-        Assertions.assertTrue(colaborador, colaboradorService.deletarPorID(1);
-
-    }*/
+        Assertions.assertEquals(contato, contatoService.buscarContatoPeloId(12));
+    }
 
 
 }

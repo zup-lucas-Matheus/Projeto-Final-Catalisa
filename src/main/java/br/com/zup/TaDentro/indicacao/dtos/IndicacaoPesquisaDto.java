@@ -2,12 +2,12 @@ package br.com.zup.TaDentro.indicacao.dtos;
 
 import java.time.LocalDate;
 
-public class IndicacaoPesquisaDTO {
+public class IndicacaoPesquisaDto {
 
     private LocalDate dataInicial;
     private LocalDate dataFinal;
 
-    public IndicacaoPesquisaDTO() {
+    public IndicacaoPesquisaDto() {
     }
 
     public LocalDate getDataInicial() {
