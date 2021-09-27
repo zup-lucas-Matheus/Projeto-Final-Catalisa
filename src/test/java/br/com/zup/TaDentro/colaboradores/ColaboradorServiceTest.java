@@ -101,24 +101,31 @@ public class ColaboradorServiceTest {
 
 
     @Test
-    public void testarBuscarColaboradorPorCpfCaminhoPositivo () {
+    public void testarBuscarColaboradorPorCpfCaminhoPositivo() {
 
         Colaborador colaborador = new Colaborador();
 
         Mockito.when(colaboradorRepository.findByCpf(Mockito.anyString()))
                 .thenReturn(Optional.of(colaborador));
 
-        Assertions.assertEquals(colaborador , colaboradorService.buscarColaboradorPorCpf("12345678910"));
+        Assertions.assertEquals(colaborador, colaboradorService.buscarColaboradorPorCpf("12345678910"));
     }
 
+    @Test
+    public void testarEncontrarIndicacaoPorCpfCaminhoNegativo() {
 
+        Colaborador colaborador = new Colaborador();
+        Optional<Colaborador> colaboradorOptional = Optional.empty();
 
+        Mockito.when(colaboradorRepository.findByCpf(Mockito.anyString()))
+                .thenReturn(colaboradorOptional);
 
+        RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> {
+            colaboradorService.buscarColaboradorPorCpf("12345678910");
+        });
 
-
-
-
-
+        Assertions.assertFalse(exception.getMessage().equals("Colaborador não cadastrado"));
+    }
 
 
     @Test
