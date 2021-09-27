@@ -1,39 +1,47 @@
 package br.com.zup.TaDentro.colaboradores;
 
-import br.com.zup.TaDentro.Usuario.Usuario;
 import br.com.zup.TaDentro.colaborador.Colaborador;
-import br.com.zup.TaDentro.colaborador.ColaboradorController;
 import br.com.zup.TaDentro.colaborador.ColaboradorService;
 import br.com.zup.TaDentro.enums.Cargo;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest (ColaboradorController.class)
+import java.time.LocalDate;
+
+@WithMockUser(username = "Teste", password = "123")
+@AutoConfigureMockMvc
+@SpringBootTest
 public class ColaboradorControllerTest {
 
     @MockBean
     private ColaboradorService colaboradorService;
-
     @Autowired
     private MockMvc mockMvc;
+    private ObjectMapper objectMapper;
+    private Colaborador colaborador;
 
+    @SpyBean
+    private ModelMapper modelMapper;
 
-
-    /*@BeforeEach
-    public void setUp () {
+    @BeforeEach
+    public void setUp() {
         colaborador = new Colaborador();
-        usuario = new Usuario();
-
-        colaborador.setNome("Lucas");
-        colaborador.setEmail("lucas@123.com");
-        colaborador.setCargo(Cargo.DEV_JR);
-        colaborador.setLoginUsuario(usuario);*/
-
+        colaborador.setNome("André");
+        colaborador.setCpf("12345678910");
+        colaborador.setCargo(Cargo.ASSISTENTE);
+        colaborador.setDataContratacao(LocalDate.now());
+        objectMapper = new ObjectMapper();
     }
+
+
+}
 
 
