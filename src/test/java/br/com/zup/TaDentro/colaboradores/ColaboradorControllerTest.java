@@ -28,6 +28,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.ui.Model;
 
+
+@WebMvcTest (ColaboradorController.class)
+public class ColaboradorControllerTest {
+
 import javax.annotation.security.RunAs;
 import java.beans.BeanProperty;
 import java.time.LocalDate;
@@ -53,6 +57,11 @@ class ColaboradorControllerTest {
     @BeforeEach
     public void setUp() {
 
+    @BeforeEach
+    public void setUp() {
+        colaborador = new Colaborador();
+
+
         usuario = new Usuario();
         usuario.setEmail("lucas@123.com");
 
@@ -64,6 +73,9 @@ class ColaboradorControllerTest {
 
         objectMapper = new ObjectMapper();
     }
+    
+*/
+
 
     @WithMockUser(username = "xablau", password = "123")
     @Test
@@ -81,5 +93,4 @@ class ColaboradorControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated());
 
     }
-
 }

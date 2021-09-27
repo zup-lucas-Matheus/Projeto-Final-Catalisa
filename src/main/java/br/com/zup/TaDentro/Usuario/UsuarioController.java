@@ -41,8 +41,10 @@ public class UsuarioController {
 
     }
 
+
     @DeleteMapping("/{id}")
     public void deletarUsuario(@PathVariable int id){
+
         usuarioService.deletarUsuario(id);
     }
 
