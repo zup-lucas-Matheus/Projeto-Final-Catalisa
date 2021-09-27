@@ -37,12 +37,20 @@ public class UsuarioController {
                 .collect(Collectors.toList());
         return dtos;
 
+    }
 
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletarPorID(@PathVariable int id) {
+        usuarioService.deletarUsuario(id);
     }
 
     public List<UsuarioDto> exibirUser(){
 
         return modelMapper.map(usuarioService.exibirUsuario(), (Type) UsuarioDto.class);
     }
+
+
 
 }

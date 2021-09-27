@@ -26,8 +26,9 @@ public class IndicacaoController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
 
-    public IndicacaoResumidaDTO cadastrarIndicacao(@RequestBody @Valid Indicacao indicacao, Authentication authentication){
-        String cpf = authentication.getName();
+    public IndicacaoResumidaDTO cadastrarIndicacao(@RequestBody @Valid Indicacao indicacao){
+        Authentication authentication;
+        String cpf = "leo@gmail.com";
         Indicacao indicacaoModel = indicacaoService.saveIndicacao(cpf,indicacao);
         return modelMapper.map(indicacaoModel ,  IndicacaoResumidaDTO.class);
     }
@@ -43,8 +44,10 @@ public class IndicacaoController {
         return indicacaoResumidaDTOS;
     }
 
+
     @DeleteMapping("/{id}")
-    public void deletarIndicacao(int id){
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletarIndicacao(@PathVariable int id){
 
         indicacaoService.deleteIndicacao(id);
     }
@@ -56,5 +59,4 @@ public class IndicacaoController {
 
         indicacaoService.atualizarIndicacao(indicacaoModel);
     }
-
 }

@@ -113,6 +113,7 @@ public class ColaboradorService {
 
     }
 
+    /*
     //Metódo formulario
     public List<Indicacao> pesquisaPorData(String email, LocalDate dataInicial, LocalDate dataFinal){
         Usuario usuario = usuarioService.encontrarUsuarioPorEmail(email);
@@ -120,8 +121,7 @@ public class ColaboradorService {
 
         return indicacaoRepository.findByColaboradorAndDataDeCadastroBetween(colaborador.get(), dataInicial, dataFinal);
 
-    }
-
+    }*/
 }
 
 

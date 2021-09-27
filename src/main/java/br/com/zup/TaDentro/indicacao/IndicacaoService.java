@@ -9,6 +9,7 @@ import br.com.zup.TaDentro.jwt.UsuarioLoginService;
 import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroIndicacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -101,6 +102,7 @@ public class IndicacaoService {
 
     //Metódo para deletar indicaçao com exption.
     public void deleteIndicacao(int id){
+
         indicacaoRepository.delete(findIndicacao(id));
     }
 

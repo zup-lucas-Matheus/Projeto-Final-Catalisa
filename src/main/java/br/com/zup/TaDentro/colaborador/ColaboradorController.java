@@ -1,6 +1,8 @@
 package br.com.zup.TaDentro.colaborador;
 
 
+import br.com.zup.TaDentro.Usuario.Usuario;
+import br.com.zup.TaDentro.Usuario.dto.UsuarioDto;
 import br.com.zup.TaDentro.colaborador.dtos.ColaboradorResumidoDTO;
 import br.com.zup.TaDentro.indicacao.Indicacao;
 import br.com.zup.TaDentro.indicacao.dtos.IndicacaoPesquisaDto;
@@ -34,9 +36,9 @@ public class ColaboradorController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ColaboradorResumidoDTO salvarColaborador(@RequestBody @Valid Colaborador colaborador, Authentication authentication) {
+    public ColaboradorResumidoDTO salvarColaborador(@RequestBody @Valid Colaborador colaborador, Authentication authentication) throws Exception {
 
-        String email = authentication.getName();
+        String email ="yanna@gmail.com";
 
         Colaborador colaboradorModel = colaboradorService.salvarColaborador(email, colaborador);
 
@@ -71,8 +73,9 @@ public class ColaboradorController {
         return modelMapper.map(colaboradorResumidoDTO, Colaborador.class);
     }
 
+    /*/Indicação de Pesquisa -
     @GetMapping
-    public List<IndicacaoResumidaDTO> indicacaoList(@RequestBody IndicacaoPesquisaDTO indicacaoPesquisaDto, Authentication authentication){
+    public List<IndicacaoResumidaDTO> indicacaoList(@RequestBody IndicacaoPesquisaDto indicacaoPesquisaDto, Authentication authentication){
         String email = authentication.getName();
         List<Indicacao> retorno = colaboradorService.pesquisaPorData(email, indicacaoPesquisaDto.getDataInicial(), indicacaoPesquisaDto.getDataFinal());
 
@@ -83,6 +86,6 @@ public class ColaboradorController {
         return dtos;
 
     }
-
+*/
 
 }
