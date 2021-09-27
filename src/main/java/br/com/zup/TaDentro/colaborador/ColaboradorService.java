@@ -85,7 +85,7 @@ public class ColaboradorService {
         Colaborador objetoColaborador = buscarColaboradorPorCpf(colaborador.getCpf());
         colaborador.setDataContratacao(colaborador.getDataContratacao());
         colaborador.setCargo(colaborador.getCargo());
-        colaboradorRepository.save(colaborador);
+        return colaboradorRepository.save(colaborador);
 
     }
 
