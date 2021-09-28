@@ -84,6 +84,30 @@ public class UsuarioServiceTest {
     }
 
     @Test
+    public void testarMetodoEncontrarUsuarioPorEmailPositivo() throws Exception {
+        Usuario usuario = new Usuario();
+        Optional<Usuario> usuarioOptional = Optional.of(usuario);
+
+        Mockito.when(usuarioRepository.findByEmail(Mockito.anyString())).thenReturn(usuarioOptional);
+        Assertions.assertEquals(usuario, usuarioservice.encontrarUsuarioPorEmail("lmatheus@123"));
+    }
+
+    @Test
+    public void testarMetodoEncontrarUsuarioPorEmailNegativoParaLancaExecao() throws Exception {
+        Usuario usuario = new Usuario();
+        Optional<Usuario> usuarioOptional = Optional.empty();
+
+        Mockito.when(usuarioRepository.findByEmail(Mockito.anyString())).thenReturn(usuarioOptional);
+
+        RuntimeException exception = Assertions
+                .assertThrows(RuntimeException.class, () -> {usuarioservice.encontrarUsuarioPorEmail("lucs@123");});
+
+        Assertions.assertTrue(exception.getMessage().equals("Usuário não encontrado"));
+
+    }
+
+
+    @Test
     public void testarMetodoParaExcluirUsuarioPorIdPositivo() throws Exception {
         Usuario usuario = new Usuario();
         Mockito.when(usuarioRepository.findById(Mockito.anyInt())).thenReturn(Optional.of(usuario));

@@ -31,6 +31,7 @@ public class IndicacaoController {
         return modelMapper.map(indicacaoModel ,  IndicacaoResumidaDTO.class);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public List<IndicacaoResumidaDTO> indicacaoList(){
 
