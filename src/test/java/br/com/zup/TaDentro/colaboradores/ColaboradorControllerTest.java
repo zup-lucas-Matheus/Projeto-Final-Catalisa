@@ -4,6 +4,7 @@ import br.com.zup.TaDentro.Usuario.Usuario;
 import br.com.zup.TaDentro.colaborador.Colaborador;
 import br.com.zup.TaDentro.colaborador.ColaboradorController;
 import br.com.zup.TaDentro.colaborador.ColaboradorService;
+import br.com.zup.TaDentro.colaborador.exceptionColaborador.MensagemErroColaborador;
 import br.com.zup.TaDentro.enums.Cargo;
 import br.com.zup.TaDentro.enums.PerfilDeSituacao;
 import br.com.zup.TaDentro.indicacao.Indicacao;
@@ -86,6 +87,30 @@ public class ColaboradorControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated());
 
     }
+
+    @Test
+    public void deletarColaboradorCaminhoPositivo() throws Exception {
+
+        Mockito.when(colaboradorService.buscarColaboradorPorId(Mockito.anyInt()))
+                .thenReturn(colaborador);
+
+        colaboradorService.deletarColaborador(1);
+
+        ResultActions resultado = mockMvc.perform(MockMvcRequestBuilders.delete("/colaborador/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    public void testarDeletarColaboradorCaminhoNegativo() throws Exception {
+
+        Mockito.doThrow(MensagemErroColaborador.class).when(colaboradorService).deletarColaborador(Mockito.anyInt());
+
+        ResultActions resultado = mockMvc.perform(MockMvcRequestBuilders.delete("/colaborador/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
 }
 
 

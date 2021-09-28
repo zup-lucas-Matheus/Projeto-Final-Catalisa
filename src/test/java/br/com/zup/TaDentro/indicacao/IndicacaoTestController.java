@@ -29,6 +29,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @WithMockUser(username = "xablau", password = "123")
 @AutoConfigureMockMvc
@@ -113,5 +116,14 @@ public class IndicacaoTestController {
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.delete("/indicacao/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
+    public void testarListagemDeIndicacaoPositivo() throws Exception {
+
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/indicacao")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
     }
 }
