@@ -84,10 +84,6 @@ public class ColaboradorServiceTest {
         Assertions.assertNotNull(objetoColaborador.getCpf());
     }
 
-
-
-
-
     @Test
     public void testarSeColaboradorJaExiste() {
 
@@ -118,7 +114,7 @@ public class ColaboradorServiceTest {
     }
 
     @Test
-    public void testarEncontrarIndicacaoPorCpfCaminhoNegativo() {
+    public void testarBuscarIndicacaoPorCpfCaminhoNegativo() {
 
         Colaborador colaborador = new Colaborador();
         Optional<Colaborador> colaboradorOptional = Optional.empty();
@@ -130,6 +126,31 @@ public class ColaboradorServiceTest {
             colaboradorService.buscarColaboradorPorCpf("12345678910");
         });
         Assertions.assertFalse(exception.getMessage().equals("Colaborador não cadastrado"));
+    }
+
+    @Test
+    public void testarAtualizarColaborador() {
+
+        Usuario usuario = new Usuario();
+        usuario.setEmail("andre@123.com");
+        colaborador.setCpf("09876543216");
+
+        Mockito.when(usuarioService.encontrarUsuarioPorEmail(usuario.getEmail()))
+                .thenReturn(usuario);
+
+        Optional <Colaborador> colaboradorOptional = Optional.of(colaborador);
+        Mockito.when(colaboradorRepository.findByCpf(colaborador.getCpf()))
+                .thenReturn(colaboradorOptional);
+
+        colaborador.setLoginUsuario(usuario);
+        Mockito.when(colaboradorRepository.save(Mockito.any()))
+                .thenReturn(colaborador);
+
+        Colaborador objetoColaborador = colaboradorService.atualizarColaborador(colaborador);
+
+        Assertions.assertEquals(colaborador.getDataContratacao(), objetoColaborador.getDataContratacao());
+        Assertions.assertEquals(colaborador.getCargo(), objetoColaborador.getCargo());
+        Assertions.assertNotNull(objetoColaborador.getCpf());
     }
 
     @Test

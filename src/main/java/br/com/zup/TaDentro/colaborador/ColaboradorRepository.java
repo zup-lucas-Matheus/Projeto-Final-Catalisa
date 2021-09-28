@@ -12,4 +12,6 @@ public interface ColaboradorRepository extends CrudRepository <Colaborador , Int
 
     Optional<Colaborador> findByLoginUsuario(Usuario usuario);
 
+    //Optional<Colaborador> de
+
 }

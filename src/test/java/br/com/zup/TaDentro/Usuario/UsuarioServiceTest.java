@@ -1,3 +1,4 @@
+
 package br.com.zup.TaDentro.Usuario;
 
 import org.junit.jupiter.api.Assertions;
@@ -12,6 +13,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+
+
+package br.com.zup.TaDentro.Usuario;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -19,13 +31,13 @@ import java.util.Optional;
 @SpringBootTest
 public class UsuarioServiceTest {
 
-
     @Mock
     private UsuarioRepository usuarioRepository;
     @InjectMocks
     private UsuarioService usuarioservice;
     @Mock
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
 
     @BeforeEach
@@ -37,7 +49,6 @@ public class UsuarioServiceTest {
     @Test
     public void savedUser() {
 
-
         Usuario user = new Usuario();
         user.setSenha("12345");
         Mockito.when(bCryptPasswordEncoder.encode(user.getSenha())).thenReturn("12345");
@@ -48,7 +59,7 @@ public class UsuarioServiceTest {
         Usuario usuarioTest = usuarioservice.salvarUsuario(user);
         Assertions.assertEquals(user, usuarioTest);
     }
-
+    
     @Test
     public void testarMetodoQueRetornaTodosOsUsuarios(){
         Usuario usuario = new Usuario();
@@ -69,6 +80,7 @@ public class UsuarioServiceTest {
         Assertions.assertEquals(usuario, usuarioservice.encontrarUsuario(1));
     }
 
+
     @Test
     public void testarMetodoEncontrarUsuarioPorIdNegativoParaLancaExecao() throws Exception {
         Usuario usuario = new Usuario();
@@ -77,9 +89,11 @@ public class UsuarioServiceTest {
         Mockito.when(usuarioRepository.findById(Mockito.anyInt())).thenReturn(usuarioOptional);
 
         RuntimeException exception = Assertions
-                .assertThrows(RuntimeException.class, () -> {usuarioservice.encontrarUsuarioPorEmail("lucs@123");});
 
-        Assertions.assertTrue(exception.getMessage().equals("Usuário não encontrado"));
+                .assertThrows(RuntimeException.class, () -> {usuarioservice.encontrarUsuarioPorEmail("324e3");});
+
+        Assertions.assertTrue(exception.getMessage().equals("Usuario não encontrado"));
+
 
     }
 

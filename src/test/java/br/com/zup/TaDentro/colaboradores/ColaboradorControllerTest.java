@@ -1,10 +1,9 @@
 package br.com.zup.TaDentro.colaboradores;
 
-import br.com.zup.TaDentro.Usuario.Usuario;
 import br.com.zup.TaDentro.colaborador.Colaborador;
-import br.com.zup.TaDentro.colaborador.ColaboradorController;
 import br.com.zup.TaDentro.colaborador.ColaboradorService;
 import br.com.zup.TaDentro.enums.Cargo;
+
 import br.com.zup.TaDentro.enums.PerfilDeSituacao;
 import br.com.zup.TaDentro.indicacao.Indicacao;
 import br.com.zup.TaDentro.indicacao.IndicacaoService;
@@ -19,37 +18,29 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.ui.Model;
 
-import javax.annotation.security.RunAs;
-import java.beans.BeanProperty;
+import org.springframework.http.MediaType;
+
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
+
 import java.time.LocalDate;
 
 
-
-
-
-
-
-
-
-
-
 @WithMockUser(username = "xablau", password = "123")
+
+
+
 @AutoConfigureMockMvc
 @SpringBootTest
 public class ColaboradorControllerTest {
@@ -71,11 +62,17 @@ public class ColaboradorControllerTest {
         usuario.setEmail("lucas@123");
 
         colaborador = new Colaborador();
+        colaborador.setNome("André");
         colaborador.setCpf("12345678910");
+
         colaborador.setNome("Lucas");
         colaborador.setCargo(Cargo.DEV_JR);
         colaborador.setDataContratacao(LocalDate.now());
         colaborador.setLoginUsuario(usuario);
+
+
+        colaborador.setCargo(Cargo.ASSISTENTE);
+        colaborador.setDataContratacao(LocalDate.now());
 
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
@@ -88,14 +85,13 @@ public class ColaboradorControllerTest {
                 .thenReturn(colaborador);
 
         String json = objectMapper.writeValueAsString(colaborador);
-
-        ResultActions resultadoDaRequisicao = mockMvc
+      
+      ResultActions resultadoDaRequisicao = mockMvc
                 .perform(MockMvcRequestBuilders.post("/colaborador")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
 
-    }
 }
 
 
