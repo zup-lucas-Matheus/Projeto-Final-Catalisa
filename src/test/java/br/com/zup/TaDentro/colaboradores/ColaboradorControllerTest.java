@@ -39,16 +39,6 @@ import javax.annotation.security.RunAs;
 import java.beans.BeanProperty;
 import java.time.LocalDate;
 
-
-
-
-
-
-
-
-
-
-
 @WithMockUser(username = "xablau", password = "123")
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -82,7 +72,7 @@ public class ColaboradorControllerTest {
     }
 
     @Test
-    void testarMetodoCadastrarIndicacaoComSucesso() throws Exception {
+    void testarMetodoCadastrarColaboradorComSucesso() throws Exception {
 
         Mockito.when(colaboradorService.salvarColaborador(Mockito.anyString(), Mockito.any(Colaborador.class)))
                 .thenReturn(colaborador);
