@@ -8,10 +8,15 @@ import br.com.zup.TaDentro.colaborador.ColaboradorService;
 import br.com.zup.TaDentro.colaborador.exceptionColaborador.MensagemErroColaborador;
 
 import br.com.zup.TaDentro.enums.Cargo;
+import br.com.zup.TaDentro.indicacao.Indicacao;
+import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroIndicacao;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -24,15 +29,21 @@ import java.util.Optional;
 @SpringBootTest
 public class ColaboradorServiceTest {
 
-    @Autowired
+    @InjectMocks
     private ColaboradorService colaboradorService;
-    @MockBean
+    @Mock
     private ColaboradorRepository colaboradorRepository;
     @Mock
     private UsuarioService usuarioService;
     private Colaborador colaborador = criarColaborador();
     private Usuario usuario;
 
+    @BeforeEach
+    public void setUp(){
+        MockitoAnnotations.openMocks(this);
+
+
+    }
 
 
     private Colaborador criarColaborador() {
@@ -147,6 +158,59 @@ public class ColaboradorServiceTest {
         Assertions.assertNotNull(exception);
 
     }
+
+    @Test
+    public void testarAtualizarColaborador() {
+
+        Usuario usuario = new Usuario();
+        usuario.setEmail("andre@123.com");
+        colaborador.setCpf("09876543216");
+
+        Mockito.when(usuarioService.encontrarUsuarioPorEmail(usuario.getEmail()))
+                .thenReturn(usuario);
+
+        Optional <Colaborador> colaboradorOptional = Optional.of(colaborador);
+        Mockito.when(colaboradorRepository.findByCpf(colaborador.getCpf()))
+                .thenReturn(colaboradorOptional);
+
+        colaborador.setLoginUsuario(usuario);
+        Mockito.when(colaboradorRepository.save(Mockito.any()))
+                .thenReturn(colaborador);
+
+        Colaborador objetoColaborador = colaboradorService.atualizarColaborador(colaborador);
+
+        Assertions.assertEquals(colaborador.getDataContratacao(), objetoColaborador.getDataContratacao());
+        Assertions.assertEquals(colaborador.getCargo(), objetoColaborador.getCargo());
+        Assertions.assertNotNull(objetoColaborador.getCpf());
+    }
+
+
+    @Test
+    public void testeValidacaoCpfDuplicadoNegativoParaLancaException(){
+
+        MensagemErroColaborador mensagemErroColaborador
+                = new MensagemErroColaborador("Colaborador já cadastrado");
+        Mockito.when(colaboradorRepository.findByCpf(Mockito.anyString()))
+                .thenThrow(mensagemErroColaborador);
+
+        RuntimeException exception = Assertions
+                .assertThrows(RuntimeException.class, () -> {colaboradorService.colaboradorDuplicado("12345678");});
+
+        Assertions.assertEquals("Colaborador já cadastrado", exception.getMessage());
+
+    }
+
+
+    @Test
+    public void testarMetodoQueRetornaTodosOsColaboradores(){
+
+        List<Colaborador> colaboradorList = Arrays.asList(colaborador);
+        Mockito.when(colaboradorRepository.findAll()).thenReturn(colaboradorList);
+
+        List<Colaborador> colaboradorListTest = Arrays.asList(colaborador);
+        Assertions.assertEquals(colaboradorList, colaboradorListTest);
+    }
+
 }
 
 

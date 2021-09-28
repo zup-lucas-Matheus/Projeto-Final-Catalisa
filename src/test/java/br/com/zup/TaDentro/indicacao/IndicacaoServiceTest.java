@@ -9,9 +9,12 @@ import br.com.zup.TaDentro.enums.PerfilDeSituacao;
 import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroFiltroIndicacao;
 import br.com.zup.TaDentro.indicacao.exceptionIndicacao.MensagemErroIndicacao;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -23,18 +26,24 @@ import java.util.*;
 @SpringBootTest
 public class IndicacaoServiceTest {
 
-    @Autowired
+    @InjectMocks
     private IndicacaoService indicacaoService;
     @Mock
     private ColaboradorService colaboradorService;
     @Mock
     private UsuarioService usuarioService;
 
-    @MockBean
+    @Mock
     private IndicacaoRepository indicacaoRepository;
 
     private Colaborador colaborador = criarColaborador();
     private Indicacao indicacao = criaIndicacao();
+
+    @BeforeEach
+    public void setUp(){
+        MockitoAnnotations.openMocks(this);
+
+    }
 
     private Indicacao criaIndicacao() {
         indicacao = new Indicacao();
@@ -356,17 +365,5 @@ public class IndicacaoServiceTest {
         List<Indicacao> indicacaoListTest = Arrays.asList(indicacao);
         Assertions.assertEquals(indicacaoList, indicacaoListTest);
     }
-
-
-    @Test
-    public void testeValidacaoCpfDuplicadoPositivo(){
-
-        Mockito.when(indicacaoRepository.findByCpf(indicacao.getCpf()))
-                .thenReturn(Optional.of(indicacao));
-
-        Assertions.assertEquals("1234", indicacaoService.indicacaoDuplicada("123"));
-
-    }
-
 
 }

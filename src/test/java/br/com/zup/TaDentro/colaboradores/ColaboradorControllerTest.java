@@ -5,20 +5,27 @@ import br.com.zup.TaDentro.colaborador.Colaborador;
 import br.com.zup.TaDentro.colaborador.ColaboradorController;
 import br.com.zup.TaDentro.colaborador.ColaboradorService;
 import br.com.zup.TaDentro.enums.Cargo;
+import br.com.zup.TaDentro.enums.PerfilDeSituacao;
+import br.com.zup.TaDentro.indicacao.Indicacao;
+import br.com.zup.TaDentro.indicacao.IndicacaoService;
 import br.com.zup.TaDentro.jwt.filter.JwtComponent;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.With;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -33,41 +40,49 @@ import java.beans.BeanProperty;
 import java.time.LocalDate;
 
 
+
+
+
+
+
+
+
+
+
+@WithMockUser(username = "xablau", password = "123")
 @AutoConfigureMockMvc
 @SpringBootTest
-class ColaboradorControllerTest {
+public class ColaboradorControllerTest {
 
     @MockBean
     private ColaboradorService colaboradorService;
     @Autowired
     private MockMvc mockMvc;
-    @Mock
-    private JwtComponent jwtComponent;
+    private ObjectMapper objectMapper;
     private Colaborador colaborador;
     private Usuario usuario;
-    @Mock
-    private ObjectMapper objectMapper;
-    @Autowired
+    @SpyBean
     private ModelMapper modelMapper;
 
     @BeforeEach
     public void setUp() {
 
         usuario = new Usuario();
-        usuario.setEmail("lucas@123.com");
+        usuario.setEmail("lucas@123");
 
         colaborador = new Colaborador();
         colaborador.setCpf("12345678910");
         colaborador.setNome("Lucas");
         colaborador.setCargo(Cargo.DEV_JR);
+        colaborador.setDataContratacao(LocalDate.now());
         colaborador.setLoginUsuario(usuario);
 
         objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
     }
 
-    @WithMockUser(username = "xablau", password = "123")
     @Test
-    void testarMetodoCadastrarColaboradorComSucesso() throws Exception {
+    void testarMetodoCadastrarIndicacaoComSucesso() throws Exception {
 
         Mockito.when(colaboradorService.salvarColaborador(Mockito.anyString(), Mockito.any(Colaborador.class)))
                 .thenReturn(colaborador);
@@ -81,5 +96,7 @@ class ColaboradorControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated());
 
     }
-
 }
+
+
+
